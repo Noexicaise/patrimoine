@@ -3,167 +3,112 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patrimoine & revenus — la moyenne contre la médiane</title>
+<title>Patrimoine, revenus & pouvoir d'achat — la moyenne contre la médiane</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0B1210;
-    --surface:#111C18;
-    --surface-2:#16221D;
-    --border:#233129;
-    --grid:#1B2823;
-    --text:#EBE7DC;
-    --text-dim:#93A79D;
-    --text-faint:#5A6E64;
-    --gold:#D4A94F;
-    --gold-soft:rgba(212,169,79,.14);
-    --teal:#5FC3A8;
-    --teal-soft:rgba(95,195,168,.14);
-    --coral:#E37A57;
-    --coral-soft:rgba(227,122,87,.14);
-    --blue:#6FA0CE;
+    --bg:#0B1210; --surface:#111C18; --surface-2:#16221D; --border:#233129; --grid:#1B2823;
+    --text:#EBE7DC; --text-dim:#93A79D; --text-faint:#5A6E64;
+    --gold:#D4A94F; --gold-soft:rgba(212,169,79,.14);
+    --teal:#5FC3A8; --teal-soft:rgba(95,195,168,.14);
+    --coral:#E37A57; --coral-soft:rgba(227,122,87,.14);
+    --blue:#6FA0CE; --blue-soft:rgba(111,160,206,.14);
+    --violet:#9C8FD0; --violet-soft:rgba(156,143,208,.14);
     --radius:10px;
-    --serif:'Instrument Serif', serif;
-    --sans:'IBM Plex Sans', sans-serif;
-    --mono:'IBM Plex Mono', monospace;
+    --serif:'Instrument Serif', serif; --sans:'IBM Plex Sans', sans-serif; --mono:'IBM Plex Mono', monospace;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{transition-duration:.01ms !important; animation-duration:.01ms !important;}
-  }
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition-duration:.01ms !important; animation-duration:.01ms !important;} }
   body{
     margin:0;
     background:
       radial-gradient(ellipse 900px 500px at 15% -10%, rgba(212,169,79,.06), transparent 60%),
       radial-gradient(ellipse 900px 600px at 100% 0%, rgba(95,195,168,.05), transparent 55%),
       var(--bg);
-    color:var(--text);
-    font-family:var(--sans);
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
+    color:var(--text); font-family:var(--sans); line-height:1.5; -webkit-font-smoothing:antialiased;
   }
   a{color:var(--teal);}
   ::selection{background:var(--gold-soft); color:var(--text);}
   :focus-visible{outline:2px solid var(--teal); outline-offset:3px; border-radius:4px;}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 20px;}
 
-  .wrap{max-width:1120px; margin:0 auto; padding:0 20px;}
-
-  /* ---------- HEADER ---------- */
   header.hero{padding:64px 0 40px; border-bottom:1px solid var(--border);}
-  .eyebrow{
-    font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--text-dim); display:flex; align-items:center; gap:10px; margin-bottom:22px;
-  }
+  .eyebrow{font-family:var(--mono); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--text-dim); display:flex; align-items:center; gap:10px; margin-bottom:22px;}
   .eyebrow::before{content:""; width:26px; height:1px; background:var(--teal);}
-  h1{
-    font-family:var(--serif); font-weight:400; font-style:normal;
-    font-size:clamp(32px, 5.4vw, 58px); line-height:1.06; margin:0 0 20px; letter-spacing:-.01em;
-    max-width:16ch;
-  }
+  h1{font-family:var(--serif); font-weight:400; font-size:clamp(30px,5vw,54px); line-height:1.08; margin:0 0 20px; letter-spacing:-.01em; max-width:20ch;}
   h1 em{font-style:italic; color:var(--gold);}
-  .sub{color:var(--text-dim); font-size:16px; max-width:56ch; margin:0 0 34px;}
+  .sub{color:var(--text-dim); font-size:16px; max-width:62ch; margin:0 0 34px;}
   .sub b{color:var(--text); font-weight:600;}
-
   .chips{display:flex; flex-wrap:wrap; gap:14px;}
-  .chip{
-    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-    padding:14px 18px; min-width:168px; flex:1 1 168px;
-  }
+  .chip{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:14px 18px; min-width:150px; flex:1 1 150px;}
   .chip .k{font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--text-faint); display:block; margin-bottom:8px;}
-  .chip .v{font-family:var(--mono); font-size:26px; font-weight:600; color:var(--text);}
-  .chip .s{font-size:12.5px; color:var(--text-dim); margin-top:4px;}
-  .chip.gold{border-color:rgba(212,169,79,.35);}
-  .chip.gold .v{color:var(--gold);}
-  .chip.teal{border-color:rgba(95,195,168,.35);}
-  .chip.teal .v{color:var(--teal);}
-  .chip.coral{border-color:rgba(227,122,87,.35);}
-  .chip.coral .v{color:var(--coral);}
+  .chip .v{font-family:var(--mono); font-size:24px; font-weight:600; color:var(--text);}
+  .chip .s{font-size:12px; color:var(--text-dim); margin-top:4px;}
+  .chip.gold{border-color:rgba(212,169,79,.35);} .chip.gold .v{color:var(--gold);}
+  .chip.teal{border-color:rgba(95,195,168,.35);} .chip.teal .v{color:var(--teal);}
+  .chip.coral{border-color:rgba(227,122,87,.35);} .chip.coral .v{color:var(--coral);}
+  .chip.violet{border-color:rgba(156,143,208,.35);} .chip.violet .v{color:var(--violet);}
 
-  /* ---------- SECTIONS ---------- */
   section{padding:56px 0; border-bottom:1px solid var(--border);}
   .s-head{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:24px;}
   .s-num{font-family:var(--mono); color:var(--text-faint); font-size:12px; letter-spacing:.1em;}
-  h2{font-family:var(--serif); font-weight:400; font-size:clamp(24px,3.4vw,34px); margin:4px 0 0;}
-  .s-desc{color:var(--text-dim); font-size:14.5px; max-width:60ch; margin-top:6px;}
+  h2{font-family:var(--serif); font-weight:400; font-size:clamp(23px,3.2vw,32px); margin:4px 0 0;}
+  .s-desc{color:var(--text-dim); font-size:14.5px; max-width:62ch; margin-top:6px;}
 
-  /* ---------- CONTROLS ---------- */
-  .controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:18px;}
+  .controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px;}
   .seg{display:flex; border:1px solid var(--border); border-radius:8px; overflow:hidden;}
-  .seg button{
-    font-family:var(--sans); font-size:12.5px; font-weight:500; color:var(--text-dim);
-    background:var(--surface); border:none; padding:9px 13px; cursor:pointer; border-right:1px solid var(--border);
-    transition:background .15s, color .15s;
-  }
+  .seg button{font-family:var(--sans); font-size:12.5px; font-weight:500; color:var(--text-dim); background:var(--surface); border:none; padding:9px 13px; cursor:pointer; border-right:1px solid var(--border); transition:background .15s, color .15s;}
   .seg button:last-child{border-right:none;}
   .seg button:hover{color:var(--text); background:var(--surface-2);}
   .seg button.active{background:var(--teal-soft); color:var(--teal); font-weight:600;}
-  .pill{
-    font-family:var(--sans); font-size:12.5px; color:var(--text-dim); background:var(--surface);
-    border:1px solid var(--border); border-radius:999px; padding:8px 14px; cursor:pointer;
-  }
+  .pill{font-family:var(--sans); font-size:12.5px; color:var(--text-dim); background:var(--surface); border:1px solid var(--border); border-radius:999px; padding:8px 14px; cursor:pointer;}
   .pill.active{background:var(--gold-soft); border-color:rgba(212,169,79,.4); color:var(--gold); font-weight:600;}
-  .btn-locate{
-    margin-left:auto; font-family:var(--sans); font-size:12.5px; font-weight:600; color:var(--bg);
-    background:var(--coral); border:none; border-radius:999px; padding:9px 16px; cursor:pointer;
-    display:flex; align-items:center; gap:6px;
-  }
+  .btn-locate{margin-left:auto; font-family:var(--sans); font-size:12.5px; font-weight:600; color:var(--bg); background:var(--coral); border:none; border-radius:999px; padding:9px 16px; cursor:pointer; display:flex; align-items:center; gap:6px;}
   .btn-locate:hover{filter:brightness(1.08);}
+  .search-box{position:relative; flex:1 1 200px; max-width:260px;}
+  .search-box input{
+    width:100%; font-family:var(--mono); font-size:12.5px; color:var(--text); background:var(--surface);
+    border:1px solid var(--border); border-radius:999px; padding:9px 14px 9px 30px; outline:none;
+  }
+  .search-box input:focus{border-color:var(--teal);}
+  .search-box::before{content:"⌕"; position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--text-faint); font-size:14px;}
 
   .legend{display:flex; gap:22px; flex-wrap:wrap; font-size:12.5px; color:var(--text-dim); margin:14px 0 4px;}
   .legend span{display:inline-flex; align-items:center; gap:7px;}
   .dot-swatch{width:9px; height:9px; border-radius:50%; display:inline-block;}
 
-  /* ---------- DUMBBELL CHART ---------- */
-  .detail-bar{
-    font-family:var(--mono); font-size:13px; background:var(--surface-2); border:1px solid var(--border);
-    border-radius:8px; padding:11px 16px; margin-bottom:14px; min-height:20px; color:var(--text-dim);
-  }
+  .detail-bar{font-family:var(--mono); font-size:13px; background:var(--surface-2); border:1px solid var(--border); border-radius:8px; padding:11px 16px; margin-bottom:14px; min-height:20px; color:var(--text-dim);}
   .detail-bar b{color:var(--text); font-weight:600;}
-  .detail-bar .g{color:var(--gold);} .detail-bar .t{color:var(--teal);} .detail-bar .c{color:var(--coral);}
+  .detail-bar .g{color:var(--gold);} .detail-bar .t{color:var(--teal);} .detail-bar .c{color:var(--coral);} .detail-bar .b{color:var(--blue);}
 
-  .dlist{
-    max-height:600px; overflow-y:auto; border:1px solid var(--border); border-radius:var(--radius);
-    background:var(--surface); padding:6px 0;
-  }
-  .dlist::-webkit-scrollbar{width:8px;}
-  .dlist::-webkit-scrollbar-thumb{background:var(--border); border-radius:4px;}
-  .drow{
-    display:grid; grid-template-columns:150px 1fr; align-items:center; gap:14px;
-    padding:7px 16px; cursor:pointer; border-radius:6px; border:1px solid transparent;
-  }
+  .dlist{max-height:600px; overflow-y:auto; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface); padding:6px 0;}
+  .dlist::-webkit-scrollbar{width:8px;} .dlist::-webkit-scrollbar-thumb{background:var(--border); border-radius:4px;}
+  .drow{display:grid; grid-template-columns:150px 1fr; align-items:center; gap:14px; padding:7px 16px; cursor:pointer; border-radius:6px; border:1px solid transparent;}
   .drow:hover, .drow:focus-visible{background:var(--surface-2);}
   .drow.pinned{background:var(--coral-soft); border-color:rgba(227,122,87,.35);}
   .drow.selected{background:var(--surface-2); border-color:var(--border);}
+  .drow.hidden{display:none;}
   .drow .label{font-size:12.5px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:flex; align-items:center; gap:6px;}
   .drow.pinned .label{color:var(--coral); font-weight:600;}
   .drow .flag{font-size:14px;}
   .track{position:relative; height:20px;}
   .track .baseline{position:absolute; top:50%; left:0; right:0; height:1px; background:var(--grid); transform:translateY(-50%);}
   .track .connector{position:absolute; top:50%; height:2px; background:var(--text-faint); opacity:.5; transform:translateY(-50%); border-radius:2px;}
-  .track .dot{
-    position:absolute; top:50%; width:10px; height:10px; border-radius:50%; transform:translate(-50%,-50%);
-    box-shadow:0 0 0 3px var(--surface);
-  }
-  .track .dot.mean{background:var(--gold);}
-  .track .dot.median{background:var(--teal);}
+  .track .dot{position:absolute; top:50%; width:10px; height:10px; border-radius:50%; transform:translate(-50%,-50%); box-shadow:0 0 0 3px var(--surface);}
+  .track .dot.mean{background:var(--gold);} .track .dot.median{background:var(--teal);}
   .drow.pinned .track .dot{box-shadow:0 0 0 3px var(--coral-soft), 0 0 10px rgba(227,122,87,.5);}
-
   .hint{font-size:12px; color:var(--text-faint); margin-top:10px; font-family:var(--mono);}
 
-  /* ---------- BELGIUM SECTION ---------- */
   .bg-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:28px;}
-  @media (max-width:820px){.bg-grid{grid-template-columns:1fr;}}
+  @media (max-width:820px){.bg-grid, .evo-grid, .scat-grid{grid-template-columns:1fr;}}
   .panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px;}
   .panel h3{font-family:var(--sans); font-size:13px; text-transform:uppercase; letter-spacing:.07em; color:var(--text-dim); margin:0 0 18px; font-weight:600;}
 
-  .hbar-row{margin-bottom:16px;}
-  .hbar-row:last-child{margin-bottom:0;}
+  .hbar-row{margin-bottom:16px;} .hbar-row:last-child{margin-bottom:0;}
   .hbar-top{display:flex; justify-content:space-between; font-size:12.5px; margin-bottom:6px;}
-  .hbar-top .name{color:var(--text-dim);}
-  .hbar-top .val{font-family:var(--mono); font-weight:600; color:var(--text);}
+  .hbar-top .name{color:var(--text-dim);} .hbar-top .val{font-family:var(--mono); font-weight:600; color:var(--text);}
   .hbar-track{height:10px; background:var(--surface-2); border-radius:5px; overflow:hidden; border:1px solid var(--border);}
   .hbar-fill{height:100%; border-radius:5px;}
 
@@ -178,24 +123,49 @@
   .region-bar .lab{font-size:11.5px; color:var(--text-dim); text-align:center;}
   .region-bar .amt{font-family:var(--mono); font-size:12px; color:var(--text); font-weight:600;}
 
-  /* ---------- GDP SECTION ---------- */
-  .gdp-list{display:flex; flex-direction:column; gap:11px; margin-top:6px;}
-  .gdp-row{display:grid; grid-template-columns:170px 1fr 84px; align-items:center; gap:12px;}
-  .gdp-row .name{font-size:13px; color:var(--text-dim); display:flex; align-items:center; gap:7px;}
-  .gdp-track{height:16px; background:var(--surface-2); border-radius:4px; overflow:hidden; border:1px solid var(--border);}
-  .gdp-fill{height:100%; background:linear-gradient(90deg, var(--blue), #86BEE8); border-radius:4px 0 0 4px;}
-  .gdp-row .val{font-family:var(--mono); font-size:12.5px; text-align:right; color:var(--text);}
-  .note{
-    font-size:12.5px; color:var(--text-faint); background:var(--surface-2); border:1px dashed var(--border);
-    border-radius:8px; padding:12px 14px; margin-top:16px;
+  /* extremes GDP */
+  .extreme-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:720px){.extreme-grid{grid-template-columns:1fr;}}
+  .extreme-panel h4{margin:0 0 4px; font-family:var(--sans); font-size:12.5px; font-weight:600; display:flex; align-items:center; gap:6px;}
+  .extreme-panel .desc{font-size:11.5px; color:var(--text-faint); margin-bottom:14px;}
+  .gdp-row{display:grid; grid-template-columns:130px 1fr 76px; align-items:center; gap:10px; margin-bottom:10px;}
+  .gdp-row .name{font-size:12.5px; color:var(--text-dim); display:flex; align-items:center; gap:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .gdp-track{height:14px; background:var(--surface-2); border-radius:4px; overflow:hidden; border:1px solid var(--border);}
+  .gdp-fill{height:100%; border-radius:4px 0 0 4px;}
+  .gdp-fill.hi{background:linear-gradient(90deg, var(--blue), #86BEE8);}
+  .gdp-fill.lo{background:linear-gradient(90deg, var(--coral), #F0A488);}
+  .gdp-row .val{font-family:var(--mono); font-size:11.5px; text-align:right; color:var(--text);}
+  .ratio-callout{
+    text-align:center; margin-top:20px; padding:18px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius);
   }
-  .callout{
-    background:var(--surface); border:1px solid rgba(95,195,168,.3); border-radius:var(--radius);
-    padding:18px 20px; margin-top:18px; font-size:13.5px; color:var(--text-dim);
-  }
+  .ratio-callout .big{font-family:var(--mono); font-size:34px; font-weight:600; color:var(--coral);}
+  .ratio-callout .lab{font-size:12.5px; color:var(--text-dim); margin-top:4px;}
+
+  .note{font-size:12.5px; color:var(--text-faint); background:var(--surface-2); border:1px dashed var(--border); border-radius:8px; padding:12px 14px; margin-top:16px;}
+
+  .subsection{margin-top:40px; padding-top:32px; border-top:1px dashed var(--border);}
+  .sub-h{font-family:var(--serif); font-weight:400; font-style:italic; font-size:20px; color:var(--text); margin:0 0 10px; font-style:normal;}
+  .rank-callout{display:flex; align-items:center; gap:18px; background:var(--surface); border:1px solid rgba(227,122,87,.35); border-radius:var(--radius); padding:18px 22px; margin-bottom:20px;}
+  .rank-big{font-family:var(--mono); font-size:44px; font-weight:600; color:var(--coral); line-height:1; flex-shrink:0;}
+  .rank-big span{font-size:20px;}
+  .rank-txt{font-size:13px; color:var(--text-dim); line-height:1.55;}
+
+  .sim-panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+  .sim-input-row{display:flex; align-items:center; gap:0; margin:18px 0 14px; max-width:420px;}
+  .sim-dollar{font-family:var(--mono); font-size:20px; color:var(--text-dim); background:var(--surface-2); border:1px solid var(--border); border-right:none; border-radius:8px 0 0 8px; padding:12px 14px;}
+  #simInput{flex:1; font-family:var(--mono); font-size:18px; background:var(--surface-2); border:1px solid var(--border); color:var(--text); padding:12px 14px; outline:none; min-width:0;}
+  #simInput:focus{border-color:var(--teal);}
+  .sim-input-row .btn-locate{border-radius:0 8px 8px 0; padding:12px 18px; flex-shrink:0;}
+  .sim-quickset{display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:12.5px; color:var(--text-faint); margin-top:6px;}
+  .sim-quickset .pill{padding:6px 12px; font-size:12px;}
+  .sim-result{margin-top:18px; padding:20px; background:var(--surface-2); border-radius:8px; border:1px solid rgba(95,195,168,.3);}
+  .sim-result .sr-big{font-family:var(--mono); font-size:36px; font-weight:600; color:var(--teal); line-height:1;}
+  .sim-result .sr-sub{font-size:13.5px; color:var(--text-dim); margin-top:8px; line-height:1.6;}
+  .sim-bar{height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:14px 0; border:1px solid var(--border);}
+  .sim-bar-fill{height:100%; background:linear-gradient(90deg, var(--teal), var(--gold), var(--coral));}
+  .callout{background:var(--surface); border:1px solid rgba(95,195,168,.3); border-radius:var(--radius); padding:18px 20px; margin-top:18px; font-size:13.5px; color:var(--text-dim);}
   .callout b{color:var(--teal); font-family:var(--mono);}
 
-  /* ---------- INSIGHT CARDS ---------- */
   .cards{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
   @media (max-width:720px){.cards{grid-template-columns:1fr;}}
   .card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px;}
@@ -203,9 +173,7 @@
   .card p{margin:0; font-size:13.5px; color:var(--text-dim); line-height:1.6;}
   .card p b{color:var(--text); font-weight:600;}
 
-  /* ---------- EVOLUTION ---------- */
   .evo-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:28px;}
-  @media (max-width:820px){.evo-grid{grid-template-columns:1fr;}}
   .line-chart{height:180px; display:flex; align-items:flex-end; gap:0; position:relative; margin-top:10px; border-bottom:1px solid var(--grid);}
   .line-chart svg{width:100%; height:100%; overflow:visible;}
   .line-labels{display:flex; justify-content:space-between; margin-top:8px; font-family:var(--mono); font-size:11.5px; color:var(--text-dim);}
@@ -215,8 +183,39 @@
   .vbar-fill{height:100%; background:linear-gradient(90deg, var(--gold), var(--coral));}
   .vbar-row .rval{font-family:var(--mono); font-size:12.5px; width:52px; text-align:right; color:var(--text);}
 
+  /* pyramid */
+  .pyramid{display:flex; flex-direction:column; gap:18px;}
+  .pyr-row{display:grid; grid-template-columns:170px 1fr 1fr; gap:14px; align-items:center;}
+  .pyr-row .plab{font-size:12.5px; color:var(--text-dim);}
+  .pyr-bar-wrap{display:flex; flex-direction:column; gap:4px;}
+  .pyr-bar-wrap .cap{font-family:var(--mono); font-size:10.5px; color:var(--text-faint);}
+  .pyr-track{height:16px; background:var(--surface-2); border-radius:4px; overflow:hidden; border:1px solid var(--border); position:relative;}
+  .pyr-fill{height:100%; display:flex; align-items:center; justify-content:flex-end; padding-right:6px; font-family:var(--mono); font-size:10.5px; color:var(--bg); font-weight:600;}
+  @media (max-width:640px){.pyr-row{grid-template-columns:1fr; gap:6px;}}
+
+  /* scatter */
+  .scat-grid{display:grid; grid-template-columns:1fr 260px; gap:24px;}
+  .scat-wrap{position:relative; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px;}
+  .scat-wrap svg{width:100%; height:auto; display:block;}
+  .scat-axis-label{font-family:var(--mono); font-size:10.5px; fill:var(--text-faint);}
+  .scat-point{cursor:pointer;}
+  .scat-point circle{transition:r .12s;}
+  .scat-point:hover circle, .scat-point.active circle{stroke:var(--text); stroke-width:1.5;}
+  .scat-point.dim circle{opacity:.18;}
+  .scat-point.dim text{opacity:.15;}
+  .scat-tooltip{
+    position:absolute; pointer-events:none; background:var(--surface-2); border:1px solid var(--border); border-radius:8px;
+    padding:8px 12px; font-family:var(--mono); font-size:11.5px; color:var(--text); white-space:nowrap; z-index:5;
+    transform:translate(-50%,-115%); opacity:0; transition:opacity .1s;
+  }
+  .scat-tooltip.show{opacity:1;}
+  .scat-side{display:flex; flex-direction:column; gap:14px;}
+  .quad-key{display:flex; flex-direction:column; gap:10px; font-size:11.5px; color:var(--text-dim);}
+  .quad-key .qi{display:flex; gap:8px; align-items:flex-start;}
+  .quad-key .qi .sw{width:9px; height:9px; border-radius:2px; margin-top:3px; flex-shrink:0;}
+
   footer{padding:40px 0 60px;}
-  footer .src{font-size:12px; color:var(--text-faint); line-height:1.8; max-width:78ch;}
+  footer .src{font-size:12px; color:var(--text-faint); line-height:1.85; max-width:82ch;}
   footer .src b{color:var(--text-dim);}
 </style>
 </head>
@@ -224,29 +223,18 @@
 
 <div class="wrap">
   <header class="hero">
-    <div class="eyebrow">Patrimoine & revenus — comparatif 2026</div>
+    <div class="eyebrow">Patrimoine, revenus & pouvoir d'achat — comparatif 2026</div>
     <h1>La moyenne ment un peu.<br>La <em>médiane</em>, moins.</h1>
-    <p class="sub">Deux façons de mesurer la richesse d'un pays donnent deux classements différents. La moyenne est tirée vers le haut par une minorité très riche ; la médiane montre ce que possède l'adulte « du milieu ». <b>La Belgique est l'un des pays où l'écart entre les deux est le plus faible</b> — signe d'une richesse mieux répartie.</p>
+    <p class="sub">Deux façons de mesurer la richesse d'un pays donnent deux classements différents — et le coût de la vie change encore la donne. <b>La Belgique est l'un des pays où l'écart moyenne/médiane est le plus faible</b>, signe d'une richesse mieux répartie qu'ailleurs.</p>
     <div class="chips">
-      <div class="chip teal">
-        <span class="k">🇧🇪 Belgique · médiane</span>
-        <span class="v">277K$</span>
-        <span class="s">2ᵉ rang mondial</span>
-      </div>
-      <div class="chip gold">
-        <span class="k">🇧🇪 Belgique · moyenne</span>
-        <span class="v">408K$</span>
-        <span class="s">11ᵉ rang mondial</span>
-      </div>
-      <div class="chip coral">
-        <span class="k">Écart moyenne ↔ médiane</span>
-        <span class="v">32%</span>
-        <span class="s">vs 90% aux États-Unis</span>
-      </div>
+      <div class="chip teal"><span class="k">🇧🇪 médiane</span><span class="v">277K$</span><span class="s">2ᵉ mondial</span></div>
+      <div class="chip gold"><span class="k">🇧🇪 moyenne</span><span class="v">408K$</span><span class="s">11ᵉ mondial</span></div>
+      <div class="chip coral"><span class="k">Écart 🇧🇪</span><span class="v">32%</span><span class="s">vs 90% aux USA</span></div>
+      <div class="chip violet"><span class="k">Richesse mondiale 2025</span><span class="v">+10,8%</span><span class="s">plus forte hausse depuis 2017</span></div>
     </div>
   </header>
 
-  <!-- ================= SECTION 1 : DUMBBELL ================= -->
+  <!-- ================= 01 : DUMBBELL ================= -->
   <section id="wealth">
     <div class="s-head">
       <div>
@@ -263,6 +251,7 @@
         <button data-sort="gapDesc">Écart le + grand</button>
         <button data-sort="gapAsc">Écart le + petit</button>
       </div>
+      <div class="search-box"><input id="wealthSearch" type="text" placeholder="Rechercher un pays…"></div>
       <button class="btn-locate" id="locateBtn">📍 Localiser la Belgique</button>
     </div>
     <div class="controls" id="regionPills">
@@ -279,22 +268,85 @@
       <span><i class="dot-swatch" style="background:var(--coral)"></i> Belgique</span>
     </div>
 
-    <div class="detail-bar" id="detailBar">Survolez ou touchez un pays pour voir le détail →</div>
-
+    <div class="detail-bar" id="detailBar">Survolez, touchez ou tapez un pays pour voir le détail →</div>
     <div class="dlist" id="dlist"></div>
     <div class="hint">Source : UBS Global Wealth Report 2026 (données fin 2025), via Visual Capitalist, juillet 2026 · valeurs en dollars US</div>
   </section>
 
-  <!-- ================= SECTION 2 : BELGIQUE ================= -->
+  <!-- ================= 02 : SIMULATEUR PERSONNEL ================= -->
+  <section id="simulator">
+    <div class="s-head">
+      <div>
+        <div class="s-num">02 — À vous de jouer</div>
+        <h2>Et vous, à quel percentile ?</h2>
+        <p class="s-desc">Entrez un revenu annuel ou un patrimoine net (en dollars) et situez-vous instantanément parmi les <b style="color:var(--text)">~5,8 milliards d'adultes</b> de la planète.</p>
+      </div>
+    </div>
+    <div class="sim-panel">
+      <div class="seg" id="simModeSeg">
+        <button data-mode="income" class="active">Revenu annuel</button>
+        <button data-mode="wealth">Patrimoine net</button>
+      </div>
+      <div class="sim-input-row">
+        <span class="sim-dollar">$</span>
+        <input type="number" id="simInput" placeholder="ex. 45000" min="0">
+        <button class="btn-locate" id="simBtn" style="margin-left:0;">Me situer</button>
+      </div>
+      <div id="simResult" class="sim-result" style="display:none;"></div>
+      <div class="sim-quickset">
+        <span>Essayer :</span>
+        <button class="pill" data-val="3920">médiane mondiale</button>
+        <button class="pill" data-val="35000">35 000 $</button>
+        <button class="pill" data-val="76109">salaire moyen 🇧🇪</button>
+        <button class="pill" data-val="85000">85 000 $</button>
+      </div>
+    </div>
+    <div class="note">Estimation à visée illustrative : modèle log-normal calibré sur la médiane mondiale (revenu : 3 920 $/an ; patrimoine : ≈9 000 $) et le seuil d'entrée du top 1% (revenu : ≈85 000 $/an, Banque mondiale PIP 2024 ; patrimoine : 1 000 000 $, seuil des millionnaires, UBS 2026) — ce n'est pas une mesure officielle exacte, mais l'ordre de grandeur est fiable.</div>
+  </section>
+
+  <!-- ================= 03 : PYRAMIDE MONDIALE ================= -->
+  <section id="pyramid">
+    <div class="s-head">
+      <div>
+        <div class="s-num">03 — L'écart ultime</div>
+        <h2>Qui possède quoi, à l'échelle mondiale</h2>
+        <p class="s-desc">Au-delà des pays : comment la richesse se répartit entre les adultes de la planète. Deux groupes, deux réalités opposées.</p>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="pyramid">
+        <div class="pyr-row">
+          <div class="plab">40% les plus pauvres<br><span style="color:var(--text-faint); font-size:11px;">patrimoine net le plus bas</span></div>
+          <div class="pyr-bar-wrap"><span class="cap">part de la population adulte</span>
+            <div class="pyr-track"><div class="pyr-fill" style="width:40%; background:var(--blue);">40%</div></div>
+          </div>
+          <div class="pyr-bar-wrap"><span class="cap">part de la richesse mondiale détenue</span>
+            <div class="pyr-track"><div class="pyr-fill" style="width:0.6%; background:var(--coral); justify-content:flex-start; padding-left:4px; color:var(--text);">0,6%</div></div>
+          </div>
+        </div>
+        <div class="pyr-row">
+          <div class="plab">1,5% les plus riches<br><span style="color:var(--text-faint); font-size:11px;">millionnaires en dollars</span></div>
+          <div class="pyr-bar-wrap"><span class="cap">part de la population adulte</span>
+            <div class="pyr-track"><div class="pyr-fill" style="width:4%; background:var(--blue); justify-content:flex-start; padding-left:4px; color:var(--text);">1,5%</div></div>
+          </div>
+          <div class="pyr-bar-wrap"><span class="cap">part de la richesse mondiale détenue</span>
+            <div class="pyr-track"><div class="pyr-fill" style="width:48%; background:var(--gold);">48%</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="note" style="margin-top:22px;">📌 41% des adultes du monde possèdent moins de 10 000 $ de patrimoine net (dettes comprises), contre 75% en l'an 2000 · 1 adulte sur 64 dans le monde est aujourd'hui millionnaire en dollars · les 57,5 millions de millionnaires mondiaux détiennent à eux seuls 48% de la richesse totale.</div>
+    </div>
+  </section>
+
+  <!-- ================= 03 : BELGIQUE ================= -->
   <section id="belgium">
     <div class="s-head">
       <div>
-        <div class="s-num">02 — Loupe sur la Belgique</div>
+        <div class="s-num">04 — Loupe sur la Belgique</div>
         <h2>Le salaire, décile par décile</h2>
         <p class="s-desc">Répartition des salaires bruts mensuels à temps plein. L'écart entre le premier et le dernier décile résume mieux la réalité qu'un seul chiffre moyen.</p>
       </div>
     </div>
-
     <div class="bg-grid">
       <div class="panel">
         <h3>Distribution des salaires bruts (€/mois)</h3>
@@ -313,53 +365,245 @@
     </div>
   </section>
 
-  <!-- ================= SECTION 3 : POUVOIR D'ACHAT ================= -->
+  <!-- ================= 04 : SALAIRES, COMPARAISON INTERNATIONALE ================= -->
+  <section id="wages">
+    <div class="s-head">
+      <div>
+        <div class="s-num">05 — Salaires, comparaison internationale</div>
+        <h2>Le salaire moyen, pays par pays</h2>
+        <p class="s-desc">Salaire annuel moyen brut, en parité de pouvoir d'achat (OCDE 2024). Une mesure différente des deciles belges ci-dessus : ici, c'est la <b style="color:var(--text)">moyenne</b>, pas la médiane — donc elle aussi tirée vers le haut par les hauts salaires.</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="seg" id="wageSortSeg">
+        <button data-sort="desc" class="active">Du + élevé au + faible</button>
+        <button data-sort="asc">Du + faible au + élevé</button>
+      </div>
+      <button class="btn-locate" id="wageLocateBtn">📍 Localiser la Belgique</button>
+    </div>
+    <div class="detail-bar" id="wageDetail">🇧🇪 <b>Belgique : 4ᵉ salaire moyen le plus élevé</b> de cet échantillon OCDE (18 économies comparables) — 76 109 $ PPA/an — devant l'Allemagne, le Canada, le Royaume-Uni et la France.</div>
+    <div class="gdp-list" id="wageList"></div>
+    <div class="note">⚠️ Ceci est une <b>moyenne</b>, pas une médiane comparable pays par pays — une vraie médiane des salaires harmonisée à l'international n'existe pas dans les statistiques officielles. Pour la répartition réelle des salaires belges (décile par décile), voir la section 03 ci-dessus.</div>
+    <div class="hint">Source : OCDE, Average Annual Wages (salaires bruts, USD PPA 2024) via Trading Economics</div>
+
+    <!-- ---- SOUS-SECTION : POSITION MONDIALE ---- -->
+    <div class="subsection">
+      <h3 class="sub-h">↳ Et sur l'ensemble de la planète ?</h3>
+      <p class="s-desc" style="margin-bottom:18px;">L'échantillon OCDE ci-dessus ne compare que des économies riches entre elles. Élargi aux ~100 pays les mieux documentés au monde (revenu moyen par habitant, méthode du revenu national brut — inclut salaires, revenus du capital et des indépendants), le classement de la Belgique change nettement.</p>
+      <div class="rank-callout">
+        <div class="rank-big">23<span>ᵉ</span></div>
+        <div class="rank-txt">sur 100 pays référencés (base de 210 pays au total) — la Belgique reste dans le premier dixième du classement mondial, mais loin de son 4ᵉ rang parmi les seules économies riches.</div>
+      </div>
+      <div class="controls">
+        <div class="search-box" style="max-width:260px;"><input id="worldSearch" type="text" placeholder="Rechercher un pays…"></div>
+        <button class="btn-locate" id="worldLocateBtn">📍 Localiser la Belgique</button>
+      </div>
+      <div class="dlist" id="worldList" style="max-height:520px;"></div>
+      <div class="note">Le tableau complet Banque mondiale/FMI/OCDE compte 210 pays ; par souci de lisibilité, cette liste couvre les 100 principaux (méthode Atlas), du plus riche au plus pauvre, sans coupure au milieu — seuls des micro-territoires et pays à données lacunaires intermédiaires ne sont pas repris individuellement.</div>
+      <div class="hint">Source : Worlddata.info, revenu national brut par habitant, méthode Atlas (Banque mondiale/FMI/OCDE), 2025-2026</div>
+    </div>
+
+    <!-- ---- SOUS-SECTION : RATIO SALAIRE / COÛT DE LA VIE ---- -->
+    <div class="subsection">
+      <h3 class="sub-h">↳ Le salaire rapporté au coût de la vie</h3>
+      <p class="s-desc" style="margin-bottom:18px;">Un salaire élevé ne veut rien dire seul. En rapportant le salaire moyen OCDE de chaque pays à son indice de coût de la vie local (Numbeo), le classement bouge encore : la Belgique <b style="color:var(--text)">recule</b> ici, son coût de la vie pesant plus lourd que celui de plusieurs voisins.</p>
+      <div class="gdp-list" id="ratioList"></div>
+      <div class="note">Indice de pouvoir d'achat local Numbeo = ce qu'un salaire moyen net permet réellement d'acheter sur place, coût de la vie et loyers déduits. Base 100 ≈ new-yorkaise.</div>
+    </div>
+  </section>
+
+  <!-- ================= 05 : POUVOIR D'ACHAT RÉEL (scatter) ================= -->
+  <section id="realpp">
+    <div class="s-head">
+      <div>
+        <div class="s-num">06 — Revenus vs coût de la vie</div>
+        <h2>Le pouvoir d'achat réel, pays par pays</h2>
+        <p class="s-desc">Chaque point croise le <b>coût de la vie local</b> (axe horizontal, référence New York = 100) et le <b>pouvoir d'achat local</b> (axe vertical — un salaire moyen net rapporté à ce coût de la vie). En haut à gauche : on vit bien pour pas cher. En bas à droite : cher, et le salaire ne suit pas.</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="search-box" style="max-width:280px;"><input id="scatSearch" type="text" placeholder="Rechercher / surligner un pays…"></div>
+    </div>
+    <div class="scat-grid">
+      <div class="scat-wrap">
+        <svg id="scatSvg" viewBox="0 0 620 460" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="scat-tooltip" id="scatTip"></div>
+      </div>
+      <div class="scat-side">
+        <div class="panel" style="padding:16px;">
+          <h3 style="margin-bottom:12px;">Comment lire ce graphique</h3>
+          <div class="quad-key">
+            <div class="qi"><span class="sw" style="background:var(--teal)"></span> Coûte peu et pouvoir d'achat élevé — le "bon plan" (Golfe, Europe de l'Est)</div>
+            <div class="qi"><span class="sw" style="background:var(--gold)"></span> Cher, mais les salaires suivent (Suisse, Luxembourg)</div>
+            <div class="qi"><span class="sw" style="background:var(--coral)"></span> Coûte peu et pouvoir d'achat faible — le salaire ne suit pas le peu qu'il y a à acheter</div>
+            <div class="qi"><span class="sw" style="background:var(--blue)"></span> Belgique et voisins d'Europe de l'Ouest</div>
+          </div>
+        </div>
+        <div class="detail-bar" id="scatDetail" style="min-height:60px;">Cliquez un point →</div>
+      </div>
+    </div>
+    <div class="note">⚠️ Cas particulier : l'Angola affiche parfois un indice de pouvoir d'achat local extrême (>250) dans les données Numbeo — probablement un artefact lié à un faible échantillon de prix — et n'est donc pas inclus ici. Cuba, avec une économie à devises multiples, affiche à l'inverse l'un des indices les plus bas au monde (≈2), une situation réelle mais atypique.</div>
+    <div class="hint">Source : Numbeo, Indice du coût de la vie & du pouvoir d'achat local par pays, données mi-2026 (référence New York = 100)</div>
+  </section>
+
+  <!-- ================= 07 : IMMOBILIER ================= -->
+  <section id="realestate">
+    <div class="s-head">
+      <div>
+        <div class="s-num">07 — Immobilier</div>
+        <h2>Le prix du mètre carré</h2>
+        <p class="s-desc">Prix moyen d'un appartement, en €/m² (2025-2026). Le patrimoine des ménages, c'est d'abord la brique — surtout en Belgique.</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Comparaison européenne</h3>
+        <div id="reListEU"></div>
+      </div>
+      <div class="panel">
+        <h3>Belgique : trois marchés, un pays</h3>
+        <div id="reListBE"></div>
+        <ul class="factlist" style="margin-top:20px;">
+          <li>Frais de notaire et droits d'enregistrement : <b>10 à 15%</b> du prix d'achat en sus</li>
+          <li>65% des transactions bruxelloises concernent des appartements, contre des maisons ailleurs</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hint">Sources : lucbrialy.com (comparatif européen, appartements neufs, 2025) · Statbel / Immoweb-Belfius / notaire.be (Belgique, 2026)</div>
+  </section>
+
+  <!-- ================= 08 : EXTRÊMES PIB ================= -->
   <section id="purchasing">
     <div class="s-head">
       <div>
-        <div class="s-num">03 — Pouvoir d'achat</div>
-        <h2>PIB par habitant, nominal</h2>
-        <p class="s-desc">Un indicateur différent : la production économique moyenne par personne. Dominé par des micro-États et places financières — à lire avec précaution.</p>
+        <div class="s-num">08 — Les extrêmes absolus</div>
+        <h2>PIB par habitant : d'un monde à l'autre</h2>
+        <p class="s-desc">Le PIB par habitant nominal mesure la production économique moyenne par personne. L'écart entre les pôles est vertigineux.</p>
       </div>
     </div>
-    <div class="gdp-list" id="gdpList"></div>
-    <div class="note">⚠️ Le PIB de Monaco et du Luxembourg est gonflé par les travailleurs frontaliers non-résidents ; celui de l'Irlande, par les sièges fiscaux de multinationales. La Suisse, les Pays-Bas et la Norvège se situent, selon les estimations FMI, dans une fourchette resserrée de 80 000 à 97 000 $.</div>
-    <div class="callout">🇧🇪 <b>Belgique (PIB/hab. en parité de pouvoir d'achat) : 63 083 $</b> — soit 355% de la moyenne mondiale (Banque mondiale/FMI, 2024). Un indicateur plus juste que le nominal pour comparer le pouvoir d'achat réel.</div>
+    <div class="extreme-grid">
+      <div class="panel extreme-panel">
+        <h4>🔼 Les plus riches</h4>
+        <div class="desc">USD nominal, FMI/estimations 2026</div>
+        <div id="gdpHigh"></div>
+      </div>
+      <div class="panel extreme-panel">
+        <h4>🔽 Les plus pauvres</h4>
+        <div class="desc">USD nominal, FMI via Visual Capitalist, 2025-2026</div>
+        <div id="gdpLow"></div>
+      </div>
+    </div>
+    <div class="ratio-callout">
+      <div class="big">×1 023</div>
+      <div class="lab">le PIB/habitant de Monaco est environ 1 023 fois supérieur à celui du Soudan du Sud</div>
+    </div>
+    <div class="note">⚠️ Le PIB de Monaco et du Luxembourg est gonflé par les travailleurs frontaliers non-résidents ; celui de l'Irlande, par les sièges fiscaux de multinationales. Les pays les plus pauvres sont presque tous en Afrique subsaharienne, souvent marqués par des conflits armés récents (Soudan du Sud, Burundi, RCA).</div>
+    <div class="callout">🇧🇪 <b>Belgique (PIB/hab. en parité de pouvoir d'achat) : 63 083 $</b> — soit 355% de la moyenne mondiale (Banque mondiale/FMI, 2024). Un indicateur plus juste que le nominal pour comparer le pouvoir d'achat réel entre pays à coût de la vie différent.</div>
   </section>
 
-  <!-- ================= SECTION 4 : INSIGHTS ================= -->
+  <!-- ================= 09 : HEURES DE TRAVAIL ================= -->
+  <section id="bigmac">
+    <div class="s-head">
+      <div>
+        <div class="s-num">09 — Combien de temps pour un Big Mac ?</div>
+        <h2>Le salaire traduit en minutes</h2>
+        <p class="s-desc">Prix d'un Big Mac (The Economist, janvier 2026) rapporté au salaire horaire moyen OCDE de chaque pays. Une façon très concrète de "voir" le pouvoir d'achat.</p>
+      </div>
+    </div>
+    <div class="detail-bar" id="bigmacDetail">🇧🇪 <b>Belgique : 9,7 minutes</b> de travail pour un Big Mac (7,05 $) — 6ᵉ meilleur score de l'échantillon.</div>
+    <div class="gdp-list" id="bigmacList"></div>
+    <div class="note">Calcul propre à ce dashboard : salaire OCDE PPA ÷ hypothèse de 1 750 h travaillées/an = salaire horaire, rapporté au prix Big Mac nominal The Economist. Approximation à visée pédagogique, pas une donnée officielle publiée telle quelle.</div>
+    <div class="hint">Sources : The Economist / Mappr, Big Mac Index, janvier 2026 · OCDE, Average Annual Wages 2024</div>
+  </section>
+
+  <!-- ================= 10 : MILLIARDAIRES ================= -->
+  <section id="billionaires">
+    <div class="s-head">
+      <div>
+        <div class="s-num">10 — Milliardaires</div>
+        <h2>3 428 personnes, 20 100 milliards $</h2>
+        <p class="s-desc">Classement Forbes 2026 (mars 2026) — un record historique, +400 milliardaires en un an.</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Par pays</h3>
+        <div id="billList"></div>
+      </div>
+      <div class="panel">
+        <h3>🇧🇪 La Belgique</h3>
+        <ul class="factlist">
+          <li><b>18</b> milliardaires belges chez Forbes 2026 (16 hommes, 2 femmes)</li>
+          <li>Fortune cumulée : <b>55,1 milliards $</b> (≈47,4 milliards €)</li>
+          <li>Le plus riche : <b>Eric Wittouck</b> (Raffinerie Tirlemontoise / Artal), <b>9 milliards $</b></li>
+          <li>Modèle dominant : dynasties industrielles (D'Ieteren, Frère, Van Damme) plutôt que fortunes tech médiatisées</li>
+        </ul>
+        <div class="note" style="margin-top:16px;">Pour comparaison : Elon Musk, 1ᵉʳ mondial, vaut à lui seul <b style="color:var(--text)">15×</b> l'ensemble des 18 milliardaires belges réunis (839 milliards $).</div>
+      </div>
+    </div>
+    <div class="hint">Source : Forbes World's Billionaires List, mars 2026 · La Libre / VRT NWS, mars 2026</div>
+  </section>
+
+  <!-- ================= 11 : INSIGHTS ================= -->
   <section id="insights">
     <div class="s-head">
       <div>
-        <div class="s-num">04 — Ce que la médiane révèle</div>
-        <h2>Quatre résultats contre-intuitifs</h2>
+        <div class="s-num">11 — Ce que la médiane révèle</div>
+        <h2>Résultats contre-intuitifs</h2>
       </div>
     </div>
     <div class="cards">
-      <div class="card">
-        <span class="tag">🇬🇷 vs 🇩🇪</span>
-        <p>Le Grec médian (<b>59 162 $</b>) est aujourd'hui plus riche que l'Allemand médian (<b>53 485 $</b>) — alors que le patrimoine moyen allemand (<b>346 613 $</b>) est 2,5× celui de la Grèce (<b>143 343 $</b>). La richesse allemande est bien plus concentrée.</p>
-      </div>
-      <div class="card">
-        <span class="tag">🇺🇸 le grand écart</span>
-        <p>Les États-Unis sont 2ᵉ mondial en patrimoine <b>moyen</b>, mais chutent au <b>28ᵉ rang</b> en médiane. Leur indice de Gini du patrimoine (<b>0,77</b>) est le plus élevé des grandes économies développées.</p>
-      </div>
-      <div class="card">
-        <span class="tag">🇧🇪 égalité relative</span>
-        <p>Avec un Gini des revenus de <b>0,248</b>, la Belgique devance le Danemark (<b>0,268</b>) et la Suède (<b>0,286</b>) — seule la Pologne (<b>0,261</b>) fait presque aussi bien en Europe.</p>
-      </div>
-      <div class="card">
-        <span class="tag">🇫🇷 en recul</span>
-        <p>Depuis 2020, le patrimoine réel moyen français a reculé d'environ <b>4,5%</b>, et le médian de plus de <b>10%</b> — l'un des rares grands marchés où la richesse des ménages a diminué sur la période.</p>
-      </div>
+      <div class="card"><span class="tag">🇬🇷 vs 🇩🇪</span><p>Le Grec médian (<b>59 162 $</b>) est aujourd'hui plus riche que l'Allemand médian (<b>53 485 $</b>) — alors que le patrimoine moyen allemand (<b>346 613 $</b>) est 2,5× celui de la Grèce (<b>143 343 $</b>). La richesse allemande est bien plus concentrée.</p></div>
+      <div class="card"><span class="tag">🇺🇸 le grand écart</span><p>Les États-Unis sont 2ᵉ mondial en patrimoine <b>moyen</b>, mais chutent au <b>28ᵉ rang</b> en médiane. Leur indice de Gini du patrimoine (<b>0,77</b>) est le plus élevé des grandes économies développées.</p></div>
+      <div class="card"><span class="tag">🇧🇪 égalité relative</span><p>Avec un Gini des revenus de <b>0,248</b>, la Belgique devance le Danemark (<b>0,268</b>) et la Suède (<b>0,286</b>) — seule la Pologne (<b>0,261</b>) fait presque aussi bien en Europe.</p></div>
+      <div class="card"><span class="tag">🇫🇷 en recul</span><p>Depuis 2020, le patrimoine réel moyen français a reculé d'environ <b>4,5%</b>, et le médian de plus de <b>10%</b> — l'un des rares grands marchés où la richesse des ménages a diminué.</p></div>
+      <div class="card"><span class="tag">🌍 le milieu invisible</span><p>41% des adultes du monde ont moins de <b>10 000 $</b> de patrimoine net. À l'autre bout, 1 adulte sur <b>64</b> est millionnaire en dollars — la classe moyenne mondiale est plus étroite qu'il n'y paraît.</p></div>
+      <div class="card"><span class="tag">🇰🇼 le paradoxe du Golfe</span><p>Le Koweït (indice de pouvoir d'achat local <b>176</b>) et le Qatar (<b>168</b>) dépassent la Suisse en pouvoir d'achat réel, avec un coût de la vie deux fois plus bas — un rapport revenu/prix parmi les plus favorables au monde.</p></div>
     </div>
   </section>
 
-  <!-- ================= SECTION 5 : EVOLUTION ================= -->
+  <!-- ================= 12 : MOBILITÉ SOCIALE ================= -->
+  <section id="mobility">
+    <div class="s-head">
+      <div>
+        <div class="s-num">12 — Mobilité sociale</div>
+        <h2>Combien de générations pour rejoindre le revenu moyen ?</h2>
+        <p class="s-desc">Quand on naît dans une famille à faible revenu, combien de temps faut-il, en moyenne, pour que la lignée familiale rattrape le revenu moyen du pays ?</p>
+      </div>
+    </div>
+    <div id="mobList"></div>
+    <div class="callout">🇧🇪 <b>Belgique : environ 4 générations (~100 ans)</b> — mieux que la moyenne OCDE (5 générations), porté par un Gini des revenus bas. Seuls 35% des écarts de revenus entre pères se transmettent à la génération suivante en Belgique, contre 50% en France ou en Allemagne.</div>
+    <div class="hint">Source : OCDE, "L'ascenseur social en panne ? Comment promouvoir la mobilité sociale", 2018 (référence toujours citée) · OCDE, Études économiques : Belgique, 2022</div>
+  </section>
+
+  <!-- ================= 13 : ÉPARGNE & DETTE ================= -->
+  <section id="savingsdebt">
+    <div class="s-head">
+      <div>
+        <div class="s-num">13 — Épargne & dette des ménages</div>
+        <h2>Le paradoxe du Nord riche et endetté</h2>
+        <p class="s-desc">Contre-intuitif : ce sont les pays les plus riches du nord de l'Europe qui ont les ménages les plus endettés — pas le Sud, souvent montré du doigt.</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Taux d'épargne des ménages (% du revenu disponible)</h3>
+        <div id="saveList"></div>
+      </div>
+      <div class="panel">
+        <h3>Dette des ménages (% du PIB, 2025)</h3>
+        <div id="debtList"></div>
+      </div>
+    </div>
+    <div class="note">🇧🇪 La Belgique épargne dans la moyenne (13%, sous sa propre moyenne historique de 15%) mais reste, avec 56,4% de dette des ménages/PIB, au-dessus du seuil de vigilance de 55% fixé par la Commission européenne — portée par un taux de propriété à crédit de 43,1% (vs 24,3% en moyenne UE).</div>
+    <div class="hint">Sources : Eurostat, taux d'épargne T2 2024/2025 · Euronews / Armstrong Economics, dette des ménages 2025 · Veracash, épargne belge 2026</div>
+  </section>
+
+  <!-- ================= 14 : EVOLUTION ================= -->
   <section id="evolution" style="border-bottom:none;">
     <div class="s-head">
       <div>
-        <div class="s-num">05 — Évolution</div>
+        <div class="s-num">14 — Évolution</div>
         <h2>2025 : la plus forte hausse depuis 2017</h2>
         <p class="s-desc">Croissance de la richesse personnelle mondiale, en dollars.</p>
       </div>
@@ -380,15 +624,15 @@
 
   <footer>
     <p class="src">
-      <b>Sources :</b> UBS Global Wealth Report 2026 (données fin 2025) · Visual Capitalist, juillet 2026 · Statbel (Structure of Earnings Survey, référence 2022, indexée 2026) · FMI World Economic Outlook, avril 2026 · Banque mondiale, PIB/hab. PPA 2024 · Observatoire de l'Europe / Euronews, juillet 2026 · Business AM, juillet 2026 · Mappr / UBS, juillet 2026 · Nairametrics, juillet 2026.<br>
-      Compilé à partir de recherches web — certains chiffres 2026 sont des estimations ou des projections d'indexation à partir de la dernière publication officielle disponible.
+      <b>Sources :</b> UBS Global Wealth Report 2026 (données fin 2025) · Visual Capitalist, juillet 2026 · Statbel (Structure of Earnings Survey, référence 2022, indexée 2026) · OCDE, Average Annual Wages 2024 (USD PPA) via Trading Economics · FMI World Economic Outlook, avril 2026 · Banque mondiale, PIB/hab. PPA 2024 · Numbeo, Indice du coût de la vie & du pouvoir d'achat local, mi-2026 · The Economist / Mappr, Big Mac Index, janvier 2026 · Forbes World's Billionaires List, mars 2026 · OCDE, "L'ascenseur social en panne ?", 2018 · Eurostat, épargne et dette des ménages, 2024-2025 · lucbrialy.com / Statbel / Immoweb-Belfius, immobilier 2025-2026 · World Inequality Database & Banque mondiale PIP (simulateur de percentile, estimation log-normale) · Worlddata.info, revenu par habitant · Observatoire de l'Europe / Euronews, juillet 2026 · Business AM, juillet 2026 · myfinancetools.io (pyramide des richesses UBS) · Trading Economics (PIB Burundi/Soudan du Sud) · Veracash, épargne belge, 2026.<br>
+      Compilé à partir de recherches web — certains chiffres 2026 sont des estimations ou projections d'indexation à partir de la dernière publication officielle disponible. Les données Numbeo sont crowdsourcées et peuvent contenir des valeurs aberrantes sur les pays à faible volume de contributions.
     </p>
   </footer>
 </div>
 
 <script>
 // ---------------------------------------------------------------
-// DATA
+// DATA — WEALTH PER ADULT (UBS 2026)
 // ---------------------------------------------------------------
 const wealthData = [
   {c:"Suisse", flag:"🇨🇭", region:"Europe", mean:910000, median:146000},
@@ -424,7 +668,8 @@ const wealthData = [
   {c:"Slovénie", flag:"🇸🇮", region:"Europe", mean:null, median:81000},
 ];
 
-const gdpData = [
+// GDP per capita nominal — extremes
+const gdpHighData = [
   {c:"Monaco", flag:"🇲🇨", value:256667},
   {c:"Liechtenstein", flag:"🇱🇮", value:201162},
   {c:"Luxembourg", flag:"🇱🇺", value:154115},
@@ -434,6 +679,252 @@ const gdpData = [
   {c:"Allemagne", flag:"🇩🇪", value:65303},
   {c:"Royaume-Uni", flag:"🇬🇧", value:61056},
 ];
+const gdpLowData = [
+  {c:"Soudan du Sud", flag:"🇸🇸", value:251},
+  {c:"Burundi", flag:"🇧🇮", value:308},
+  {c:"Sierra Leone", flag:"🇸🇱", value:472},
+  {c:"Malawi", flag:"🇲🇼", value:483},
+  {c:"Centrafrique", flag:"🇨🇫", value:532},
+  {c:"Madagascar", flag:"🇲🇬", value:595},
+  {c:"Mozambique", flag:"🇲🇿", value:663},
+  {c:"RD Congo", flag:"🇨🇩", value:743},
+];
+
+// Salaire annuel moyen brut, USD PPA — OCDE 2024 (via Trading Economics)
+const wageData = [
+  {c:"Luxembourg", flag:"🇱🇺", value:94447},
+  {c:"Suisse", flag:"🇨🇭", value:87468},
+  {c:"États-Unis", flag:"🇺🇸", value:82933},
+  {c:"Belgique", flag:"🇧🇪", value:76109, pin:true},
+  {c:"Autriche", flag:"🇦🇹", value:75767},
+  {c:"Pays-Bas", flag:"🇳🇱", value:75370},
+  {c:"Danemark", flag:"🇩🇰", value:74021},
+  {c:"Australie", flag:"🇦🇺", value:70736},
+  {c:"Allemagne", flag:"🇩🇪", value:69433},
+  {c:"Canada", flag:"🇨🇦", value:69417},
+  {c:"Royaume-Uni", flag:"🇬🇧", value:63691},
+  {c:"France", flag:"🇫🇷", value:60608},
+  {c:"Irlande", flag:"🇮🇪", value:60430},
+  {c:"Suède", flag:"🇸🇪", value:60415},
+  {c:"Espagne", flag:"🇪🇸", value:54564},
+  {c:"Italie", flag:"🇮🇹", value:51019},
+  {c:"Japon", flag:"🇯🇵", value:49446},
+  {c:"Portugal", flag:"🇵🇹", value:40002},
+];
+
+// Revenu national moyen par habitant, méthode Atlas — Worlddata.info (2025-2026), $ US, 100 premiers pays documentés
+const worldIncomeData = [
+  {c:"Monaco", flag:"🇲🇨", value:186080},
+  {c:"Bermudes", flag:"🇧🇲", value:139370},
+  {c:"Liechtenstein", flag:"🇱🇮", value:116440},
+  {c:"Suisse", flag:"🇨🇭", value:110330},
+  {c:"Norvège", flag:"🇳🇴", value:97310},
+  {c:"Luxembourg", flag:"🇱🇺", value:95720},
+  {c:"Islande", flag:"🇮🇸", value:89220},
+  {c:"États-Unis", flag:"🇺🇸", value:88810},
+  {c:"Irlande", flag:"🇮🇪", value:87360},
+  {c:"Île de Man", flag:"🇮🇲", value:87030},
+  {c:"Îles Caïmans", flag:"🇰🇾", value:81920},
+  {c:"Singapour", flag:"🇸🇬", value:81760},
+  {c:"Danemark", flag:"🇩🇰", value:77190},
+  {c:"Qatar", flag:"🇶🇦", value:74330},
+  {c:"Îles Féroé", flag:"🇫🇴", value:73120},
+  {c:"Macao", flag:"🇲🇴", value:69920},
+  {c:"Pays-Bas", flag:"🇳🇱", value:68530},
+  {c:"Australie", flag:"🇦🇺", value:64120},
+  {c:"Suède", flag:"🇸🇪", value:63010},
+  {c:"Hong Kong", flag:"🇭🇰", value:62500},
+  {c:"Autriche", flag:"🇦🇹", value:60360},
+  {c:"Allemagne", flag:"🇩🇪", value:60200},
+  {c:"Belgique", flag:"🇧🇪", value:59500, pin:true},
+  {c:"Canada", flag:"🇨🇦", value:56420},
+  {c:"Israël", flag:"🇮🇱", value:56180},
+  {c:"Finlande", flag:"🇫🇮", value:55250},
+  {c:"Royaume-Uni", flag:"🇬🇧", value:54550},
+  {c:"Andorre", flag:"🇦🇩", value:53230},
+  {c:"France", flag:"🇫🇷", value:48630},
+  {c:"Nouvelle-Zélande", flag:"🇳🇿", value:46630},
+  {c:"Italie", flag:"🇮🇹", value:42080},
+  {c:"Malte", flag:"🇲🇹", value:41440},
+  {c:"Japon", flag:"🇯🇵", value:38340},
+  {c:"Corée du Sud", flag:"🇰🇷", value:37880},
+  {c:"Espagne", flag:"🇪🇸", value:37120},
+  {c:"Chypre", flag:"🇨🇾", value:36110},
+  {c:"Arabie saoudite", flag:"🇸🇦", value:36070},
+  {c:"Slovénie", flag:"🇸🇮", value:35520},
+  {c:"Taïwan", flag:"🇹🇼", value:33365},
+  {c:"Tchéquie", flag:"🇨🇿", value:32960},
+  {c:"Estonie", flag:"🇪🇪", value:32310},
+  {c:"Lituanie", flag:"🇱🇹", value:30500},
+  {c:"Portugal", flag:"🇵🇹", value:29930},
+  {c:"Slovaquie", flag:"🇸🇰", value:26410},
+  {c:"Pologne", flag:"🇵🇱", value:25520},
+  {c:"Grèce", flag:"🇬🇷", value:25360},
+  {c:"Croatie", flag:"🇭🇷", value:25360},
+  {c:"Lettonie", flag:"🇱🇻", value:24980},
+  {c:"Hongrie", flag:"🇭🇺", value:23850},
+  {c:"Antigua-et-Barbuda", flag:"🇦🇬", value:23790},
+  {c:"Roumanie", flag:"🇷🇴", value:20190},
+  {c:"Costa Rica", flag:"🇨🇷", value:17930},
+  {c:"Bulgarie", flag:"🇧🇬", value:17780},
+  {c:"Chili", flag:"🇨🇱", value:16960},
+  {c:"Turquie", flag:"🇹🇷", value:16300},
+  {c:"Russie", flag:"🇷🇺", value:15960},
+  {c:"Argentine", flag:"🇦🇷", value:14650},
+  {c:"Chine", flag:"🇨🇳", value:14230},
+  {c:"Monténégro", flag:"🇲🇪", value:14150},
+  {c:"Kazakhstan", flag:"🇰🇿", value:13740},
+  {c:"Mexique", flag:"🇲🇽", value:13730},
+  {c:"Serbie", flag:"🇷🇸", value:13480},
+  {c:"Malaisie", flag:"🇲🇾", value:12380},
+  {c:"Albanie", flag:"🇦🇱", value:12060},
+  {c:"Brésil", flag:"🇧🇷", value:10550},
+  {c:"Bosnie-Herzégovine", flag:"🇧🇦", value:9940},
+  {c:"Macédoine du Nord", flag:"🇲🇰", value:9490},
+  {c:"Biélorussie", flag:"🇧🇾", value:9160},
+  {c:"Arménie", flag:"🇦🇲", value:9020},
+  {c:"Géorgie", flag:"🇬🇪", value:8990},
+  {c:"Moldavie", flag:"🇲🇩", value:8050},
+  {c:"Colombie", flag:"🇨🇴", value:7900},
+  {c:"Thaïlande", flag:"🇹🇭", value:7690},
+  {c:"Azerbaïdjan", flag:"🇦🇿", value:7360},
+  {c:"Équateur", flag:"🇪🇨", value:6890},
+  {c:"Afrique du Sud", flag:"🇿🇦", value:6270},
+  {c:"Algérie", flag:"🇩🇿", value:5850},
+  {c:"Ukraine", flag:"🇺🇦", value:5510},
+  {c:"Indonésie", flag:"🇮🇩", value:5120},
+  {c:"Vietnam", flag:"🇻🇳", value:4970},
+  {c:"Philippines", flag:"🇵🇭", value:4850},
+  {c:"Sri Lanka", flag:"🇱🇰", value:4670},
+  {c:"Iran", flag:"🇮🇷", value:4650},
+  {c:"Bolivie", flag:"🇧🇴", value:4420},
+  {c:"Maroc", flag:"🇲🇦", value:4360},
+  {c:"Venezuela", flag:"🇻🇪", value:3860},
+  {c:"Ouzbékistan", flag:"🇺🇿", value:3670},
+  {c:"Égypte", flag:"🇪🇬", value:3260},
+  {c:"Palestine", flag:"🇵🇸", value:3250},
+  {c:"Bangladesh", flag:"🇧🇩", value:2840},
+  {c:"Kirghizistan", flag:"🇰🇬", value:2800},
+  {c:"Côte d'Ivoire", flag:"🇨🇮", value:2780},
+  {c:"Inde", flag:"🇮🇳", value:2760},
+  {c:"Cambodge", flag:"🇰🇭", value:2750},
+  {c:"Tadjikistan", flag:"🇹🇯", value:2080},
+  {c:"Cameroun", flag:"🇨🇲", value:1860},
+  {c:"Timor oriental", flag:"🇹🇱", value:1510},
+  {c:"Pakistan", flag:"🇵🇰", value:1500},
+  {c:"Nigeria", flag:"🇳🇬", value:1360},
+  {c:"Myanmar", flag:"🇲🇲", value:1320},
+  {c:"Soudan", flag:"🇸🇩", value:900},
+  {c:"RD Congo", flag:"🇨🇩", value:720},
+  {c:"Soudan du Sud", flag:"🇸🇸", value:460},
+  {c:"Afghanistan", flag:"🇦🇫", value:390},
+  {c:"Burundi", flag:"🇧🇮", value:240},
+];
+
+// Ratio salaire OCDE / coût de la vie = Indice de pouvoir d'achat local Numbeo (mêmes 18 pays que wageData)
+const ratioData = [
+  {c:"Suisse", flag:"🇨🇭", value:165.68},
+  {c:"Luxembourg", flag:"🇱🇺", value:155.07},
+  {c:"États-Unis", flag:"🇺🇸", value:144.52},
+  {c:"Danemark", flag:"🇩🇰", value:141.20},
+  {c:"Australie", flag:"🇦🇺", value:134.75},
+  {c:"Allemagne", flag:"🇩🇪", value:129.97},
+  {c:"Suède", flag:"🇸🇪", value:128.60},
+  {c:"Pays-Bas", flag:"🇳🇱", value:124.28},
+  {c:"Royaume-Uni", flag:"🇬🇧", value:118.17},
+  {c:"Belgique", flag:"🇧🇪", value:117.14, pin:true},
+  {c:"Canada", flag:"🇨🇦", value:114.78},
+  {c:"Autriche", flag:"🇦🇹", value:114.20},
+  {c:"France", flag:"🇫🇷", value:113.34},
+  {c:"Irlande", flag:"🇮🇪", value:112.96},
+  {c:"Japon", flag:"🇯🇵", value:107.28},
+  {c:"Espagne", flag:"🇪🇸", value:96.75},
+  {c:"Italie", flag:"🇮🇹", value:85.50},
+  {c:"Portugal", flag:"🇵🇹", value:65.34},
+];
+
+// Immobilier — prix moyen appartement €/m² (lucbrialy.com 2025 ; Belgique Statbel/Immoweb 2026)
+const reEU = [
+  {c:"Luxembourg", flag:"🇱🇺", value:10289},
+  {c:"Autriche", flag:"🇦🇹", value:4669},
+  {c:"Royaume-Uni", flag:"🇬🇧", value:3955},
+  {c:"France", flag:"🇫🇷", value:3390},
+  {c:"Belgique", flag:"🇧🇪", value:3118, pin:true},
+  {c:"Espagne", flag:"🇪🇸", value:2526},
+];
+const reBE = [
+  {c:"Bruxelles (moyenne région)", flag:"🏙️", value:3350},
+  {c:"Belgique (moyenne nationale)", flag:"🇧🇪", value:3118},
+  {c:"Wallonie (Namur / Charleroi)", flag:"🏘️", value:2000},
+];
+
+// Big Mac — minutes de travail (calcul propre : salaire OCDE PPA/1750h vs prix Big Mac Economist Jan 2026)
+const bigmacData = [
+  {c:"Japon", flag:"🇯🇵", value:6.4},
+  {c:"États-Unis", flag:"🇺🇸", value:7.8},
+  {c:"Luxembourg", flag:"🇱🇺", value:7.8},
+  {c:"Australie", flag:"🇦🇺", value:8.4},
+  {c:"Canada", flag:"🇨🇦", value:8.4},
+  {c:"Belgique", flag:"🇧🇪", value:9.7, pin:true},
+  {c:"Pays-Bas", flag:"🇳🇱", value:9.8},
+  {c:"Autriche", flag:"🇦🇹", value:9.8},
+  {c:"Danemark", flag:"🇩🇰", value:10.1},
+  {c:"Allemagne", flag:"🇩🇪", value:10.7},
+  {c:"Suisse", flag:"🇨🇭", value:10.9},
+  {c:"Royaume-Uni", flag:"🇬🇧", value:11.7},
+  {c:"France", flag:"🇫🇷", value:12.2},
+  {c:"Irlande", flag:"🇮🇪", value:12.3},
+  {c:"Suède", flag:"🇸🇪", value:12.6},
+  {c:"Espagne", flag:"🇪🇸", value:13.6},
+  {c:"Italie", flag:"🇮🇹", value:14.5},
+  {c:"Portugal", flag:"🇵🇹", value:18.5},
+];
+
+// Milliardaires par pays — Forbes 2026
+const billData = [
+  {c:"États-Unis", flag:"🇺🇸", value:989},
+  {c:"Chine", flag:"🇨🇳", value:539},
+  {c:"Inde", flag:"🇮🇳", value:229},
+  {c:"Allemagne", flag:"🇩🇪", value:172},
+  {c:"Belgique", flag:"🇧🇪", value:18, pin:true},
+];
+
+// Mobilité sociale — générations nécessaires pour rejoindre le revenu moyen (OCDE 2018)
+const mobData = [
+  {c:"Danemark / Norvège / Finlande", flag:"🇩🇰", value:2.5, note:"pays nordiques"},
+  {c:"Belgique", flag:"🇧🇪", value:4, pin:true},
+  {c:"Moyenne OCDE", flag:"🌍", value:5, note:"référence"},
+  {c:"France", flag:"🇫🇷", value:6},
+  {c:"Allemagne", flag:"🇩🇪", value:6},
+  {c:"Hongrie", flag:"🇭🇺", value:7},
+  {c:"Économies émergentes", flag:"🌐", value:9, note:"moyenne"},
+];
+
+// Épargne des ménages (% revenu disponible) — Eurostat T2 2024/2025, Belgique: Veracash 2026
+const saveData = [
+  {c:"Hongrie", flag:"🇭🇺", value:24.6},
+  {c:"Allemagne", flag:"🇩🇪", value:20.0},
+  {c:"France", flag:"🇫🇷", value:17.6},
+  {c:"Moyenne UE", flag:"🇪🇺", value:14.8},
+  {c:"Belgique", flag:"🇧🇪", value:13.0, pin:true},
+  {c:"Espagne", flag:"🇪🇸", value:13.0},
+  {c:"Italie", flag:"🇮🇹", value:13.0},
+];
+
+// Dette des ménages (% du PIB, 2025) — Eurostat via Euronews
+const debtData = [
+  {c:"Pays-Bas", flag:"🇳🇱", value:93.5},
+  {c:"Danemark", flag:"🇩🇰", value:84.1},
+  {c:"Suède", flag:"🇸🇪", value:82.3},
+  {c:"Finlande", flag:"🇫🇮", value:62.9},
+  {c:"Luxembourg", flag:"🇱🇺", value:60.5},
+  {c:"France", flag:"🇫🇷", value:59.5},
+  {c:"Belgique", flag:"🇧🇪", value:56.4, pin:true},
+  {c:"Portugal", flag:"🇵🇹", value:53.9},
+  {c:"Allemagne", flag:"🇩🇪", value:49.0},
+  {c:"Espagne", flag:"🇪🇸", value:42.9},
+  {c:"Italie", flag:"🇮🇹", value:35.9},
+];
 
 const deciles = [
   {label:"RMMMG (minimum légal)", value:2190, cls:"min"},
@@ -442,29 +933,72 @@ const deciles = [
   {label:"Moyenne", value:4076, cls:"mean"},
   {label:"D9 — 10% gagnent plus", value:6305, cls:"decile"},
 ];
-
 const regions = [
-  {label:"Wallonie (est. basse)", value:3517, note:"provinces industrielles"},
-  {label:"Moyenne nationale", value:4076, note:"tous secteurs"},
-  {label:"Bruxelles-Capitale", value:4748, note:"+16% vs national"},
+  {label:"Wallonie (est. basse)", value:3517},
+  {label:"Moyenne nationale", value:4076},
+  {label:"Bruxelles-Capitale", value:4748},
 ];
-
 const regionGrowth = [
   {label:"Europe / Moyen-Orient / Afrique", value:17.5},
   {label:"Amériques", value:8.5},
   {label:"Asie-Pacifique", value:5.9},
 ];
 
+// Cost of living index (X, ref NY=100) vs local purchasing power index (Y) — Numbeo mid-2026
+const scatterData = [
+  {c:"Suisse", flag:"🇨🇭", x:109.79, y:165.68, region:"Europe"},
+  {c:"Norvège", flag:"🇳🇴", x:85.48, y:123.21, region:"Europe"},
+  {c:"Islande", flag:"🇮🇸", x:97.64, y:113.57, region:"Europe"},
+  {c:"Luxembourg", flag:"🇱🇺", x:78.59, y:155.07, region:"Europe"},
+  {c:"Danemark", flag:"🇩🇰", x:78.57, y:141.20, region:"Europe"},
+  {c:"Pays-Bas", flag:"🇳🇱", x:72.97, y:124.28, region:"Europe"},
+  {c:"Autriche", flag:"🇦🇹", x:70.76, y:114.20, region:"Europe"},
+  {c:"Irlande", flag:"🇮🇪", x:70.83, y:112.96, region:"Europe"},
+  {c:"Belgique", flag:"🇧🇪", x:68.33, y:117.14, region:"Europe", pin:true},
+  {c:"Royaume-Uni", flag:"🇬🇧", x:68.18, y:118.17, region:"Europe"},
+  {c:"Allemagne", flag:"🇩🇪", x:67.98, y:129.97, region:"Europe"},
+  {c:"France", flag:"🇫🇷", x:66.90, y:113.34, region:"Europe"},
+  {c:"Suède", flag:"🇸🇪", x:65.46, y:128.60, region:"Europe"},
+  {c:"Italie", flag:"🇮🇹", x:61.27, y:85.50, region:"Europe"},
+  {c:"Espagne", flag:"🇪🇸", x:51.39, y:96.75, region:"Europe"},
+  {c:"Grèce", flag:"🇬🇷", x:53.32, y:62.32, region:"Europe"},
+  {c:"Portugal", flag:"🇵🇹", x:48.66, y:65.34, region:"Europe"},
+  {c:"Pologne", flag:"🇵🇱", x:46.21, y:94.73, region:"Europe"},
+  {c:"Roumanie", flag:"🇷🇴", x:39.45, y:72.69, region:"Europe"},
+  {c:"Ukraine", flag:"🇺🇦", x:28.95, y:48.06, region:"Europe"},
+  {c:"États-Unis", flag:"🇺🇸", x:69.73, y:144.52, region:"Amériques"},
+  {c:"Canada", flag:"🇨🇦", x:61.31, y:114.78, region:"Amériques"},
+  {c:"Mexique", flag:"🇲🇽", x:44.39, y:46.82, region:"Amériques"},
+  {c:"Brésil", flag:"🇧🇷", x:33.08, y:44.28, region:"Amériques"},
+  {c:"Argentine", flag:"🇦🇷", x:44.87, y:44.75, region:"Amériques"},
+  {c:"Cuba", flag:"🇨🇺", x:42.14, y:2.43, region:"Amériques"},
+  {c:"Singapour", flag:"🇸🇬", x:90.82, y:91.33, region:"Asie-Pacifique"},
+  {c:"Israël", flag:"🇮🇱", x:89.65, y:114.98, region:"Moyen-Orient"},
+  {c:"Japon", flag:"🇯🇵", x:47.62, y:107.28, region:"Asie-Pacifique"},
+  {c:"Corée du Sud", flag:"🇰🇷", x:56.66, y:101.66, region:"Asie-Pacifique"},
+  {c:"Chine", flag:"🇨🇳", x:30.68, y:94.23, region:"Asie-Pacifique"},
+  {c:"Inde", flag:"🇮🇳", x:18.14, y:69.56, region:"Asie-Pacifique"},
+  {c:"Vietnam", flag:"🇻🇳", x:26.87, y:40.48, region:"Asie-Pacifique"},
+  {c:"Thaïlande", flag:"🇹🇭", x:36.77, y:41.04, region:"Asie-Pacifique"},
+  {c:"Émirats arabes unis", flag:"🇦🇪", x:55.58, y:113.41, region:"Moyen-Orient"},
+  {c:"Qatar", flag:"🇶🇦", x:50.20, y:168.12, region:"Moyen-Orient"},
+  {c:"Koweït", flag:"🇰🇼", x:43.14, y:175.78, region:"Moyen-Orient"},
+  {c:"Afrique du Sud", flag:"🇿🇦", x:38.86, y:105.51, region:"Afrique"},
+  {c:"Nigeria", flag:"🇳🇬", x:20.21, y:8.77, region:"Afrique"},
+  {c:"Australie", flag:"🇦🇺", x:71.45, y:134.75, region:"Asie-Pacifique"},
+  {c:"Nouvelle-Zélande", flag:"🇳🇿", x:60.20, y:119.39, region:"Asie-Pacifique"},
+];
+
 // ---------------------------------------------------------------
-// DUMBBELL CHART
+// 01 — DUMBBELL CHART
 // ---------------------------------------------------------------
 const MAXV = 950000;
 let currentSort = "mean";
 let currentRegion = "Toutes";
+let searchTerm = "";
 let selectedRow = null;
 
 function pct(v){ return (v/MAXV*100).toFixed(2); }
-function fmtK(v){ return v==null ? "—" : Math.round(v/1000)+"K$"; }
 function fmtFull(v){ return v==null ? "n/d" : "$"+v.toLocaleString("en-US"); }
 
 function sortedData(){
@@ -472,13 +1006,13 @@ function sortedData(){
   if(currentSort==="mean") d = d.slice().sort((a,b)=>(b.mean??-1)-(a.mean??-1));
   if(currentSort==="median") d = d.slice().sort((a,b)=>(b.median??-1)-(a.median??-1));
   if(currentSort==="gapDesc") d = d.slice().sort((a,b)=>{
-    const ga = (a.mean!=null && a.median!=null) ? a.mean-a.median : -Infinity;
-    const gb = (b.mean!=null && b.median!=null) ? b.mean-b.median : -Infinity;
+    const ga=(a.mean!=null&&a.median!=null)?a.mean-a.median:-Infinity;
+    const gb=(b.mean!=null&&b.median!=null)?b.mean-b.median:-Infinity;
     return gb-ga;
   });
   if(currentSort==="gapAsc") d = d.slice().sort((a,b)=>{
-    const ga = (a.mean!=null && a.median!=null) ? a.mean-a.median : Infinity;
-    const gb = (b.mean!=null && b.median!=null) ? b.mean-b.median : Infinity;
+    const ga=(a.mean!=null&&a.median!=null)?a.mean-a.median:Infinity;
+    const gb=(b.mean!=null&&b.median!=null)?b.mean-b.median:Infinity;
     return ga-gb;
   });
   return d;
@@ -489,10 +1023,10 @@ function renderDumbbell(){
   const data = sortedData();
   list.innerHTML = "";
   data.forEach(d=>{
+    const matchesSearch = searchTerm === "" || d.c.toLowerCase().includes(searchTerm);
     const row = document.createElement('div');
-    row.className = 'drow' + (d.pin ? ' pinned':'') + (selectedRow===d.c ? ' selected':'');
-    row.tabIndex = 0;
-    row.setAttribute('role','button');
+    row.className = 'drow' + (d.pin?' pinned':'') + (selectedRow===d.c?' selected':'') + (matchesSearch?'':' hidden');
+    row.tabIndex = 0; row.setAttribute('role','button');
     row.id = 'row-'+d.c.replace(/\s+/g,'-');
 
     const label = document.createElement('div');
@@ -501,33 +1035,19 @@ function renderDumbbell(){
 
     const track = document.createElement('div');
     track.className = 'track';
-    const baseline = document.createElement('div'); baseline.className='baseline';
-    track.appendChild(baseline);
+    const baseline = document.createElement('div'); baseline.className='baseline'; track.appendChild(baseline);
 
     if(d.mean!=null && d.median!=null){
       const lo = Math.min(pct(d.mean), pct(d.median));
       const hi = Math.max(pct(d.mean), pct(d.median));
       const conn = document.createElement('div');
-      conn.className='connector';
-      conn.style.left = lo+'%';
-      conn.style.width = (hi-lo)+'%';
+      conn.className='connector'; conn.style.left=lo+'%'; conn.style.width=(hi-lo)+'%';
       track.appendChild(conn);
     }
-    if(d.mean!=null){
-      const dot = document.createElement('div');
-      dot.className='dot mean';
-      dot.style.left = pct(d.mean)+'%';
-      track.appendChild(dot);
-    }
-    if(d.median!=null){
-      const dot = document.createElement('div');
-      dot.className='dot median';
-      dot.style.left = pct(d.median)+'%';
-      track.appendChild(dot);
-    }
+    if(d.mean!=null){ const dot=document.createElement('div'); dot.className='dot mean'; dot.style.left=pct(d.mean)+'%'; track.appendChild(dot); }
+    if(d.median!=null){ const dot=document.createElement('div'); dot.className='dot median'; dot.style.left=pct(d.median)+'%'; track.appendChild(dot); }
 
-    row.appendChild(label);
-    row.appendChild(track);
+    row.appendChild(label); row.appendChild(track);
 
     const showDetail = ()=>{
       selectedRow = d.c;
@@ -540,135 +1060,395 @@ function renderDumbbell(){
     };
     row.addEventListener('mouseenter', showDetail);
     row.addEventListener('click', showDetail);
-    row.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); showDetail(); } });
-
+    row.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); showDetail(); } });
     list.appendChild(row);
   });
 }
 
 document.getElementById('sortSeg').addEventListener('click', e=>{
-  const btn = e.target.closest('button');
-  if(!btn) return;
+  const btn = e.target.closest('button'); if(!btn) return;
   document.querySelectorAll('#sortSeg button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  currentSort = btn.dataset.sort;
-  renderDumbbell();
+  btn.classList.add('active'); currentSort = btn.dataset.sort; renderDumbbell();
 });
-
 document.getElementById('regionPills').addEventListener('click', e=>{
-  const pill = e.target.closest('.pill');
-  if(!pill) return;
+  const pill = e.target.closest('.pill'); if(!pill) return;
   document.querySelectorAll('#regionPills .pill').forEach(p=>p.classList.remove('active'));
-  pill.classList.add('active');
-  currentRegion = pill.dataset.region;
-  renderDumbbell();
+  pill.classList.add('active'); currentRegion = pill.dataset.region; renderDumbbell();
 });
-
+document.getElementById('wealthSearch').addEventListener('input', e=>{
+  searchTerm = e.target.value.trim().toLowerCase(); renderDumbbell();
+});
 document.getElementById('locateBtn').addEventListener('click', ()=>{
-  currentRegion = "Toutes";
+  currentRegion = "Toutes"; searchTerm = "";
+  document.getElementById('wealthSearch').value = "";
   document.querySelectorAll('#regionPills .pill').forEach(p=>p.classList.remove('active'));
   document.querySelector('#regionPills .pill[data-region="Toutes"]').classList.add('active');
   renderDumbbell();
   const el = document.getElementById('row-Belgique');
   if(el){
     el.scrollIntoView({block:'center', behavior:'smooth'});
-    el.style.transition = 'none';
     el.animate([{outline:'2px solid var(--coral)'},{outline:'2px solid transparent'}], {duration:900, iterations:2});
     el.click();
   }
 });
-
 renderDumbbell();
 
 // ---------------------------------------------------------------
-// BELGIUM DECILES
+// 03 — BELGIUM DECILES + REGION BARS
 // ---------------------------------------------------------------
 const decilesEl = document.getElementById('deciles');
 const maxDecile = Math.max(...deciles.map(d=>d.value));
 const colorMap = {min:'var(--text-faint)', decile:'var(--blue)', median:'var(--teal)', mean:'var(--gold)'};
 deciles.forEach(d=>{
-  const row = document.createElement('div');
-  row.className = 'hbar-row';
+  const row = document.createElement('div'); row.className='hbar-row';
   row.innerHTML = `
     <div class="hbar-top"><span class="name">${d.label}</span><span class="val">${d.value.toLocaleString('fr-BE')} €</span></div>
-    <div class="hbar-track"><div class="hbar-fill" style="width:${(d.value/maxDecile*100).toFixed(1)}%; background:${colorMap[d.cls]}"></div></div>
-  `;
+    <div class="hbar-track"><div class="hbar-fill" style="width:${(d.value/maxDecile*100).toFixed(1)}%; background:${colorMap[d.cls]}"></div></div>`;
   decilesEl.appendChild(row);
 });
-
-// ---------------------------------------------------------------
-// REGION BARS (Belgium)
-// ---------------------------------------------------------------
 const regionBarsEl = document.getElementById('regionBars');
 const maxRegion = Math.max(...regions.map(r=>r.value));
 const regionColors = ['var(--blue)','var(--gold)','var(--coral)'];
 regions.forEach((r,i)=>{
   const h = (r.value/maxRegion*100).toFixed(0);
-  const bar = document.createElement('div');
-  bar.className = 'region-bar';
-  bar.innerHTML = `
-    <div class="amt">${r.value.toLocaleString('fr-BE')} €</div>
-    <div class="col" style="height:${h}%; background:${regionColors[i]}"></div>
-    <div class="lab">${r.label}</div>
-  `;
+  const bar = document.createElement('div'); bar.className='region-bar';
+  bar.innerHTML = `<div class="amt">${r.value.toLocaleString('fr-BE')} €</div><div class="col" style="height:${h}%; background:${regionColors[i]}"></div><div class="lab">${r.label}</div>`;
   regionBarsEl.appendChild(bar);
 });
 
 // ---------------------------------------------------------------
-// GDP LIST
+// 04 — WAGE COMPARISON LIST
 // ---------------------------------------------------------------
-const gdpListEl = document.getElementById('gdpList');
-const maxGdp = Math.max(...gdpData.map(g=>g.value));
-gdpData.forEach(g=>{
-  const row = document.createElement('div');
-  row.className = 'gdp-row';
-  row.innerHTML = `
-    <div class="name">${g.flag} ${g.c}</div>
-    <div class="gdp-track"><div class="gdp-fill" style="width:${(g.value/maxGdp*100).toFixed(1)}%"></div></div>
-    <div class="val">$${g.value.toLocaleString('en-US')}</div>
+let wageSort = "desc";
+function renderWages(){
+  const el = document.getElementById('wageList');
+  el.innerHTML = "";
+  const data = wageData.slice().sort((a,b)=> wageSort==="desc" ? b.value-a.value : a.value-b.value);
+  const max = Math.max(...wageData.map(w=>w.value));
+  data.forEach(w=>{
+    const row = document.createElement('div');
+    row.className = 'gdp-row';
+    row.id = 'wage-'+w.c.replace(/\s+/g,'-');
+    if(w.pin) row.style.cssText = 'background:var(--coral-soft); border-radius:6px; padding:4px 6px; margin:-4px -6px 10px;';
+    row.innerHTML = `
+      <div class="name" style="${w.pin?'color:var(--coral); font-weight:600;':''}">${w.flag} ${w.c}</div>
+      <div class="gdp-track"><div class="gdp-fill hi" style="width:${(w.value/max*100).toFixed(1)}%; ${w.pin?'background:linear-gradient(90deg, var(--coral), #F0A488);':''}"></div></div>
+      <div class="val">$${w.value.toLocaleString('en-US')}</div>`;
+    el.appendChild(row);
+  });
+}
+renderWages();
+document.getElementById('wageSortSeg').addEventListener('click', e=>{
+  const btn = e.target.closest('button'); if(!btn) return;
+  document.querySelectorAll('#wageSortSeg button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); wageSort = btn.dataset.sort; renderWages();
+});
+document.getElementById('wageLocateBtn').addEventListener('click', ()=>{
+  const el = document.getElementById('wage-Belgique');
+  if(el){
+    el.scrollIntoView({block:'center', behavior:'smooth'});
+    el.animate([{outline:'2px solid var(--coral)'},{outline:'2px solid transparent'}], {duration:900, iterations:2});
+  }
+});
+
+// ---- World income list (position mondiale) ----
+let worldSearchTerm = "";
+function renderWorldIncome(){
+  const list = document.getElementById('worldList');
+  list.innerHTML = "";
+  worldIncomeData.forEach((d,i)=>{
+    const matches = worldSearchTerm==="" || d.c.toLowerCase().includes(worldSearchTerm);
+    const row = document.createElement('div');
+    row.className = 'drow' + (d.pin?' pinned':'') + (matches?'':' hidden');
+    row.id = 'world-'+d.c.replace(/\s+/g,'-');
+    row.style.gridTemplateColumns = '32px 150px 1fr 90px';
+    row.innerHTML = `
+      <div style="font-family:var(--mono); font-size:11px; color:var(--text-faint);">${i+1}</div>
+      <div class="label"><span class="flag">${d.flag}</span> ${d.c}</div>
+      <div class="hbar-track" style="margin:0;"><div class="hbar-fill" style="width:${Math.max((d.value/186080*100),1.2).toFixed(1)}%; background:${d.pin?'var(--coral)':'var(--blue)'}"></div></div>
+      <div style="font-family:var(--mono); font-size:11.5px; text-align:right; color:var(--text);">$${d.value.toLocaleString('en-US')}</div>`;
+    list.appendChild(row);
+  });
+}
+renderWorldIncome();
+document.getElementById('worldSearch').addEventListener('input', e=>{
+  worldSearchTerm = e.target.value.trim().toLowerCase(); renderWorldIncome();
+});
+document.getElementById('worldLocateBtn').addEventListener('click', ()=>{
+  document.getElementById('worldSearch').value = ""; worldSearchTerm = ""; renderWorldIncome();
+  const el = document.getElementById('world-Belgique');
+  if(el){
+    el.scrollIntoView({block:'center', behavior:'smooth'});
+    el.animate([{outline:'2px solid var(--coral)'},{outline:'2px solid transparent'}], {duration:900, iterations:2});
+  }
+});
+
+// ---- Ratio salaire / coût de la vie ----
+function renderRatio(){
+  const el = document.getElementById('ratioList');
+  el.innerHTML = "";
+  const sorted = ratioData.slice().sort((a,b)=>b.value-a.value);
+  const max = Math.max(...ratioData.map(r=>r.value));
+  sorted.forEach((r,i)=>{
+    const row = document.createElement('div');
+    row.className = 'gdp-row';
+    if(r.pin) row.style.cssText = 'background:var(--coral-soft); border-radius:6px; padding:4px 6px; margin:-4px -6px 10px;';
+    row.innerHTML = `
+      <div class="name" style="${r.pin?'color:var(--coral); font-weight:600;':''}">${i+1}. ${r.flag} ${r.c}</div>
+      <div class="gdp-track"><div class="gdp-fill" style="width:${(r.value/max*100).toFixed(1)}%; ${r.pin?'background:linear-gradient(90deg, var(--coral), #F0A488);':'background:linear-gradient(90deg, var(--teal), #8FE0CC);'}"></div></div>
+      <div class="val">${r.value.toFixed(1)}</div>`;
+    el.appendChild(row);
+  });
+}
+renderRatio();
+
+// ---------------------------------------------------------------
+// 02 — PERSONAL PERCENTILE SIMULATOR (log-normal approximation)
+// ---------------------------------------------------------------
+function erf(x){
+  const sign = x < 0 ? -1 : 1; x = Math.abs(x);
+  const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+  const t = 1/(1+p*x);
+  const y = 1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);
+  return sign*y;
+}
+function normalCDF(z){ return 0.5*(1+erf(z/Math.SQRT2)); }
+const simParams = {
+  income: { median: 3920, sigma: 1.322, top1: 85000 },
+  wealth: { median: 9000, sigma: 2.170, top1: 1000000 }
+};
+let simMode = "income";
+document.getElementById('simModeSeg').addEventListener('click', e=>{
+  const btn = e.target.closest('button'); if(!btn) return;
+  document.querySelectorAll('#simModeSeg button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); simMode = btn.dataset.mode;
+  document.getElementById('simInput').placeholder = simMode==="income" ? "ex. 45000" : "ex. 120000";
+});
+function runSim(value){
+  if(!value || value<=0) return;
+  const p = simParams[simMode];
+  const z = Math.log(value/p.median)/p.sigma;
+  let pct = normalCDF(z)*100;
+  pct = Math.max(0.01, Math.min(99.99, pct));
+  const beat = pct.toFixed(pct>99?2:1);
+  const label = simMode==="income" ? "de revenu annuel" : "de patrimoine net";
+  let tier = "";
+  if(pct>99) tier = "— dans le top 1% mondial";
+  else if(pct>90) tier = "— dans le top 10% mondial";
+  else if(pct>50) tier = "— au-dessus de la médiane mondiale";
+  else tier = "— en-dessous de la médiane mondiale";
+  const el = document.getElementById('simResult');
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div class="sr-big">Top ${(100-pct).toFixed(pct>99?2:1)}%</div>
+    <div class="sim-bar"><div class="sim-bar-fill" style="width:${pct}%"></div></div>
+    <div class="sr-sub">Avec <b style="color:var(--text)">$${Number(value).toLocaleString('en-US')}</b> ${label}, vous êtes plus riche que <b style="color:var(--text)">${beat}%</b> des adultes de la planète ${tier}.</div>
   `;
-  gdpListEl.appendChild(row);
+}
+document.getElementById('simBtn').addEventListener('click', ()=>{
+  runSim(parseFloat(document.getElementById('simInput').value));
+});
+document.getElementById('simInput').addEventListener('keydown', e=>{ if(e.key==='Enter') runSim(parseFloat(e.target.value)); });
+document.querySelector('.sim-quickset').addEventListener('click', e=>{
+  const btn = e.target.closest('button[data-val]'); if(!btn) return;
+  document.getElementById('simInput').value = btn.dataset.val;
+  runSim(parseFloat(btn.dataset.val));
 });
 
 // ---------------------------------------------------------------
-// EVOLUTION — line chart (svg)
+// 06 — SCATTER: cost of living vs local purchasing power
+// ---------------------------------------------------------------
+const svgNS = "http://www.w3.org/2000/svg";
+const scatSvg = document.getElementById('scatSvg');
+const scatTip = document.getElementById('scatTip');
+const PAD = {l:46, r:20, t:20, b:40};
+const W = 620, H = 460;
+const xMax = 120, yMax = 190;
+function sx(v){ return PAD.l + (v/xMax)*(W-PAD.l-PAD.r); }
+function sy(v){ return H-PAD.b - (v/yMax)*(H-PAD.t-PAD.b); }
+
+function quadColor(d){
+  if(d.pin) return 'var(--blue)';
+  if(d.x < 60 && d.y >= 100) return 'var(--teal)';
+  if(d.x >= 60 && d.y >= 100) return 'var(--gold)';
+  if(d.x < 60 && d.y < 100) return 'var(--coral)';
+  return 'var(--blue)';
+}
+
+function buildScatter(){
+  scatSvg.innerHTML = "";
+  // grid lines
+  for(let gx=0; gx<=xMax; gx+=20){
+    const l = document.createElementNS(svgNS,'line');
+    l.setAttribute('x1', sx(gx)); l.setAttribute('x2', sx(gx));
+    l.setAttribute('y1', PAD.t); l.setAttribute('y2', H-PAD.b);
+    l.setAttribute('stroke', 'var(--grid)'); l.setAttribute('stroke-width','1');
+    scatSvg.appendChild(l);
+    const t = document.createElementNS(svgNS,'text');
+    t.setAttribute('x', sx(gx)); t.setAttribute('y', H-PAD.b+16);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('class','scat-axis-label');
+    t.textContent = gx; scatSvg.appendChild(t);
+  }
+  for(let gy=0; gy<=yMax; gy+=40){
+    const l = document.createElementNS(svgNS,'line');
+    l.setAttribute('x1', PAD.l); l.setAttribute('x2', W-PAD.r);
+    l.setAttribute('y1', sy(gy)); l.setAttribute('y2', sy(gy));
+    l.setAttribute('stroke', 'var(--grid)'); l.setAttribute('stroke-width','1');
+    scatSvg.appendChild(l);
+    const t = document.createElementNS(svgNS,'text');
+    t.setAttribute('x', PAD.l-8); t.setAttribute('y', sy(gy)+3);
+    t.setAttribute('text-anchor','end'); t.setAttribute('class','scat-axis-label');
+    t.textContent = gy; scatSvg.appendChild(t);
+  }
+  // reference line at purchasing power = 100 (parity)
+  const refline = document.createElementNS(svgNS,'line');
+  refline.setAttribute('x1', PAD.l); refline.setAttribute('x2', W-PAD.r);
+  refline.setAttribute('y1', sy(100)); refline.setAttribute('y2', sy(100));
+  refline.setAttribute('stroke', 'var(--text-faint)'); refline.setAttribute('stroke-dasharray','3,4'); refline.setAttribute('stroke-width','1');
+  scatSvg.appendChild(refline);
+
+  // axis titles
+  const xt = document.createElementNS(svgNS,'text');
+  xt.setAttribute('x', W/2); xt.setAttribute('y', H-6); xt.setAttribute('text-anchor','middle');
+  xt.setAttribute('class','scat-axis-label'); xt.textContent = "Indice du coût de la vie (New York = 100) →";
+  scatSvg.appendChild(xt);
+  const yt = document.createElementNS(svgNS,'text');
+  yt.setAttribute('x', -H/2); yt.setAttribute('y', 14); yt.setAttribute('text-anchor','middle');
+  yt.setAttribute('transform','rotate(-90)'); yt.setAttribute('class','scat-axis-label');
+  yt.textContent = "Pouvoir d'achat local →";
+  scatSvg.appendChild(yt);
+
+  scatterData.forEach(d=>{
+    const g = document.createElementNS(svgNS,'g');
+    g.setAttribute('class','scat-point');
+    g.dataset.country = d.c.toLowerCase();
+    const cx = sx(d.x), cy = sy(d.y);
+    const circle = document.createElementNS(svgNS,'circle');
+    circle.setAttribute('cx', cx); circle.setAttribute('cy', cy);
+    circle.setAttribute('r', d.pin ? 8 : 6);
+    circle.setAttribute('fill', quadColor(d));
+    circle.setAttribute('fill-opacity', d.pin ? 1 : 0.85);
+    circle.setAttribute('stroke', 'var(--bg)'); circle.setAttribute('stroke-width','1.5');
+    g.appendChild(circle);
+    if(d.pin){
+      const label = document.createElementNS(svgNS,'text');
+      label.setAttribute('x', cx); label.setAttribute('y', cy-13);
+      label.setAttribute('text-anchor','middle'); label.setAttribute('fill','var(--coral)');
+      label.setAttribute('font-family','var(--mono)'); label.setAttribute('font-size','11'); label.setAttribute('font-weight','600');
+      label.textContent = 'Belgique'; g.appendChild(label);
+    }
+    g.addEventListener('mouseenter', ()=>showTip(d, cx, cy));
+    g.addEventListener('mouseleave', hideTip);
+    g.addEventListener('click', ()=>pinDetail(d));
+    scatSvg.appendChild(g);
+  });
+}
+function showTip(d, cx, cy){
+  scatTip.innerHTML = `<b>${d.flag} ${d.c}</b><br>Coût de la vie: ${d.x.toFixed(1)} · Pouvoir d'achat: ${d.y.toFixed(1)}`;
+  const rect = scatSvg.getBoundingClientRect();
+  const wrapRect = scatSvg.parentElement.getBoundingClientRect();
+  const px = (cx/W)*rect.width + (rect.left-wrapRect.left);
+  const py = (cy/H)*rect.height + (rect.top-wrapRect.top);
+  scatTip.style.left = px+'px'; scatTip.style.top = py+'px';
+  scatTip.classList.add('show');
+}
+function hideTip(){ scatTip.classList.remove('show'); }
+function pinDetail(d){
+  document.getElementById('scatDetail').innerHTML =
+    `<b>${d.flag} ${d.c}</b><br>Coût de la vie : <span class="b">${d.x.toFixed(1)}</span> (réf. New York = 100)<br>Pouvoir d'achat local : <span class="t">${d.y.toFixed(1)}</span>`;
+}
+buildScatter();
+document.getElementById('scatSearch').addEventListener('input', e=>{
+  const term = e.target.value.trim().toLowerCase();
+  const points = scatSvg.querySelectorAll('.scat-point');
+  if(term===""){ points.forEach(p=>p.classList.remove('dim','active')); return; }
+  points.forEach(p=>{
+    const match = p.dataset.country.includes(term);
+    p.classList.toggle('dim', !match);
+    p.classList.toggle('active', match);
+  });
+});
+
+// ---------------------------------------------------------------
+// 06 — GDP EXTREMES
+// ---------------------------------------------------------------
+function renderGdp(containerId, data, cls){
+  const el = document.getElementById(containerId);
+  const max = Math.max(...data.map(g=>g.value));
+  data.forEach(g=>{
+    const row = document.createElement('div'); row.className='gdp-row';
+    const width = cls==='hi' ? (g.value/max*100) : Math.max((g.value/max*100), 3);
+    row.innerHTML = `
+      <div class="name">${g.flag} ${g.c}</div>
+      <div class="gdp-track"><div class="gdp-fill ${cls}" style="width:${width.toFixed(1)}%"></div></div>
+      <div class="val">$${g.value.toLocaleString('en-US')}</div>`;
+    el.appendChild(row);
+  });
+}
+renderGdp('gdpHigh', gdpHighData, 'hi');
+renderGdp('gdpLow', gdpLowData, 'lo');
+
+// ---------------------------------------------------------------
+// GENERIC HORIZONTAL BAR LIST RENDERER (used by several new sections)
+// ---------------------------------------------------------------
+function renderBarList(containerId, data, opts={}){
+  const el = document.getElementById(containerId);
+  if(!el) return;
+  const fmt = opts.fmt || (v => v.toLocaleString('en-US'));
+  const max = opts.max || Math.max(...data.map(d=>d.value));
+  el.innerHTML = "";
+  data.forEach((d,i)=>{
+    const row = document.createElement('div');
+    row.className = 'gdp-row';
+    if(d.pin) row.style.cssText = 'background:var(--coral-soft); border-radius:6px; padding:4px 6px; margin:-4px -6px 10px;';
+    row.innerHTML = `
+      <div class="name" style="${d.pin?'color:var(--coral); font-weight:600;':''}">${d.flag} ${d.c}</div>
+      <div class="gdp-track"><div class="gdp-fill" style="width:${Math.max((d.value/max*100),1.5).toFixed(1)}%; ${d.pin?'background:linear-gradient(90deg, var(--coral), #F0A488);':'background:linear-gradient(90deg, var(--blue), #86BEE8);'}"></div></div>
+      <div class="val">${fmt(d.value)}</div>`;
+    el.appendChild(row);
+  });
+}
+
+// Real estate
+renderBarList('reListEU', reEU, {fmt:v=>v.toLocaleString('en-US')+' €'});
+renderBarList('reListBE', reBE, {fmt:v=>v.toLocaleString('en-US')+' €'});
+
+// Big Mac hours
+renderBarList('bigmacList', bigmacData, {fmt:v=>v.toFixed(1)+' min'});
+
+// Billionaires
+renderBarList('billList', billData, {fmt:v=>v.toLocaleString('en-US')});
+
+// Social mobility (generations)
+renderBarList('mobList', mobData, {fmt:v=>v+(v===1?' génération':' générations'), max:9});
+
+// Savings & debt
+renderBarList('saveList', saveData, {fmt:v=>v.toFixed(1)+'%'});
+renderBarList('debtList', debtData, {fmt:v=>v.toFixed(1)+'%'});
+
+// ---------------------------------------------------------------
+// 14 — EVOLUTION
 // ---------------------------------------------------------------
 const svg = document.getElementById('lineChart');
 const growthVals = [4.2,4.6,10.8];
 const maxG = 12;
-const pts = growthVals.map((v,i)=>{
-  const x = 30 + i*170;
-  const y = 170 - (v/maxG*160);
-  return [x,y];
-});
+const pts = growthVals.map((v,i)=>{ const x=30+i*170; const y=170-(v/maxG*160); return [x,y]; });
 const pathD = "M"+pts.map(p=>p.join(',')).join(' L');
 const areaD = pathD + ` L${pts[2][0]},170 L${pts[0][0]},170 Z`;
-
 svg.innerHTML = `
-  <defs>
-    <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#D4A94F" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#D4A94F" stop-opacity="0"/>
-    </linearGradient>
-  </defs>
+  <defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#D4A94F" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#D4A94F" stop-opacity="0"/>
+  </linearGradient></defs>
   <path d="${areaD}" fill="url(#areaGrad)" />
   <path d="${pathD}" fill="none" stroke="#D4A94F" stroke-width="2.5" />
   ${pts.map(p=>`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#0B1210" stroke="#D4A94F" stroke-width="2.5"/>`).join('')}
 `;
-
-// ---------------------------------------------------------------
-// REGIONAL GROWTH BARS
-// ---------------------------------------------------------------
 const rgEl = document.getElementById('regionGrowth');
 const maxRg = Math.max(...regionGrowth.map(r=>r.value));
 regionGrowth.forEach(r=>{
-  const row = document.createElement('div');
-  row.className = 'vbar-row';
-  row.innerHTML = `
-    <div class="rlab">${r.label}</div>
-    <div class="vbar-track"><div class="vbar-fill" style="width:${(r.value/maxRg*100).toFixed(0)}%"></div></div>
-    <div class="rval">+${r.value}%</div>
-  `;
+  const row = document.createElement('div'); row.className='vbar-row';
+  row.innerHTML = `<div class="rlab">${r.label}</div><div class="vbar-track"><div class="vbar-fill" style="width:${(r.value/maxRg*100).toFixed(0)}%"></div></div><div class="rval">+${r.value}%</div>`;
   rgEl.appendChild(row);
 });
 </script>
