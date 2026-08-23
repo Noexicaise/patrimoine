@@ -163,6 +163,60 @@
   .sim-result .sr-sub{font-size:13.5px; color:var(--text-dim); margin-top:8px; line-height:1.6;}
   .sim-bar{height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:14px 0; border:1px solid var(--border);}
   .sim-bar-fill{height:100%; background:linear-gradient(90deg, var(--teal), var(--gold), var(--coral));}
+
+  /* ---------- TOC / NAVIGATION ---------- */
+  .toc-toggle{
+    position:fixed; top:18px; right:18px; z-index:200;
+    font-family:var(--sans); font-size:12.5px; font-weight:600; color:var(--text);
+    background:var(--surface); border:1px solid var(--border); border-radius:999px;
+    padding:9px 16px; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.4);
+  }
+  .toc-toggle:hover{border-color:var(--teal);}
+  .toc-overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:210;
+    opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  .toc-overlay.open{opacity:1; pointer-events:auto;}
+  .toc-panel{
+    position:fixed; top:0; right:0; bottom:0; width:min(320px, 86vw); z-index:220;
+    background:var(--surface); border-left:1px solid var(--border);
+    transform:translateX(100%); transition:transform .25s ease;
+    display:flex; flex-direction:column;
+  }
+  .toc-panel.open{transform:translateX(0);}
+  .toc-head{
+    display:flex; align-items:center; justify-content:space-between; padding:20px 22px;
+    border-bottom:1px solid var(--border); font-family:var(--serif); font-size:20px; color:var(--text);
+    flex-shrink:0;
+  }
+  .toc-close{background:none; border:none; color:var(--text-dim); font-size:18px; cursor:pointer; padding:4px;}
+  .toc-close:hover{color:var(--text);}
+  .toc-body{overflow-y:auto; padding:16px 12px 40px;}
+  .toc-group{margin-bottom:22px;}
+  .toc-group-title{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; padding:0 10px 8px;}
+  .toc-link{
+    display:block; font-family:var(--sans); font-size:13.5px; color:var(--text-dim);
+    padding:8px 10px; border-radius:6px; text-decoration:none; line-height:1.35;
+  }
+  .toc-link:hover, .toc-link:focus-visible{background:var(--surface-2); color:var(--text);}
+  .back-to-top{
+    position:fixed; bottom:22px; right:18px; z-index:150;
+    width:42px; height:42px; border-radius:50%; background:var(--surface); border:1px solid var(--border);
+    color:var(--text-dim); font-size:16px; cursor:pointer; box-shadow:0 4px 16px rgba(0,0,0,.4);
+    opacity:0; pointer-events:none; transition:opacity .2s;
+  }
+  .back-to-top.show{opacity:1; pointer-events:auto;}
+  .back-to-top:hover{color:var(--teal); border-color:var(--teal);}
+
+  .group-divider{
+    max-width:1120px; margin:0 auto; padding:38px 20px 0;
+    display:flex; align-items:center; gap:14px;
+  }
+  .group-divider .gd-label{
+    font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    white-space:nowrap; padding:6px 14px; border-radius:999px; border:1px solid;
+  }
+  .group-divider .gd-line{flex:1; height:1px; background:var(--border);}
   .callout{background:var(--surface); border:1px solid rgba(95,195,168,.3); border-radius:var(--radius); padding:18px 20px; margin-top:18px; font-size:13.5px; color:var(--text-dim);}
   .callout b{color:var(--teal); font-family:var(--mono);}
 
@@ -220,6 +274,58 @@
 </style>
 </head>
 <body>
+
+<button id="tocToggle" class="toc-toggle" aria-label="Ouvrir le sommaire">☰ Sommaire</button>
+<div id="tocOverlay" class="toc-overlay"></div>
+<nav id="tocPanel" class="toc-panel">
+  <div class="toc-head">
+    <span>Sommaire</span>
+    <button id="tocClose" class="toc-close" aria-label="Fermer">✕</button>
+  </div>
+  <div class="toc-body">
+    <div class="toc-group">
+      <div class="toc-group-title" style="color:var(--gold)">Patrimoine mondial</div>
+      <a href="#wealth" class="toc-link">01 · Patrimoine par adulte</a>
+      <a href="#simulator" class="toc-link">02 · Simulateur personnel</a>
+      <a href="#pyramid" class="toc-link">03 · La pyramide mondiale</a>
+    </div>
+    <div class="toc-group">
+      <div class="toc-group-title" style="color:var(--coral)">La Belgique en détail</div>
+      <a href="#belgium" class="toc-link">04 · Salaires belges (déciles)</a>
+      <a href="#wealthstructure" class="toc-link">05 · Structure du patrimoine</a>
+      <a href="#wealthorigin" class="toc-link">06 · Origine des grandes fortunes</a>
+      <a href="#billionaires" class="toc-link">12 · Milliardaires belges</a>
+    </div>
+    <div class="toc-group">
+      <div class="toc-group-title" style="color:var(--blue)">Revenus & pouvoir d'achat</div>
+      <a href="#wages" class="toc-link">07 · Salaires, comparaison internationale</a>
+      <a href="#realpp" class="toc-link">08 · Revenus vs coût de la vie</a>
+      <a href="#realestate" class="toc-link">09 · Immobilier</a>
+      <a href="#purchasing" class="toc-link">10 · Extrêmes du PIB/habitant</a>
+      <a href="#bigmac" class="toc-link">11 · Minutes pour un Big Mac</a>
+    </div>
+    <div class="toc-group">
+      <div class="toc-group-title" style="color:var(--teal)">Société & fiscalité</div>
+      <a href="#insights" class="toc-link">13 · Ce que la médiane révèle</a>
+      <a href="#mobility" class="toc-link">14 · Mobilité sociale</a>
+      <a href="#savingsdebt" class="toc-link">15 · Épargne & dette</a>
+      <a href="#taxwedge" class="toc-link">16 · Coin fiscal</a>
+      <a href="#redistrib" class="toc-link">17 · Redistribution</a>
+      <a href="#inheritance" class="toc-link">18 · Droits de succession</a>
+      <a href="#ceoratio" class="toc-link">19 · Ratio CEO / salarié</a>
+      <a href="#genderpay" class="toc-link">20 · Écart salarial H/F</a>
+      <a href="#pensions" class="toc-link">21 · Pensions légales</a>
+      <a href="#lifeexp" class="toc-link">22 · Espérance de vie</a>
+    </div>
+    <div class="toc-group">
+      <div class="toc-group-title" style="color:var(--text-dim)">Prospective</div>
+      <a href="#demography" class="toc-link">23 · Démographie 2050</a>
+      <a href="#evolution" class="toc-link">24 · Évolution</a>
+    </div>
+  </div>
+</nav>
+<button id="backToTop" class="back-to-top" aria-label="Retour en haut">↑</button>
+
 
 <div class="wrap">
   <header class="hero">
@@ -339,6 +445,7 @@
   </section>
 
   <!-- ================= 03 : BELGIQUE ================= -->
+  <div class="group-divider"><span class="gd-label" style="color:var(--coral); border-color:rgba(227,122,87,.4);">La Belgique en détail</span><span class="gd-line"></span></div>
   <section id="belgium">
     <div class="s-head">
       <div>
@@ -365,11 +472,75 @@
     </div>
   </section>
 
-  <!-- ================= 04 : SALAIRES, COMPARAISON INTERNATIONALE ================= -->
+  <!-- ================= 05 : STRUCTURE DU PATRIMOINE BELGE ================= -->
+  <section id="wealthstructure">
+    <div class="s-head">
+      <div>
+        <div class="s-num">05 — De quoi le patrimoine belge est-il fait ?</div>
+        <h2>73% de brique, 23% de finance</h2>
+        <p class="s-desc">Composition moyenne du patrimoine des ménages belges en 2025 (Keytrade Bank / UGent).</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Répartition du patrimoine</h3>
+        <div id="structList"></div>
+        <div class="note" style="margin-top:16px;">Patrimoine médian belge 2025 : <b style="color:var(--text)">286 250 €</b> · Résidence principale : <b style="color:var(--text)">51%</b> du total (contre 45% en 2024) — la valeur refuge par excellence.</div>
+      </div>
+      <div class="panel">
+        <h3>Concentration : le top 10% belge</h3>
+        <div id="beConcList"></div>
+        <div class="note" style="margin-top:16px;">Comparé à la pyramide mondiale (section 03) : la Belgique est nettement plus égalitaire que la moyenne planétaire, mais la concentration y reste réelle.</div>
+      </div>
+    </div>
+    <div class="hint">Sources : Keytrade Bank / Université de Gand, Le Belge et son patrimoine, 2025 · Banque nationale de Belgique, comptes distributionnels de patrimoine (DWA), T2 2023</div>
+  </section>
+
+  <!-- ================= 06 : ORIGINE DES GRANDES FORTUNES ================= -->
+  <section id="wealthorigin">
+    <div class="s-head">
+      <div>
+        <div class="s-num">06 — D'où vient l'argent des plus riches ?</div>
+        <h2>Héritage, entrepreneuriat, travail</h2>
+        <p class="s-desc">Comparaison entre les 20% de ménages belges les plus riches et les 20% les plus pauvres : d'où vient leur patrimoine ?</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Héritages et donations reçus</h3>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">20% les plus riches</span><span class="val">37%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:74%; background:var(--gold)"></div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">20% les plus pauvres</span><span class="val">17%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:34%; background:var(--blue)"></div></div>
+        </div>
+        <div class="note" style="margin-top:16px;">Part des ménages ayant reçu un héritage ou une donation significative, par quintile de richesse.</div>
+      </div>
+      <div class="panel">
+        <h3>Revenus d'indépendant / entrepreneuriat</h3>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">20% les plus riches</span><span class="val">35%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:70%; background:var(--coral)"></div></div>
+        </div>
+        <ul class="factlist" style="margin-top:20px;">
+          <li>Les revenus du travail salarié restent, toutes classes confondues, la <b>1ʳᵉ source</b> de constitution du patrimoine en Belgique — devant les héritages et l'indépendance</li>
+          <li>Tendance récente : de plus en plus de parents "sautent une génération" et transmettent directement aux petits-enfants</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout">📌 L'héritage n'est donc pas la source <em>principale</em> de la richesse belge, même chez les plus aisés — mais il y est <b>plus de deux fois plus fréquent</b> que chez les plus pauvres, et il se cumule à un accès facilité à l'entrepreneuriat.</div>
+    <div class="hint">Source : Keytrade Bank / UGent, enquête patrimoine 2024-2025</div>
+  </section>
+
+  <!-- ================= 07 : SALAIRES, COMPARAISON INTERNATIONALE ================= -->
+
+  <div class="group-divider"><span class="gd-label" style="color:var(--blue); border-color:rgba(111,160,206,.4);">Revenus & pouvoir d'achat</span><span class="gd-line"></span></div>
   <section id="wages">
     <div class="s-head">
       <div>
-        <div class="s-num">05 — Salaires, comparaison internationale</div>
+        <div class="s-num">07 — Salaires, comparaison internationale</div>
         <h2>Le salaire moyen, pays par pays</h2>
         <p class="s-desc">Salaire annuel moyen brut, en parité de pouvoir d'achat (OCDE 2024). Une mesure différente des deciles belges ci-dessus : ici, c'est la <b style="color:var(--text)">moyenne</b>, pas la médiane — donc elle aussi tirée vers le haut par les hauts salaires.</p>
       </div>
@@ -416,7 +587,7 @@
   <section id="realpp">
     <div class="s-head">
       <div>
-        <div class="s-num">06 — Revenus vs coût de la vie</div>
+        <div class="s-num">08 — Revenus vs coût de la vie</div>
         <h2>Le pouvoir d'achat réel, pays par pays</h2>
         <p class="s-desc">Chaque point croise le <b>coût de la vie local</b> (axe horizontal, référence New York = 100) et le <b>pouvoir d'achat local</b> (axe vertical — un salaire moyen net rapporté à ce coût de la vie). En haut à gauche : on vit bien pour pas cher. En bas à droite : cher, et le salaire ne suit pas.</p>
       </div>
@@ -450,7 +621,7 @@
   <section id="realestate">
     <div class="s-head">
       <div>
-        <div class="s-num">07 — Immobilier</div>
+        <div class="s-num">09 — Immobilier</div>
         <h2>Le prix du mètre carré</h2>
         <p class="s-desc">Prix moyen d'un appartement, en €/m² (2025-2026). Le patrimoine des ménages, c'est d'abord la brique — surtout en Belgique.</p>
       </div>
@@ -476,7 +647,7 @@
   <section id="purchasing">
     <div class="s-head">
       <div>
-        <div class="s-num">08 — Les extrêmes absolus</div>
+        <div class="s-num">10 — Les extrêmes absolus</div>
         <h2>PIB par habitant : d'un monde à l'autre</h2>
         <p class="s-desc">Le PIB par habitant nominal mesure la production économique moyenne par personne. L'écart entre les pôles est vertigineux.</p>
       </div>
@@ -505,7 +676,7 @@
   <section id="bigmac">
     <div class="s-head">
       <div>
-        <div class="s-num">09 — Combien de temps pour un Big Mac ?</div>
+        <div class="s-num">11 — Combien de temps pour un Big Mac ?</div>
         <h2>Le salaire traduit en minutes</h2>
         <p class="s-desc">Prix d'un Big Mac (The Economist, janvier 2026) rapporté au salaire horaire moyen OCDE de chaque pays. Une façon très concrète de "voir" le pouvoir d'achat.</p>
       </div>
@@ -520,7 +691,7 @@
   <section id="billionaires">
     <div class="s-head">
       <div>
-        <div class="s-num">10 — Milliardaires</div>
+        <div class="s-num">12 — Milliardaires</div>
         <h2>3 428 personnes, 20 100 milliards $</h2>
         <p class="s-desc">Classement Forbes 2026 (mars 2026) — un record historique, +400 milliardaires en un an.</p>
       </div>
@@ -545,10 +716,11 @@
   </section>
 
   <!-- ================= 11 : INSIGHTS ================= -->
+  <div class="group-divider"><span class="gd-label" style="color:var(--teal); border-color:rgba(95,195,168,.4);">Société & fiscalité</span><span class="gd-line"></span></div>
   <section id="insights">
     <div class="s-head">
       <div>
-        <div class="s-num">11 — Ce que la médiane révèle</div>
+        <div class="s-num">13 — Ce que la médiane révèle</div>
         <h2>Résultats contre-intuitifs</h2>
       </div>
     </div>
@@ -566,7 +738,7 @@
   <section id="mobility">
     <div class="s-head">
       <div>
-        <div class="s-num">12 — Mobilité sociale</div>
+        <div class="s-num">14 — Mobilité sociale</div>
         <h2>Combien de générations pour rejoindre le revenu moyen ?</h2>
         <p class="s-desc">Quand on naît dans une famille à faible revenu, combien de temps faut-il, en moyenne, pour que la lignée familiale rattrape le revenu moyen du pays ?</p>
       </div>
@@ -580,7 +752,7 @@
   <section id="savingsdebt">
     <div class="s-head">
       <div>
-        <div class="s-num">13 — Épargne & dette des ménages</div>
+        <div class="s-num">15 — Épargne & dette des ménages</div>
         <h2>Le paradoxe du Nord riche et endetté</h2>
         <p class="s-desc">Contre-intuitif : ce sont les pays les plus riches du nord de l'Europe qui ont les ménages les plus endettés — pas le Sud, souvent montré du doigt.</p>
       </div>
@@ -603,7 +775,7 @@
   <section id="taxwedge">
     <div class="s-head">
       <div>
-        <div class="s-num">15 — Coin fiscal</div>
+        <div class="s-num">16 — Coin fiscal</div>
         <h2>Ce que l'État prélève avant que vous touchiez votre salaire</h2>
         <p class="s-desc">Le "coin fiscal" (tax wedge) mesure la part du coût total employeur absorbée par l'impôt et les cotisations, pour un travailleur célibataire sans enfant au salaire moyen.</p>
       </div>
@@ -617,7 +789,7 @@
   <section id="redistrib">
     <div class="s-head">
       <div>
-        <div class="s-num">16 — Redistribution</div>
+        <div class="s-num">17 — Redistribution</div>
         <h2>Ce que l'impôt corrige (ou pas)</h2>
         <p class="s-desc">Chili, Belgique, USA, Japon, Espagne et Turquie ont tous une inégalité de revenus <b style="color:var(--text)">similaire avant impôts</b> (Gini ≈ 0,50). Après impôts et transferts sociaux, leurs trajectoires divergent radicalement.</p>
       </div>
@@ -631,7 +803,7 @@
   <section id="inheritance">
     <div class="s-head">
       <div>
-        <div class="s-num">17 — Droits de succession</div>
+        <div class="s-num">18 — Droits de succession</div>
         <h2>Transmettre sa richesse : d'un pays à l'autre</h2>
         <p class="s-desc">Taux maximaux légaux sur successions et donations, 2025 (hors abattements, qui varient énormément).</p>
       </div>
@@ -645,7 +817,7 @@
   <section id="ceoratio">
     <div class="s-head">
       <div>
-        <div class="s-num">18 — Ratio CEO / salarié</div>
+        <div class="s-num">19 — Ratio CEO / salarié</div>
         <h2>Combien de fois le salaire moyen ?</h2>
         <p class="s-desc">Rémunération totale du patron d'une grande entreprise cotée, rapportée au salaire moyen du pays.</p>
       </div>
@@ -659,7 +831,7 @@
   <section id="genderpay">
     <div class="s-head">
       <div>
-        <div class="s-num">19 — Écart salarial hommes-femmes</div>
+        <div class="s-num">20 — Écart salarial hommes-femmes</div>
         <h2>Le salaire horaire, par genre</h2>
         <p class="s-desc">Écart non ajusté entre le salaire horaire brut moyen des hommes et des femmes, en % du salaire des hommes (Eurostat, 2024).</p>
       </div>
@@ -673,7 +845,7 @@
   <section id="pensions">
     <div class="s-head">
       <div>
-        <div class="s-num">20 — Pensions légales</div>
+        <div class="s-num">21 — Pensions légales</div>
         <h2>Le taux de remplacement net</h2>
         <p class="s-desc">Quelle part de son dernier salaire net un retraité au salaire moyen touche-t-il de pension légale ?</p>
       </div>
@@ -687,7 +859,7 @@
   <section id="lifeexp">
     <div class="s-head">
       <div>
-        <div class="s-num">21 — Espérance de vie vs richesse</div>
+        <div class="s-num">22 — Espérance de vie vs richesse</div>
         <h2>Vivre vieux ne coûte pas toujours cher</h2>
         <p class="s-desc">La richesse d'un pays prédit globalement une vie plus longue — mais avec des exceptions frappantes.</p>
       </div>
@@ -706,11 +878,43 @@
     <div class="hint">Source : ONU / OMS, 2025-2026 · OCDE, Panorama de la santé 2025</div>
   </section>
 
-  <!-- ================= 22 : EVOLUTION ================= -->
+  <!-- ================= 24 : PROJECTION DÉMOGRAPHIQUE ================= -->
+  <div class="group-divider"><span class="gd-label" style="color:var(--text-dim); border-color:var(--border);">Prospective</span><span class="gd-line"></span></div>
+  <section id="demography">
+    <div class="s-head">
+      <div>
+        <div class="s-num">23 — Projection démographique</div>
+        <h2>2 actifs pour 1 pensionné en 2050</h2>
+        <p class="s-desc">Le vieillissement de la population explique directement pourquoi les pensions (section 21) sont sous pression : il y aura de moins en moins d'actifs pour financer de plus en plus de pensionnés, qui vivront eux-mêmes plus longtemps à la retraite.</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>🇧🇪 La trajectoire belge</h3>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">1977</span><span class="val">4,5 actifs / pensionné</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:var(--teal)"></div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">2050 (projection)</span><span class="val">2 actifs / pensionné</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:44%; background:var(--coral)"></div></div>
+        </div>
+        <div class="note" style="margin-top:16px;">En 1977, un retraité belge vivait <b style="color:var(--text)">14 ans</b> en moyenne à la retraite. En 2050, ce sera <b style="color:var(--text)">23 ans</b> — presque le double, sur une base de cotisants deux fois plus restreinte proportionnellement.</div>
+      </div>
+      <div class="panel">
+        <h3>Retraités pour 100 actifs, 2050 (projection)</h3>
+        <div id="demoList"></div>
+        <div class="note" style="margin-top:16px;">Le Japon, déjà le pays le plus âgé du monde, illustre où l'Europe se dirige avec 15-20 ans de retard.</div>
+      </div>
+    </div>
+    <div class="hint">Sources : Moustique / ULB (Jennifer Alonso-Garcia), avril 2026 · Statista / OCDE, projections 2020-2050 · Eurostat, ratio de dépendance démographique UE</div>
+  </section>
+
+  <!-- ================= 25 : EVOLUTION ================= -->
   <section id="evolution" style="border-bottom:none;">
     <div class="s-head">
       <div>
-        <div class="s-num">14 — Évolution</div>
+        <div class="s-num">24 — Évolution</div>
         <h2>2025 : la plus forte hausse depuis 2017</h2>
         <p class="s-desc">Croissance de la richesse personnelle mondiale, en dollars.</p>
       </div>
@@ -1108,6 +1312,30 @@ const lifeData = [
   {c:"Moyenne mondiale", flag:"🌍", value:73.4},
   {c:"Nigeria", flag:"🇳🇬", value:54.6},
   {c:"Centrafrique", flag:"🇨🇫", value:53.6},
+];
+
+// Structure du patrimoine belge 2025 (Keytrade/UGent)
+const structData = [
+  {c:"Résidence principale", flag:"🏠", value:51},
+  {c:"Autre immobilier", flag:"🏘️", value:22},
+  {c:"Liquidités (comptes, épargne)", flag:"💶", value:11},
+  {c:"Fonds, actions, obligations", flag:"📈", value:8},
+  {c:"Autres actifs (indép., biens)", flag:"🎨", value:8},
+];
+// Concentration du patrimoine belge (BNB DWA, T2 2023)
+const beConcData = [
+  {c:"10% les plus riches", flag:"🔺", value:55},
+  {c:"50% les moins nantis", flag:"🔻", value:8.4},
+];
+
+// Retraités pour 100 actifs, projection 2050 (Statista/OCDE)
+const demoData = [
+  {c:"Japon", flag:"🇯🇵", value:81},
+  {c:"Italie", flag:"🇮🇹", value:74},
+  {c:"Espagne / Corée du Sud", flag:"🇪🇸", value:80, note:"≈"},
+  {c:"Moyenne UE", flag:"🇪🇺", value:55},
+  {c:"France", flag:"🇫🇷", value:55},
+  {c:"Belgique", flag:"🇧🇪", value:50, pin:true},
 ];
 
 const deciles = [
@@ -1619,6 +1847,11 @@ renderBarList('genderList', genderData, {fmt:v=>(v>0?'+':'')+v.toFixed(1)+'%', m
 renderBarList('pensionList', pensionData, {fmt:v=>v.toFixed(1)+'%'});
 renderBarList('lifeList', lifeData, {fmt:v=>v.toFixed(1)+' ans'});
 
+// Structure patrimoine belge, concentration, démographie
+renderBarList('structList', structData, {fmt:v=>v+'%', max:60});
+renderBarList('beConcList', beConcData, {fmt:v=>v+'%', max:60});
+renderBarList('demoList', demoData, {fmt:v=>v+' / 100'});
+
 // ---------------------------------------------------------------
 // 14 — EVOLUTION
 // ---------------------------------------------------------------
@@ -1644,6 +1877,25 @@ regionGrowth.forEach(r=>{
   row.innerHTML = `<div class="rlab">${r.label}</div><div class="vbar-track"><div class="vbar-fill" style="width:${(r.value/maxRg*100).toFixed(0)}%"></div></div><div class="rval">+${r.value}%</div>`;
   rgEl.appendChild(row);
 });
+
+// ---------------------------------------------------------------
+// TOC PANEL + BACK TO TOP
+// ---------------------------------------------------------------
+const tocPanel = document.getElementById('tocPanel');
+const tocOverlay = document.getElementById('tocOverlay');
+function openToc(){ tocPanel.classList.add('open'); tocOverlay.classList.add('open'); }
+function closeToc(){ tocPanel.classList.remove('open'); tocOverlay.classList.remove('open'); }
+document.getElementById('tocToggle').addEventListener('click', openToc);
+document.getElementById('tocClose').addEventListener('click', closeToc);
+tocOverlay.addEventListener('click', closeToc);
+document.querySelectorAll('.toc-link').forEach(a=> a.addEventListener('click', closeToc));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeToc(); });
+
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', ()=>{
+  backToTop.classList.toggle('show', window.scrollY > 800);
+});
+backToTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 </script>
 </body>
 </html>
