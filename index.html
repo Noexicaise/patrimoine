@@ -150,6 +150,20 @@
   .rank-big span{font-size:20px;}
   .rank-txt{font-size:13px; color:var(--text-dim); line-height:1.55;}
 
+  /* ---------- TABS ---------- */
+  .tabs{display:flex; gap:8px; border-bottom:1px solid var(--border); margin-bottom:24px; flex-wrap:wrap;}
+  .tab-btn{
+    font-family:var(--sans); font-size:13.5px; font-weight:600; color:var(--text-dim);
+    background:none; border:none; padding:11px 4px; cursor:pointer; position:relative; margin-right:22px;
+  }
+  .tab-btn::after{content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:transparent;}
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn.active{color:var(--coral);}
+  .tab-btn.active::after{background:var(--coral);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block; animation:tabFade .25s ease;}
+  @keyframes tabFade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
   .sim-panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
   .sim-input-row{display:flex; align-items:center; gap:0; margin:18px 0 14px; max-width:420px;}
   .sim-dollar{font-family:var(--mono); font-size:20px; color:var(--text-dim); background:var(--surface-2); border:1px solid var(--border); border-right:none; border-radius:8px 0 0 8px; padding:12px 14px;}
@@ -199,6 +213,23 @@
     padding:8px 10px; border-radius:6px; text-decoration:none; line-height:1.35;
   }
   .toc-link:hover, .toc-link:focus-visible{background:var(--surface-2); color:var(--text);}
+  .toc-link.active{background:var(--teal-soft); color:var(--teal); font-weight:600;}
+  .toc-link.hidden{display:none;}
+  .toc-group.hidden{display:none;}
+  .toc-search-wrap{padding:0 22px 14px; flex-shrink:0; border-bottom:1px solid var(--border);}
+  .toc-search{
+    width:100%; font-family:var(--sans); font-size:13px; color:var(--text);
+    background:var(--surface-2); border:1px solid var(--border); border-radius:8px;
+    padding:9px 12px; outline:none;
+  }
+  .toc-search:focus{border-color:var(--teal);}
+
+  @media print{
+    .toc-toggle, .toc-overlay, .toc-panel, .back-to-top{display:none !important;}
+    body{background:#fff; color:#111;}
+    .chip, .panel, .surface{border-color:#ccc !important;}
+    section{break-inside:avoid; border-bottom:1px solid #ccc;}
+  }
   .back-to-top{
     position:fixed; bottom:22px; right:18px; z-index:150;
     width:42px; height:42px; border-radius:50%; background:var(--surface); border:1px solid var(--border);
@@ -282,7 +313,10 @@
     <span>Sommaire</span>
     <button id="tocClose" class="toc-close" aria-label="Fermer">✕</button>
   </div>
-  <div class="toc-body">
+  <div class="toc-search-wrap">
+    <input id="tocSearch" type="text" placeholder="🔍 Rechercher un pays, un mot-clé…" class="toc-search">
+  </div>
+  <div class="toc-body" id="tocBody">
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--gold)">Patrimoine mondial</div>
       <a href="#wealth" class="toc-link">01 · Patrimoine par adulte</a>
@@ -294,33 +328,34 @@
       <a href="#belgium" class="toc-link">04 · Salaires belges (déciles)</a>
       <a href="#wealthstructure" class="toc-link">05 · Structure du patrimoine</a>
       <a href="#wealthorigin" class="toc-link">06 · Origine des grandes fortunes</a>
-      <a href="#billionaires" class="toc-link">12 · Milliardaires belges</a>
+      <a href="#billionaires" class="toc-link">14 · Milliardaires belges</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--blue)">Revenus & pouvoir d'achat</div>
       <a href="#wages" class="toc-link">07 · Salaires, comparaison internationale</a>
       <a href="#realpp" class="toc-link">08 · Revenus vs coût de la vie</a>
       <a href="#realestate" class="toc-link">09 · Immobilier</a>
-      <a href="#purchasing" class="toc-link">10 · Extrêmes du PIB/habitant</a>
-      <a href="#bigmac" class="toc-link">11 · Minutes pour un Big Mac</a>
+      <a href="#housingburden" class="toc-link">10 · Taux d'effort logement</a>
+      <a href="#purchasing" class="toc-link">11 · Extrêmes du PIB/habitant</a>
+      <a href="#bigmac" class="toc-link">12 · Minutes pour un Big Mac</a>
+      <a href="#foodbasket" class="toc-link">13 · Panier de courses</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--teal)">Société & fiscalité</div>
-      <a href="#insights" class="toc-link">13 · Ce que la médiane révèle</a>
-      <a href="#mobility" class="toc-link">14 · Mobilité sociale</a>
-      <a href="#savingsdebt" class="toc-link">15 · Épargne & dette</a>
-      <a href="#taxwedge" class="toc-link">16 · Coin fiscal</a>
-      <a href="#redistrib" class="toc-link">17 · Redistribution</a>
-      <a href="#inheritance" class="toc-link">18 · Droits de succession</a>
-      <a href="#ceoratio" class="toc-link">19 · Ratio CEO / salarié</a>
-      <a href="#genderpay" class="toc-link">20 · Écart salarial H/F</a>
-      <a href="#pensions" class="toc-link">21 · Pensions légales</a>
-      <a href="#lifeexp" class="toc-link">22 · Espérance de vie</a>
+      <a href="#insights" class="toc-link">15 · Ce que la médiane révèle</a>
+      <a href="#mobility" class="toc-link">16 · Mobilité sociale</a>
+      <a href="#savingsdebt" class="toc-link">17 · Épargne & dette</a>
+      <a href="#poverty" class="toc-link">18 · Pauvreté</a>
+      <a href="#fiscality" class="toc-link">19 · Fiscalité & succession</a>
+      <a href="#ceoratio" class="toc-link">20 · Ratio CEO / salarié</a>
+      <a href="#genderpay" class="toc-link">21 · Écart salarial H/F</a>
+      <a href="#pensions" class="toc-link">22 · Pensions légales</a>
+      <a href="#lifeexp" class="toc-link">23 · Espérance de vie</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--text-dim)">Prospective</div>
-      <a href="#demography" class="toc-link">23 · Démographie 2050</a>
-      <a href="#evolution" class="toc-link">24 · Évolution</a>
+      <a href="#demography" class="toc-link">24 · Démographie 2050</a>
+      <a href="#evolution" class="toc-link">25 · Évolution</a>
     </div>
   </div>
 </nav>
@@ -643,11 +678,25 @@
     <div class="hint">Sources : lucbrialy.com (comparatif européen, appartements neufs, 2025) · Statbel / Immoweb-Belfius / notaire.be (Belgique, 2026)</div>
   </section>
 
+  <!-- ================= NEW : TAUX D'EFFORT LOGEMENT ================= -->
+  <section id="housingburden">
+    <div class="s-head">
+      <div>
+        <div class="s-num">10 — Le poids du logement sur le budget</div>
+        <h2>Taux d'effort : quand se loger devient un fardeau</h2>
+        <p class="s-desc">Part de la population vivant dans un ménage où le logement (loyer/crédit + charges) absorbe plus de 40% du revenu disponible (Eurostat 2024).</p>
+      </div>
+    </div>
+    <div id="housingBurdenList"></div>
+    <div class="callout">🇧🇪 <b>La Belgique fait mieux que la moyenne UE au niveau national (6,7% vs 8,2%)</b> — mais ce chiffre masque un écart énorme : à Bruxelles, les 20% de ménages les plus pauvres consacrent <b>plus de 50%</b> de leurs revenus au logement, contre 3,9-5,7% en Flandre.</div>
+    <div class="hint">Source : Eurostat, Housing cost overburden rate (ilc_lvho07a), 2024 · Statbel / Vivalis, Baromètre social bruxellois 2025</div>
+  </section>
+
   <!-- ================= 08 : EXTRÊMES PIB ================= -->
   <section id="purchasing">
     <div class="s-head">
       <div>
-        <div class="s-num">10 — Les extrêmes absolus</div>
+        <div class="s-num">11 — Les extrêmes absolus</div>
         <h2>PIB par habitant : d'un monde à l'autre</h2>
         <p class="s-desc">Le PIB par habitant nominal mesure la production économique moyenne par personne. L'écart entre les pôles est vertigineux.</p>
       </div>
@@ -676,7 +725,7 @@
   <section id="bigmac">
     <div class="s-head">
       <div>
-        <div class="s-num">11 — Combien de temps pour un Big Mac ?</div>
+        <div class="s-num">12 — Combien de temps pour un Big Mac ?</div>
         <h2>Le salaire traduit en minutes</h2>
         <p class="s-desc">Prix d'un Big Mac (The Economist, janvier 2026) rapporté au salaire horaire moyen OCDE de chaque pays. Une façon très concrète de "voir" le pouvoir d'achat.</p>
       </div>
@@ -687,11 +736,38 @@
     <div class="hint">Sources : The Economist / Mappr, Big Mac Index, janvier 2026 · OCDE, Average Annual Wages 2024</div>
   </section>
 
+  <!-- ================= NEW : PANIER DE COURSES ================= -->
+  <section id="foodbasket">
+    <div class="s-head">
+      <div>
+        <div class="s-num">13 — Le panier de courses</div>
+        <h2>Le même caddie, des prix très différents</h2>
+        <p class="s-desc">Niveau de prix de l'alimentation, indice base 100 = moyenne UE (Eurostat 2025-2026).</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Niveau de prix général (biens & services, UE=100)</h3>
+        <div id="priceLevelList"></div>
+      </div>
+      <div class="panel">
+        <h3>🇧🇪 Le budget alimentaire belge</h3>
+        <ul class="factlist">
+          <li>Dépense alimentaire annuelle moyenne : <b>2 400 €</b> — sous la moyenne UE (2 500 €) mais au-dessus de la France (≈2 200 €)</li>
+          <li>Inflation alimentaire 2025 : <b>+3,83%</b> en moyenne (Testachats, sur 3 000+ produits)</li>
+          <li>Près de <b>3 Belges sur 10</b> font régulièrement leurs courses de l'autre côté de la frontière (705 millions € dépensés à l'étranger en 2025, dont 65% en France)</li>
+        </ul>
+        <div class="note" style="margin-top:16px;">Part du revenu consacrée à l'alimentation : <b style="color:var(--text)">≈14%</b> en France, <b style="color:var(--text)">&lt;7%</b> aux États-Unis, <b style="color:var(--text)">&gt;50%</b> en Russie — un bon indicateur de vulnérabilité économique d'un ménage.</div>
+      </div>
+    </div>
+    <div class="hint">Sources : Eurostat, niveaux de prix comparatifs 2025-2026 · Moustique / Fevia, dépenses alimentaires belges, mars 2026 · Test-Achats, juin 2026</div>
+  </section>
+
   <!-- ================= 10 : MILLIARDAIRES ================= -->
   <section id="billionaires">
     <div class="s-head">
       <div>
-        <div class="s-num">12 — Milliardaires</div>
+        <div class="s-num">14 — Milliardaires</div>
         <h2>3 428 personnes, 20 100 milliards $</h2>
         <p class="s-desc">Classement Forbes 2026 (mars 2026) — un record historique, +400 milliardaires en un an.</p>
       </div>
@@ -720,7 +796,7 @@
   <section id="insights">
     <div class="s-head">
       <div>
-        <div class="s-num">13 — Ce que la médiane révèle</div>
+        <div class="s-num">15 — Ce que la médiane révèle</div>
         <h2>Résultats contre-intuitifs</h2>
       </div>
     </div>
@@ -738,7 +814,7 @@
   <section id="mobility">
     <div class="s-head">
       <div>
-        <div class="s-num">14 — Mobilité sociale</div>
+        <div class="s-num">16 — Mobilité sociale</div>
         <h2>Combien de générations pour rejoindre le revenu moyen ?</h2>
         <p class="s-desc">Quand on naît dans une famille à faible revenu, combien de temps faut-il, en moyenne, pour que la lignée familiale rattrape le revenu moyen du pays ?</p>
       </div>
@@ -752,7 +828,7 @@
   <section id="savingsdebt">
     <div class="s-head">
       <div>
-        <div class="s-num">15 — Épargne & dette des ménages</div>
+        <div class="s-num">17 — Épargne & dette des ménages</div>
         <h2>Le paradoxe du Nord riche et endetté</h2>
         <p class="s-desc">Contre-intuitif : ce sont les pays les plus riches du nord de l'Europe qui ont les ménages les plus endettés — pas le Sud, souvent montré du doigt.</p>
       </div>
@@ -771,53 +847,83 @@
     <div class="hint">Sources : Eurostat, taux d'épargne T2 2024/2025 · Euronews / Armstrong Economics, dette des ménages 2025 · Veracash, épargne belge 2026</div>
   </section>
 
-  <!-- ================= 15 : COIN FISCAL ================= -->
-  <section id="taxwedge">
+  <!-- ================= NEW : PAUVRETÉ ================= -->
+  <section id="poverty">
     <div class="s-head">
       <div>
-        <div class="s-num">16 — Coin fiscal</div>
-        <h2>Ce que l'État prélève avant que vous touchiez votre salaire</h2>
-        <p class="s-desc">Le "coin fiscal" (tax wedge) mesure la part du coût total employeur absorbée par l'impôt et les cotisations, pour un travailleur célibataire sans enfant au salaire moyen.</p>
+        <div class="s-num">18 — Pauvreté</div>
+        <h2>Le seuil, et qui vit en-dessous</h2>
+        <p class="s-desc">Le taux de risque de pauvreté mesure la part de la population vivant sous 60% du revenu médian national — un seuil relatif, propre à chaque pays.</p>
       </div>
     </div>
-    <div id="wedgeList"></div>
-    <div class="callout">🇧🇪 <b>La Belgique a le coin fiscal le plus élevé des 38 pays de l'OCDE : 52,5%</b> — pour 100 € de coût salarial, l'employé ne touche net que 47,50 €. La Colombie, à l'autre extrême, affiche 0%.</div>
-    <div class="hint">Source : OCDE, Taxing Wages 2026 (données 2025) · Tax Foundation Europe, avril 2026</div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>🇧🇪 La Belgique, trois pays en un</h3>
+        <div id="povRegionList"></div>
+        <div class="note" style="margin-top:16px;">Seuil de pauvreté belge 2025 : <b style="color:var(--text)">1 565 €/mois</b> pour une personne isolée, <b style="color:var(--text)">3 287 €/mois</b> pour un couple avec 2 enfants.</div>
+      </div>
+      <div class="panel">
+        <h3>Risque de pauvreté ou d'exclusion sociale</h3>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">🇧🇪 Belgique</span><span class="val">18,3%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:87%; background:var(--coral)"></div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">Moyenne UE-27</span><span class="val">21,0%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:var(--blue)"></div></div>
+        </div>
+        <ul class="factlist" style="margin-top:20px;">
+          <li>La Belgique est en <b>avance sur son objectif UE 2030</b> de réduction de la pauvreté</li>
+          <li>Malgré cela, <b>1,9 million</b> de Belges restent à risque de pauvreté ou d'exclusion sociale</li>
+          <li>Plus de <b>la moitié des enfants</b> à Bruxelles cumulent au moins deux indicateurs de pauvreté</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hint">Sources : Statbel / SPF Sécurité sociale, EU-SILC 2025 · Eurostat · Vivalis, Baromètre social bruxellois 2025 · IWEPS</div>
   </section>
 
-  <!-- ================= 16 : REDISTRIBUTION ================= -->
-  <section id="redistrib">
+  <!-- ================= FISCALITÉ (onglets) ================= -->
+  <section id="fiscality">
     <div class="s-head">
       <div>
-        <div class="s-num">17 — Redistribution</div>
-        <h2>Ce que l'impôt corrige (ou pas)</h2>
-        <p class="s-desc">Chili, Belgique, USA, Japon, Espagne et Turquie ont tous une inégalité de revenus <b style="color:var(--text)">similaire avant impôts</b> (Gini ≈ 0,50). Après impôts et transferts sociaux, leurs trajectoires divergent radicalement.</p>
+        <div class="s-num">19 — Fiscalité & succession</div>
+        <h2>Ce que l'État prend, corrige et transmet</h2>
+        <p class="s-desc">Trois visages de la fiscalité belge : ce qu'elle prélève sur le travail, ce qu'elle corrige comme inégalités, et ce qu'elle taxe à la transmission.</p>
       </div>
     </div>
-    <div id="redistribList"></div>
-    <div class="callout">🇧🇪 <b>En Belgique, la redistribution réduit les inégalités de près de moitié</b> — l'une des corrections les plus fortes de l'OCDE, aux côtés du Danemark, de la Finlande, de l'Irlande et de la Slovénie. Au Chili, la même inégalité de départ n'est presque pas corrigée.</div>
-    <div class="hint">Source : Our World in Data / OCDE, réduction du Gini via impôts et transferts, données les plus récentes disponibles</div>
-  </section>
+    <div class="tabs" id="fiscalTabs">
+      <button class="tab-btn active" data-tab="wedge">Coin fiscal</button>
+      <button class="tab-btn" data-tab="redistrib">Redistribution</button>
+      <button class="tab-btn" data-tab="inherit">Succession</button>
+    </div>
 
-  <!-- ================= 17 : DROITS DE SUCCESSION ================= -->
-  <section id="inheritance">
-    <div class="s-head">
-      <div>
-        <div class="s-num">18 — Droits de succession</div>
-        <h2>Transmettre sa richesse : d'un pays à l'autre</h2>
-        <p class="s-desc">Taux maximaux légaux sur successions et donations, 2025 (hors abattements, qui varient énormément).</p>
-      </div>
+    <div class="tab-panel active" data-panel="wedge">
+      <p class="s-desc" style="margin-bottom:16px;">Le "coin fiscal" (tax wedge) mesure la part du coût total employeur absorbée par l'impôt et les cotisations, pour un travailleur célibataire sans enfant au salaire moyen.</p>
+      <div id="wedgeList"></div>
+      <div class="callout">🇧🇪 <b>La Belgique a le coin fiscal le plus élevé des 38 pays de l'OCDE : 52,5%</b> — pour 100 € de coût salarial, l'employé ne touche net que 47,50 €. La Colombie, à l'autre extrême, affiche 0%.</div>
+      <div class="hint">Source : OCDE, Taxing Wages 2026 (données 2025) · Tax Foundation Europe, avril 2026</div>
     </div>
-    <div id="inheritList"></div>
-    <div class="callout">🇧🇪 <b>La Belgique peut taxer jusqu'à 80%</b> les successions les plus élevées entre non-parents — mais les abattements et taux réduits (notamment en ligne directe) changent radicalement la facture réelle. 10 pays européens n'appliquent aucun droit de succession.</div>
-    <div class="hint">Source : Tax Foundation Europe, Estate, Inheritance and Gift Taxes in Europe, 2025 · SPF Finances Belgique</div>
+
+    <div class="tab-panel" data-panel="redistrib">
+      <p class="s-desc" style="margin-bottom:16px;">Chili, Belgique, USA, Japon, Espagne et Turquie ont tous une inégalité de revenus <b style="color:var(--text)">similaire avant impôts</b> (Gini ≈ 0,50). Après impôts et transferts sociaux, leurs trajectoires divergent radicalement.</p>
+      <div id="redistribList"></div>
+      <div class="callout">🇧🇪 <b>En Belgique, la redistribution réduit les inégalités de près de moitié</b> — l'une des corrections les plus fortes de l'OCDE, aux côtés du Danemark, de la Finlande, de l'Irlande et de la Slovénie. Au Chili, la même inégalité de départ n'est presque pas corrigée.</div>
+      <div class="hint">Source : Our World in Data / OCDE, réduction du Gini via impôts et transferts, données les plus récentes disponibles</div>
+    </div>
+
+    <div class="tab-panel" data-panel="inherit">
+      <p class="s-desc" style="margin-bottom:16px;">Taux maximaux légaux sur successions et donations, 2025 (hors abattements, qui varient énormément).</p>
+      <div id="inheritList"></div>
+      <div class="callout">🇧🇪 <b>La Belgique peut taxer jusqu'à 80%</b> les successions les plus élevées entre non-parents — mais les abattements et taux réduits (notamment en ligne directe) changent radicalement la facture réelle. 10 pays européens n'appliquent aucun droit de succession.</div>
+      <div class="hint">Source : Tax Foundation Europe, Estate, Inheritance and Gift Taxes in Europe, 2025 · SPF Finances Belgique</div>
+    </div>
   </section>
 
   <!-- ================= 18 : RATIO CEO ================= -->
   <section id="ceoratio">
     <div class="s-head">
       <div>
-        <div class="s-num">19 — Ratio CEO / salarié</div>
+        <div class="s-num">20 — Ratio CEO / salarié</div>
         <h2>Combien de fois le salaire moyen ?</h2>
         <p class="s-desc">Rémunération totale du patron d'une grande entreprise cotée, rapportée au salaire moyen du pays.</p>
       </div>
@@ -831,7 +937,7 @@
   <section id="genderpay">
     <div class="s-head">
       <div>
-        <div class="s-num">20 — Écart salarial hommes-femmes</div>
+        <div class="s-num">21 — Écart salarial hommes-femmes</div>
         <h2>Le salaire horaire, par genre</h2>
         <p class="s-desc">Écart non ajusté entre le salaire horaire brut moyen des hommes et des femmes, en % du salaire des hommes (Eurostat, 2024).</p>
       </div>
@@ -845,7 +951,7 @@
   <section id="pensions">
     <div class="s-head">
       <div>
-        <div class="s-num">21 — Pensions légales</div>
+        <div class="s-num">22 — Pensions légales</div>
         <h2>Le taux de remplacement net</h2>
         <p class="s-desc">Quelle part de son dernier salaire net un retraité au salaire moyen touche-t-il de pension légale ?</p>
       </div>
@@ -859,7 +965,7 @@
   <section id="lifeexp">
     <div class="s-head">
       <div>
-        <div class="s-num">22 — Espérance de vie vs richesse</div>
+        <div class="s-num">23 — Espérance de vie vs richesse</div>
         <h2>Vivre vieux ne coûte pas toujours cher</h2>
         <p class="s-desc">La richesse d'un pays prédit globalement une vie plus longue — mais avec des exceptions frappantes.</p>
       </div>
@@ -883,9 +989,9 @@
   <section id="demography">
     <div class="s-head">
       <div>
-        <div class="s-num">23 — Projection démographique</div>
+        <div class="s-num">24 — Projection démographique</div>
         <h2>2 actifs pour 1 pensionné en 2050</h2>
-        <p class="s-desc">Le vieillissement de la population explique directement pourquoi les pensions (section 21) sont sous pression : il y aura de moins en moins d'actifs pour financer de plus en plus de pensionnés, qui vivront eux-mêmes plus longtemps à la retraite.</p>
+        <p class="s-desc">Le vieillissement de la population explique directement pourquoi les pensions (section 22) sont sous pression : il y aura de moins en moins d'actifs pour financer de plus en plus de pensionnés, qui vivront eux-mêmes plus longtemps à la retraite.</p>
       </div>
     </div>
     <div class="bg-grid">
@@ -914,7 +1020,7 @@
   <section id="evolution" style="border-bottom:none;">
     <div class="s-head">
       <div>
-        <div class="s-num">24 — Évolution</div>
+        <div class="s-num">25 — Évolution</div>
         <h2>2025 : la plus forte hausse depuis 2017</h2>
         <p class="s-desc">Croissance de la richesse personnelle mondiale, en dollars.</p>
       </div>
@@ -1336,6 +1442,37 @@ const demoData = [
   {c:"Moyenne UE", flag:"🇪🇺", value:55},
   {c:"France", flag:"🇫🇷", value:55},
   {c:"Belgique", flag:"🇧🇪", value:50, pin:true},
+];
+
+// Taux d'effort logement (>40% revenu, Eurostat 2024)
+const housingBurdenData = [
+  {c:"Grèce", flag:"🇬🇷", value:28.9},
+  {c:"Danemark", flag:"🇩🇰", value:14.6},
+  {c:"Allemagne", flag:"🇩🇪", value:12.0},
+  {c:"Suède", flag:"🇸🇪", value:10.6},
+  {c:"Tchéquie", flag:"🇨🇿", value:9.2},
+  {c:"Moyenne UE", flag:"🇪🇺", value:8.2},
+  {c:"Belgique", flag:"🇧🇪", value:6.7, pin:true},
+  {c:"Slovénie", flag:"🇸🇮", value:3.8},
+  {c:"Croatie", flag:"🇭🇷", value:3.7},
+  {c:"Chypre", flag:"🇨🇾", value:2.4},
+];
+
+// Niveau de prix général, biens & services (UE=100), Eurostat 2025-2026
+const priceLevelData = [
+  {c:"Danemark", flag:"🇩🇰", value:140},
+  {c:"Pays-Bas", flag:"🇳🇱", value:120.4},
+  {c:"Autriche", flag:"🇦🇹", value:119},
+  {c:"Belgique", flag:"🇧🇪", value:118.1, pin:true},
+  {c:"Moyenne UE", flag:"🇪🇺", value:100},
+  {c:"Bulgarie", flag:"🇧🇬", value:63},
+];
+
+// Pauvreté par région belge (risque de pauvreté, 2025)
+const povRegionData = [
+  {c:"Bruxelles", flag:"🏙️", value:23},
+  {c:"Wallonie", flag:"🏘️", value:13},
+  {c:"Flandre", flag:"🌾", value:7},
 ];
 
 const deciles = [
@@ -1840,6 +1977,15 @@ renderBarList('debtList', debtData, {fmt:v=>v.toFixed(1)+'%'});
 
 // Tax wedge, redistribution, inheritance, CEO ratio, gender pay gap, pensions, life expectancy
 renderBarList('wedgeList', wedgeData, {fmt:v=>v.toFixed(1)+'%'});
+
+// Fiscality tabs
+document.getElementById('fiscalTabs').addEventListener('click', e=>{
+  const btn = e.target.closest('.tab-btn'); if(!btn) return;
+  document.querySelectorAll('#fiscalTabs .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelector(`.tab-panel[data-panel="${btn.dataset.tab}"]`).classList.add('active');
+});
 renderBarList('redistribList', redistribData, {fmt:v=>'-'+v+'%'});
 renderBarList('inheritList', inheritData, {fmt:v=>v.toFixed(1)+'%'});
 renderBarList('ceoList', ceoData, {fmt:v=>v+'×'});
@@ -1851,6 +1997,11 @@ renderBarList('lifeList', lifeData, {fmt:v=>v.toFixed(1)+' ans'});
 renderBarList('structList', structData, {fmt:v=>v+'%', max:60});
 renderBarList('beConcList', beConcData, {fmt:v=>v+'%', max:60});
 renderBarList('demoList', demoData, {fmt:v=>v+' / 100'});
+
+// Taux d'effort logement, niveau de prix, pauvreté régionale
+renderBarList('housingBurdenList', housingBurdenData, {fmt:v=>v.toFixed(1)+'%'});
+renderBarList('priceLevelList', priceLevelData, {fmt:v=>v.toFixed(1)});
+renderBarList('povRegionList', povRegionData, {fmt:v=>v+'%', max:25});
 
 // ---------------------------------------------------------------
 // 14 — EVOLUTION
@@ -1889,6 +2040,34 @@ document.getElementById('tocToggle').addEventListener('click', openToc);
 document.getElementById('tocClose').addEventListener('click', closeToc);
 tocOverlay.addEventListener('click', closeToc);
 document.querySelectorAll('.toc-link').forEach(a=> a.addEventListener('click', closeToc));
+
+// Search filter within TOC
+document.getElementById('tocSearch').addEventListener('input', e=>{
+  const term = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('.toc-group').forEach(group=>{
+    let anyVisible = false;
+    group.querySelectorAll('.toc-link').forEach(link=>{
+      const match = term==="" || link.textContent.toLowerCase().includes(term);
+      link.classList.toggle('hidden', !match);
+      if(match) anyVisible = true;
+    });
+    group.classList.toggle('hidden', !anyVisible);
+  });
+});
+
+// Scroll-spy: highlight active section in TOC
+const spySections = Array.from(document.querySelectorAll('main section, .wrap > section, section[id]')).filter(s=>s.id);
+const spyLinks = {};
+document.querySelectorAll('.toc-link').forEach(a=>{ spyLinks[a.getAttribute('href').slice(1)] = a; });
+const spyObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    const link = spyLinks[entry.target.id];
+    if(!link) return;
+    if(entry.isIntersecting) link.classList.add('active');
+    else link.classList.remove('active');
+  });
+}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+spySections.forEach(s=> spyObserver.observe(s));
 document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeToc(); });
 
 const backToTop = document.getElementById('backToTop');
