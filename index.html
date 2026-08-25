@@ -150,6 +150,21 @@
   .rank-big span{font-size:20px;}
   .rank-txt{font-size:13px; color:var(--text-dim); line-height:1.55;}
 
+  /* ---------- FUN FACTS ---------- */
+  .fact-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;}
+  @media (max-width:900px){.fact-grid{grid-template-columns:repeat(2, 1fr);}}
+  @media (max-width:520px){.fact-grid{grid-template-columns:1fr;}}
+  .fact-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px 18px; text-align:center; display:flex; flex-direction:column; align-items:center;
+    transition:border-color .2s, transform .2s;
+  }
+  .fact-card:hover{border-color:var(--coral); transform:translateY(-2px);}
+  .fact-emoji{font-size:26px; margin-bottom:10px;}
+  .fact-num{font-family:var(--mono); font-size:30px; font-weight:600; color:var(--gold); line-height:1;}
+  .fact-label{font-family:var(--sans); font-size:12px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em; margin:6px 0 12px;}
+  .fact-desc{font-size:12.5px; color:var(--text-dim); line-height:1.5;}
+
   /* ---------- TABS ---------- */
   .tabs{display:flex; gap:8px; border-bottom:1px solid var(--border); margin-bottom:24px; flex-wrap:wrap;}
   .tab-btn{
@@ -353,9 +368,18 @@
       <a href="#lifeexp" class="toc-link">23 · Espérance de vie</a>
     </div>
     <div class="toc-group">
+      <div class="toc-group-title" style="color:var(--text-dim)">Indicateurs macroéconomiques</div>
+      <a href="#unemployment" class="toc-link">24 · Chômage</a>
+      <a href="#publicdebt" class="toc-link">25 · Dette publique</a>
+      <a href="#productivity" class="toc-link">26 · Productivité horaire</a>
+      <a href="#minwage" class="toc-link">27 · Salaire minimum légal</a>
+      <a href="#gdpgrowth" class="toc-link">28 · Croissance du PIB</a>
+    </div>
+    <div class="toc-group">
       <div class="toc-group-title" style="color:var(--text-dim)">Prospective</div>
-      <a href="#demography" class="toc-link">24 · Démographie 2050</a>
-      <a href="#evolution" class="toc-link">25 · Évolution</a>
+      <a href="#demography" class="toc-link">29 · Démographie 2050</a>
+      <a href="#funfacts" class="toc-link">30 · Pour se rendre compte</a>
+      <a href="#evolution" class="toc-link">31 · Évolution</a>
     </div>
   </div>
 </nav>
@@ -747,8 +771,9 @@
     </div>
     <div class="bg-grid">
       <div class="panel">
-        <h3>Niveau de prix général (biens & services, UE=100)</h3>
+        <h3>Niveau de prix général (consommation des ménages, UE-27=100)</h3>
         <div id="priceLevelList"></div>
+        <div class="note" style="margin-top:16px;">L'Islande et la Suisse, hors UE, ne sont pas directement comparables sur le pouvoir d'achat : leurs salaires sont aussi nettement plus élevés (voir sections 07-08).</div>
       </div>
       <div class="panel">
         <h3>🇧🇪 Le budget alimentaire belge</h3>
@@ -760,7 +785,7 @@
         <div class="note" style="margin-top:16px;">Part du revenu consacrée à l'alimentation : <b style="color:var(--text)">≈14%</b> en France, <b style="color:var(--text)">&lt;7%</b> aux États-Unis, <b style="color:var(--text)">&gt;50%</b> en Russie — un bon indicateur de vulnérabilité économique d'un ménage.</div>
       </div>
     </div>
-    <div class="hint">Sources : Eurostat, niveaux de prix comparatifs 2025-2026 · Moustique / Fevia, dépenses alimentaires belges, mars 2026 · Test-Achats, juin 2026</div>
+    <div class="hint">Sources : Eurostat / Statistics Norway, niveaux de prix comparatifs 2025 · Moustique / Fevia, dépenses alimentaires belges, mars 2026 · Test-Achats, juin 2026</div>
   </section>
 
   <!-- ================= 10 : MILLIARDAIRES ================= -->
@@ -984,12 +1009,85 @@
     <div class="hint">Source : ONU / OMS, 2025-2026 · OCDE, Panorama de la santé 2025</div>
   </section>
 
+  <div class="group-divider"><span class="gd-label" style="color:var(--gold); border-color:rgba(212,169,79,.4);">Indicateurs macroéconomiques</span><span class="gd-line"></span></div>
+
+  <!-- ================= NEW : CHÔMAGE ================= -->
+  <section id="unemployment">
+    <div class="s-head">
+      <div>
+        <div class="s-num">24 — Chômage</div>
+        <h2>Qui travaille, qui cherche</h2>
+        <p class="s-desc">Taux de chômage harmonisé, population active 15-74 ans (Eurostat/OCDE, décembre 2025 - mars 2026).</p>
+      </div>
+    </div>
+    <div id="unemploymentList"></div>
+    <div class="callout">🇧🇪 <b>La Belgique tourne autour de 5,9%</b>, proche de la moyenne UE — mais avec un écart régional marqué : la Wallonie affiche 7,5% (1,5 point au-dessus de la moyenne UE), quand la Flandre reste nettement plus basse.</div>
+    <div class="hint">Sources : Eurostat, Euro-indicateurs, décembre 2025-janvier 2026 · OCDE, mars 2026 · IWEPS, 2024</div>
+  </section>
+
+  <!-- ================= NEW : DETTE PUBLIQUE ================= -->
+  <section id="publicdebt">
+    <div class="s-head">
+      <div>
+        <div class="s-num">25 — Dette publique</div>
+        <h2>Ce que l'État doit, en % du PIB</h2>
+        <p class="s-desc">Dette publique brute des administrations, T1 2026 (Eurostat) et dernières données FMI pour les pays hors UE.</p>
+      </div>
+    </div>
+    <div id="debtPublicList"></div>
+    <div class="callout">🇧🇪 <b>La Belgique dépasse 109% du PIB</b> — au-dessus du seuil de Maastricht (60%) comme 19 des 27 pays de l'UE, mais loin derrière le Japon, dont la dette (230% du PIB) est jugée soutenable car détenue à 90% par des créanciers domestiques.</div>
+    <div class="hint">Sources : EU Debt Map / Eurostat, T1 2026 · FMI, World Economic Outlook, avril 2025-2026</div>
+  </section>
+
+  <!-- ================= NEW : PRODUCTIVITÉ ================= -->
+  <section id="productivity">
+    <div class="s-head">
+      <div>
+        <div class="s-num">26 — Productivité horaire</div>
+        <h2>Travailler moins, produire plus</h2>
+        <p class="s-desc">PIB généré par heure travaillée (USD PPA, OCDE 2024) — et le nombre d'heures travaillées par an, qui suit souvent la tendance inverse.</p>
+      </div>
+    </div>
+    <div id="productivityList"></div>
+    <div class="callout">🇧🇪 <b>La Belgique produit 105,24 $ par heure travaillée</b> (5ᵉ rang mondial) en travaillant seulement 1 493 heures par an, sous la moyenne UE. Autre exemple frappant : la France, malgré ses 35 heures hebdomadaires, affiche une productivité horaire supérieure de 15% à celle des États-Unis.</div>
+    <div class="hint">Source : OCDE, GDP per hour worked, données 2024</div>
+  </section>
+
+  <!-- ================= NEW : SALAIRE MINIMUM ================= -->
+  <section id="minwage">
+    <div class="s-head">
+      <div>
+        <div class="s-num">27 — Salaire minimum légal</div>
+        <h2>Le plancher, pas la moyenne</h2>
+        <p class="s-desc">Salaire minimum net mensuel, 2026 — à ne pas confondre avec le salaire <em>moyen</em> déjà comparé en section 07.</p>
+      </div>
+    </div>
+    <div id="minwageList"></div>
+    <div class="callout">🇧🇪 <b>≈1 540 € net/mois</b> — la Belgique fait partie des six pays européens dépassant 1 500 € (avec le Luxembourg, l'Irlande, l'Allemagne, les Pays-Bas et la France), loin devant l'Espagne ou la Slovénie. L'Australie détient le record mondial à 2 300 €.</div>
+    <div class="hint">Sources : OCDE, base salaires minimums 2025-2026 · Eurostat (earn_mw_cur) · Fair Work Commission Australie, 2025</div>
+  </section>
+
+  <!-- ================= NEW : CROISSANCE DU PIB ================= -->
+  <section id="gdpgrowth">
+    <div class="s-head">
+      <div>
+        <div class="s-num">28 — Croissance du PIB</div>
+        <h2>Qui accélère, qui ralentit</h2>
+        <p class="s-desc">Prévisions de croissance du PIB réel pour 2026 (FMI, avril 2026).</p>
+      </div>
+    </div>
+    <div id="gdpGrowthList"></div>
+    <div class="callout">🇧🇪 La Belgique, membre de la zone euro, suit une trajectoire proche de <b>1,1%</b> — l'un des rythmes de croissance les plus faibles du monde, très loin derrière l'Inde (6,5%) ou la Chine (4,4%), qui portent désormais la croissance mondiale.</div>
+    <div class="hint">Source : FMI, World Economic Outlook, avril 2026</div>
+  </section>
+
   <!-- ================= 24 : PROJECTION DÉMOGRAPHIQUE ================= -->
   <div class="group-divider"><span class="gd-label" style="color:var(--text-dim); border-color:var(--border);">Prospective</span><span class="gd-line"></span></div>
+
   <section id="demography">
     <div class="s-head">
       <div>
-        <div class="s-num">24 — Projection démographique</div>
+        <div class="s-num">29 — Projection démographique</div>
         <h2>2 actifs pour 1 pensionné en 2050</h2>
         <p class="s-desc">Le vieillissement de la population explique directement pourquoi les pensions (section 22) sont sous pression : il y aura de moins en moins d'actifs pour financer de plus en plus de pensionnés, qui vivront eux-mêmes plus longtemps à la retraite.</p>
       </div>
@@ -1016,11 +1114,91 @@
     <div class="hint">Sources : Moustique / ULB (Jennifer Alonso-Garcia), avril 2026 · Statista / OCDE, projections 2020-2050 · Eurostat, ratio de dépendance démographique UE</div>
   </section>
 
+  <!-- ================= NEW : POUR SE RENDRE COMPTE ================= -->
+  <section id="funfacts">
+    <div class="s-head">
+      <div>
+        <div class="s-num">30 — Pour se rendre compte</div>
+        <h2>Les mêmes chiffres, mis en perspective</h2>
+        <p class="s-desc">Rien de nouveau ici — juste les données déjà vues dans ce dashboard, recombinées pour donner une idée plus concrète de ce qu'elles représentent.</p>
+      </div>
+    </div>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <div class="fact-emoji">🍔</div>
+        <div class="fact-num">218</div>
+        <div class="fact-label">Big Macs</div>
+        <div class="fact-desc">Ce que permet d'acheter un salaire minimum belge net (1 540 €), d'affilée.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">⏱️</div>
+        <div class="fact-num">5,8</div>
+        <div class="fact-label">jours ouvrés</div>
+        <div class="fact-desc">Le temps qu'il faut à un CEO du Bel 20 pour gagner l'équivalent du salaire annuel moyen d'un salarié belge.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">💸</div>
+        <div class="fact-num">71 700 $</div>
+        <div class="fact-label">par Belge</div>
+        <div class="fact-desc">Si la fortune d'Elon Musk (839 milliards $) était partagée entre les 11,7 millions d'habitants de Belgique.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">⌛</div>
+        <div class="fact-num">2,3M</div>
+        <div class="fact-label">d'années</div>
+        <div class="fact-desc">Temps qu'il faudrait pour dépenser la fortune d'Elon Musk à raison de 1 000 € par jour.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">🌍</div>
+        <div class="fact-num">3,7M $</div>
+        <div class="fact-label">par seconde</div>
+        <div class="fact-desc">Richesse générée par l'économie mondiale (≈117 000 milliards $/an) — chaque seconde, jour et nuit.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">🏠</div>
+        <div class="fact-num">7,5</div>
+        <div class="fact-label">ans de salaire</div>
+        <div class="fact-desc">En consacrant 100% de son salaire net moyen, il faudrait ce temps pour s'offrir un appartement de 70m² à Bruxelles.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">💰</div>
+        <div class="fact-num">9,2</div>
+        <div class="fact-label">ans de salaire</div>
+        <div class="fact-desc">Le nombre d'années de salaire net qu'il faudrait cumuler intégralement pour atteindre le patrimoine médian belge (286 250 €).</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">🏛️</div>
+        <div class="fact-num">61 957 $</div>
+        <div class="fact-label">par habitant</div>
+        <div class="fact-desc">La part de la dette publique belge qui "revient" à chaque habitant du pays, nouveau-nés compris.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">🚀</div>
+        <div class="fact-num">≈11</div>
+        <div class="fact-label">secondes</div>
+        <div class="fact-desc">Le temps qu'il faut à Elon Musk, à son rythme de gain estimé le plus élevé (≈6 817 $/seconde en 2025), pour "gagner" l'équivalent du salaire annuel moyen d'un Belge.</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">⚡</div>
+        <div class="fact-num">×47</div>
+        <div class="fact-label">moins probable</div>
+        <div class="fact-desc">Gagner le jackpot de l'EuroMillions (1 chance sur 139 838 160) est environ 47 fois moins probable que d'être frappé par la foudre au cours d'une année (1 sur 3 000 000).</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-emoji">🗼</div>
+        <div class="fact-num">≈1,1</div>
+        <div class="fact-label">km de billets</div>
+        <div class="fact-desc">La hauteur qu'atteindrait une pile d'un milliard de dollars en billets de 100$ empilés — trois fois la hauteur de la Tour Eiffel.</div>
+      </div>
+    </div>
+    <div class="hint">Calculs propres à ce dashboard, à partir des chiffres déjà sourcés dans les sections 05, 07, 09, 12, 14, 20, 25 et 27, ainsi que : culture-seconde.com / le mal pensant (gains Musk, 2025-2026) · vmaths.fr / loto-stats.fr (probabilités EuroMillions, 2026) — à visée illustrative, pas des recommandations financières.</div>
+  </section>
+
   <!-- ================= 25 : EVOLUTION ================= -->
   <section id="evolution" style="border-bottom:none;">
     <div class="s-head">
       <div>
-        <div class="s-num">25 — Évolution</div>
+        <div class="s-num">31 — Évolution</div>
         <h2>2025 : la plus forte hausse depuis 2017</h2>
         <p class="s-desc">Croissance de la richesse personnelle mondiale, en dollars.</p>
       </div>
@@ -1458,14 +1636,23 @@ const housingBurdenData = [
   {c:"Chypre", flag:"🇨🇾", value:2.4},
 ];
 
-// Niveau de prix général, biens & services (UE=100), Eurostat 2025-2026
+// Niveau de prix général, consommation des ménages (UE=100), Eurostat 2025 (via Statistics Norway / IndexBox)
 const priceLevelData = [
-  {c:"Danemark", flag:"🇩🇰", value:140},
+  {c:"Islande", flag:"🇮🇸", value:173.5},
+  {c:"Suisse", flag:"🇨🇭", value:171.3},
+  {c:"Danemark", flag:"🇩🇰", value:139.7},
+  {c:"Irlande", flag:"🇮🇪", value:136.2},
+  {c:"Luxembourg", flag:"🇱🇺", value:131.5},
+  {c:"Norvège", flag:"🇳🇴", value:128.6},
+  {c:"Suède", flag:"🇸🇪", value:121.0},
+  {c:"Finlande", flag:"🇫🇮", value:120.8},
   {c:"Pays-Bas", flag:"🇳🇱", value:120.4},
-  {c:"Autriche", flag:"🇦🇹", value:119},
+  {c:"Autriche", flag:"🇦🇹", value:119.0},
   {c:"Belgique", flag:"🇧🇪", value:118.1, pin:true},
-  {c:"Moyenne UE", flag:"🇪🇺", value:100},
-  {c:"Bulgarie", flag:"🇧🇬", value:63},
+  {c:"Moyenne UE-27", flag:"🇪🇺", value:100},
+  {c:"Turquie", flag:"🇹🇷", value:59.6},
+  {c:"Bosnie-Herzégovine", flag:"🇧🇦", value:59.2},
+  {c:"Macédoine du Nord", flag:"🇲🇰", value:54.8},
 ];
 
 // Pauvreté par région belge (risque de pauvreté, 2025)
@@ -1473,6 +1660,68 @@ const povRegionData = [
   {c:"Bruxelles", flag:"🏙️", value:23},
   {c:"Wallonie", flag:"🏘️", value:13},
   {c:"Flandre", flag:"🌾", value:7},
+];
+
+// Chômage (%, Eurostat/OCDE, déc.2025-mars 2026)
+const unemploymentData = [
+  {c:"Tchéquie", flag:"🇨🇿", value:3.1},
+  {c:"Malte", flag:"🇲🇹", value:3.2},
+  {c:"Pologne", flag:"🇵🇱", value:3.2},
+  {c:"Moyenne OCDE", flag:"🌍", value:5.0},
+  {c:"Belgique", flag:"🇧🇪", value:5.9, pin:true},
+  {c:"Moyenne UE", flag:"🇪🇺", value:5.9},
+  {c:"États-Unis", flag:"🇺🇸", value:4.3},
+  {c:"Suède", flag:"🇸🇪", value:8.8},
+  {c:"Espagne", flag:"🇪🇸", value:10.0},
+  {c:"Finlande", flag:"🇫🇮", value:10.3},
+];
+
+// Dette publique (% PIB, Eurostat T1 2026 / FMI)
+const publicDebtData = [
+  {c:"Japon", flag:"🇯🇵", value:230},
+  {c:"Singapour", flag:"🇸🇬", value:176},
+  {c:"Grèce", flag:"🇬🇷", value:143.5},
+  {c:"Italie", flag:"🇮🇹", value:138.9},
+  {c:"France", flag:"🇫🇷", value:117.6},
+  {c:"Belgique", flag:"🇧🇪", value:109.1, pin:true},
+  {c:"Espagne", flag:"🇪🇸", value:101.6},
+  {c:"Moyenne zone euro", flag:"🇪🇺", value:88.9},
+  {c:"Moyenne UE", flag:"🇪🇺", value:82.9},
+  {c:"Danemark", flag:"🇩🇰", value:29.9},
+  {c:"Luxembourg", flag:"🇱🇺", value:26.1},
+  {c:"Estonie", flag:"🇪🇪", value:24.1},
+  {c:"Bulgarie", flag:"🇧🇬", value:23.9},
+];
+
+// Productivité horaire (PIB $/heure travaillée PPA, OCDE 2024)
+const productivityData = [
+  {c:"Danemark", flag:"🇩🇰", value:106.46},
+  {c:"Belgique", flag:"🇧🇪", value:105.24, pin:true},
+  {c:"Autriche", flag:"🇦🇹", value:97.59},
+];
+
+// Salaire minimum légal net mensuel (€, 2026)
+const minwageData = [
+  {c:"Australie", flag:"🇦🇺", value:2300},
+  {c:"Nouvelle-Zélande", flag:"🇳🇿", value:1720},
+  {c:"Belgique", flag:"🇧🇪", value:1540, pin:true},
+  {c:"Espagne", flag:"🇪🇸", value:1381},
+  {c:"Slovénie", flag:"🇸🇮", value:1278},
+];
+
+// Croissance du PIB réel prévue 2026 (%, FMI avril 2026)
+const gdpGrowthData = [
+  {c:"Inde", flag:"🇮🇳", value:6.5},
+  {c:"Chine", flag:"🇨🇳", value:4.4},
+  {c:"Monde", flag:"🌍", value:3.1},
+  {c:"États-Unis", flag:"🇺🇸", value:2.3},
+  {c:"Espagne", flag:"🇪🇸", value:2.1},
+  {c:"Zone euro (dont Belgique)", flag:"🇧🇪", value:1.1, pin:true},
+  {c:"France", flag:"🇫🇷", value:0.9},
+  {c:"Allemagne", flag:"🇩🇪", value:0.8},
+  {c:"Royaume-Uni", flag:"🇬🇧", value:0.8},
+  {c:"Japon", flag:"🇯🇵", value:0.7},
+  {c:"Italie", flag:"🇮🇹", value:0.5},
 ];
 
 const deciles = [
@@ -1992,6 +2241,13 @@ renderBarList('ceoList', ceoData, {fmt:v=>v+'×'});
 renderBarList('genderList', genderData, {fmt:v=>(v>0?'+':'')+v.toFixed(1)+'%', max:20});
 renderBarList('pensionList', pensionData, {fmt:v=>v.toFixed(1)+'%'});
 renderBarList('lifeList', lifeData, {fmt:v=>v.toFixed(1)+' ans'});
+
+// Chômage, dette publique, productivité, salaire minimum, croissance du PIB
+renderBarList('unemploymentList', unemploymentData, {fmt:v=>v.toFixed(1)+'%'});
+renderBarList('debtPublicList', publicDebtData, {fmt:v=>v.toFixed(1)+'%'});
+renderBarList('productivityList', productivityData, {fmt:v=>'$'+v.toFixed(2)});
+renderBarList('minwageList', minwageData, {fmt:v=>v.toLocaleString('en-US')+' €'});
+renderBarList('gdpGrowthList', gdpGrowthData, {fmt:v=>(v>0?'+':'')+v.toFixed(1)+'%'});
 
 // Structure patrimoine belge, concentration, démographie
 renderBarList('structList', structData, {fmt:v=>v+'%', max:60});
