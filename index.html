@@ -408,10 +408,19 @@
       <a href="#gdpgrowth" class="toc-link">31 · Croissance du PIB</a>
     </div>
     <div class="toc-group">
+      <div class="toc-group-title" style="color:var(--blue)">Démographie & migrations</div>
+      <a href="#migration" class="toc-link">32 · Couloirs migratoires</a>
+      <a href="#remittances" class="toc-link">33 · Envois de fonds</a>
+      <a href="#refugees" class="toc-link">34 · Réfugiés & asile</a>
+      <a href="#fertility" class="toc-link">35 · Fécondité mondiale</a>
+      <a href="#urbanization" class="toc-link">36 · Urbanisation</a>
+      <a href="#belgianpop" class="toc-link">37 · Population belge</a>
+    </div>
+    <div class="toc-group">
       <div class="toc-group-title" style="color:var(--text-dim)">Prospective</div>
-      <a href="#demography" class="toc-link">32 · Démographie 2050</a>
-      <a href="#funfacts" class="toc-link">33 · Pour se rendre compte</a>
-      <a href="#evolution" class="toc-link">34 · Évolution</a>
+      <a href="#demography" class="toc-link">38 · Démographie 2050</a>
+      <a href="#funfacts" class="toc-link">39 · Pour se rendre compte</a>
+      <a href="#evolution" class="toc-link">40 · Évolution</a>
     </div>
   </div>
 </nav>
@@ -1184,13 +1193,156 @@
     <div class="hint">Source : FMI, World Economic Outlook, avril 2026</div>
   </section>
 
+  <div class="group-divider"><span class="gd-label" style="color:var(--blue); border-color:rgba(111,160,206,.4);">Démographie & migrations</span><span class="gd-line"></span></div>
+
+  <!-- ================= NEW : COULOIRS MIGRATOIRES ================= -->
+  <section id="migration">
+    <div class="s-head">
+      <div>
+        <div class="s-num">32 — Couloirs migratoires mondiaux</div>
+        <h2>304 millions de personnes vivent hors de leur pays de naissance</h2>
+        <p class="s-desc">Soit environ 3,9% de la population mondiale (ONU DESA, 2024) — un chiffre qui a presque doublé depuis 2000 (173 millions).</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Les plus grands couloirs migratoires</h3>
+        <ul class="factlist">
+          <li><b>🇲🇽 → 🇺🇸 Mexique → États-Unis</b> : le plus important couloir migratoire au monde</li>
+          <li><b>🇦🇫 → 🇮🇷 Afghanistan → Iran</b></li>
+          <li><b>🇸🇾 → 🇹🇷 Syrie → Turquie</b></li>
+          <li><b>🇷🇺 ↔ 🇺🇦 Russie ↔ Ukraine</b></li>
+          <li><b>🇮🇳 → 🇦🇪 Inde → Émirats arabes unis</b></li>
+        </ul>
+        <div class="note" style="margin-top:16px;">Il y a aujourd'hui plus d'hommes que de femmes parmi les migrants internationaux, et l'écart tend à se creuser légèrement (OIM, État de la migration dans le monde 2026).</div>
+      </div>
+      <div class="panel">
+        <h3>Sud-Sud, pas seulement Sud-Nord</h3>
+        <ul class="factlist">
+          <li>Contrairement à une idée reçue, les migrations <b>Sud-Sud</b> sont légèrement supérieures aux migrations Sud-Nord dans le monde</li>
+          <li><b>Plus de 85%</b> des migrations africaines restent intracontinentales</li>
+          <li>Les deux tiers de tous les migrants internationaux vivent dans seulement <b>20 pays</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="hint">Sources : OIM, État de la migration dans le monde 2026 (mai 2026) · ONU DESA, Migration internationale, 2024 · Sciences Po, Atlas de l'espace mondial</div>
+  </section>
+
+  <!-- ================= NEW : ENVOIS DE FONDS ================= -->
+  <section id="remittances">
+    <div class="s-head">
+      <div>
+        <div class="s-num">33 — Envois de fonds des migrants</div>
+        <h2>685 milliards $ — plus que l'aide au développement et les investissements étrangers réunis</h2>
+        <p class="s-desc">Ce que les migrants renvoient chez eux (remittances), vers les pays à revenu faible et intermédiaire, en 2024.</p>
+      </div>
+    </div>
+    <div id="remittanceList"></div>
+    <div class="callout">💸 Envoyer 200$ coûte en moyenne <b>6%</b> de frais — plus de deux fois la cible fixée par l'ONU (3%). Les transferts vers l'Asie sont les moins chers (4,1%), ceux vers l'Afrique subsaharienne les plus onéreux (7,8%).</div>
+    <div class="hint">Source : Banque mondiale, KNOMAD, Migration and Development Brief, 2024-2025</div>
+  </section>
+
+  <!-- ================= NEW : RÉFUGIÉS ================= -->
+  <section id="refugees">
+    <div class="s-head">
+      <div>
+        <div class="s-num">34 — Réfugiés et demandeurs d'asile</div>
+        <h2>123,9 millions de personnes déplacées de force</h2>
+        <p class="s-desc">Fin 2025, le nombre total de personnes contraintes de fuir dans le monde (HCR).</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Dans le monde, fin 2025</h3>
+        <div id="refugeeWorldList"></div>
+        <div class="note" style="margin-top:16px;">Plus de 70% des réfugiés vivent dans seulement 10 pays d'accueil — le plus souvent voisins directs des zones de crise, pas les pays riches.</div>
+      </div>
+      <div class="panel">
+        <h3>🇧🇪 La Belgique en 2025</h3>
+        <ul class="factlist">
+          <li><b>8 987</b> personnes ont obtenu une protection internationale en Belgique en 2025</li>
+          <li>Taux de protection : <b>39,1%</b> des demandes (en recul, 55,5% en 2024)</li>
+          <li>Principaux pays d'origine : Afghanistan, Palestine, Érythrée, RD Congo, Turquie</li>
+          <li><b>971</b> mineurs étrangers non accompagnés (MENA) reconnus en 2025</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hint">Source : HCR, Tendances mondiales & Aperçu statistique, juin 2026 · CGRA/CGVS, Statistiques asile 2025</div>
+  </section>
+
+  <!-- ================= NEW : FÉCONDITÉ & PYRAMIDE DES ÂGES ================= -->
+  <section id="fertility">
+    <div class="s-head">
+      <div>
+        <div class="s-num">35 — Fécondité mondiale</div>
+        <h2>2,24 enfants par femme — et ça continue de baisser</h2>
+        <p class="s-desc">Le seuil de renouvellement des générations est de 2,1 enfants par femme. La moyenne mondiale y est encore supérieure, mais recule d'année en année (2,73 en 2000, 2,31 en 2023, 2,24 en 2025).</p>
+      </div>
+    </div>
+    <div id="fertilityList"></div>
+    <div class="callout">📉 L'Europe est le continent à la fécondité la plus basse (1,41 enfant/femme en 2025), loin sous le seuil de renouvellement — l'Afrique reste la plus élevée (3,95), bien qu'en baisse continue depuis des décennies.</div>
+    <div class="hint">Source : Atlasocio.com / ONU, ISF par pays et continent, 2025 · Statista, pays au taux de fécondité le plus bas, 2024</div>
+  </section>
+
+  <!-- ================= NEW : URBANISATION ================= -->
+  <section id="urbanization">
+    <div class="s-head">
+      <div>
+        <div class="s-num">36 — Urbanisation</div>
+        <h2>57,9% de l'humanité vit désormais en ville</h2>
+        <p class="s-desc">Contre 46,7% en 2000 — et la croissance urbaine mondiale d'ici 2050 se concentrera pour plus de la moitié dans seulement 7 pays (Inde, Nigeria, Pakistan, RD Congo, Égypte, Bangladesh, Éthiopie).</p>
+      </div>
+    </div>
+    <div id="urbanList"></div>
+    <div class="hint">Source : ONU DESA, Perspectives de l'urbanisation mondiale 2025 · Atlasocio.com · Worldometer, 2026</div>
+  </section>
+
+  <!-- ================= NEW : POPULATION BELGE ================= -->
+  <section id="belgianpop">
+    <div class="s-head">
+      <div>
+        <div class="s-num">37 — La population belge, en mutation</div>
+        <h2>36% d'origine étrangère, et la croissance vient de l'immigration</h2>
+        <p class="s-desc">Au 1er janvier 2025, la Belgique comptait 11 825 551 habitants. Sa croissance démographique tient presque entièrement au solde migratoire.</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Composition de la population (2025)</h3>
+        <div id="belPopList"></div>
+        <div class="note" style="margin-top:16px;">La part des Belges d'origine belge est passée de <b style="color:var(--text)">79,3% (2005) à 64% (2025)</b> — deux décennies de diversification continue.</div>
+      </div>
+      <div class="panel">
+        <h3>Écarts régionaux (origine étrangère + non-Belges)</h3>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">Bruxelles</span><span class="val">78,0%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:100%; background:var(--coral)"></div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">Wallonie</span><span class="val">≈36%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:46%; background:var(--blue)"></div></div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-top"><span class="name">Flandre</span><span class="val">28,1%</span></div>
+          <div class="hbar-track"><div class="hbar-fill" style="width:36%; background:var(--teal)"></div></div>
+        </div>
+        <ul class="factlist" style="margin-top:20px;">
+          <li>Croissance démographique 2024 : <b>+0,52%</b> (61 901 personnes)</li>
+          <li>Solde migratoire : <b>+66 044</b> — solde naturel : <b>-3 879</b> (plus de décès que de naissances)</li>
+          <li>98,4% des Belges d'origine belge sont nés en Belgique ; 68,4% des Belges d'origine étrangère aussi</li>
+        </ul>
+      </div>
+    </div>
+    <div class="hint">Source : Statbel, Structure de la population selon l'origine, juin 2025 · Statbel, Mouvement de la population, 2025</div>
+  </section>
+
   <!-- ================= 24 : PROJECTION DÉMOGRAPHIQUE ================= -->
   <div class="group-divider"><span class="gd-label" style="color:var(--text-dim); border-color:var(--border);">Prospective</span><span class="gd-line"></span></div>
 
   <section id="demography">
     <div class="s-head">
       <div>
-        <div class="s-num">32 — Projection démographique</div>
+        <div class="s-num">38 — Projection démographique</div>
         <h2>2 actifs pour 1 pensionné en 2050</h2>
         <p class="s-desc">Le vieillissement de la population explique directement pourquoi les pensions (section 25) sont sous pression : il y aura de moins en moins d'actifs pour financer de plus en plus de pensionnés, qui vivront eux-mêmes plus longtemps à la retraite.</p>
       </div>
@@ -1221,7 +1373,7 @@
   <section id="funfacts">
     <div class="s-head">
       <div>
-        <div class="s-num">33 — Pour se rendre compte</div>
+        <div class="s-num">39 — Pour se rendre compte</div>
         <h2>Les mêmes chiffres, mis en perspective</h2>
         <p class="s-desc">Rien de nouveau ici — juste les données déjà vues dans ce dashboard, recombinées pour donner une idée plus concrète de ce qu'elles représentent.</p>
       </div>
@@ -1301,7 +1453,7 @@
   <section id="evolution" style="border-bottom:none;">
     <div class="s-head">
       <div>
-        <div class="s-num">34 — Évolution</div>
+        <div class="s-num">40 — Évolution</div>
         <h2>2025 : la plus forte hausse depuis 2017</h2>
         <p class="s-desc">Croissance de la richesse personnelle mondiale, en dollars.</p>
       </div>
@@ -1873,6 +2025,50 @@ const carbonData = [
   {c:"Bernard Arnault (empreinte totale)", flag:"👑", value:10421},
 ];
 
+// Envois de fonds — principaux pays destinataires (Banque mondiale, ~2021-2024, milliards $)
+const remittanceData = [
+  {c:"Inde", flag:"🇮🇳", value:89},
+  {c:"Mexique", flag:"🇲🇽", value:68},
+  {c:"Chine", flag:"🇨🇳", value:53},
+  {c:"Philippines", flag:"🇵🇭", value:37},
+  {c:"Égypte", flag:"🇪🇬", value:32},
+];
+
+// Réfugiés/déplacés dans le monde, fin 2025 (HCR)
+const refugeeWorldData = [
+  {c:"Personnes déplacées internes (PDI)", flag:"🏚️", value:68.7},
+  {c:"Réfugiés (mandat HCR + UNRWA)", flag:"🧳", value:41.6},
+  {c:"Demandeurs d'asile", flag:"📋", value:9.0},
+  {c:"Apatrides", flag:"❓", value:4.6},
+];
+
+// Fécondité (enfants par femme), 2025
+const fertilityData = [
+  {c:"Afrique (continent)", flag:"🌍", value:3.95},
+  {c:"Monde (moyenne)", flag:"🌐", value:2.24},
+  {c:"Seuil de renouvellement", flag:"⚖️", value:2.10},
+  {c:"Amériques (continent)", flag:"🌎", value:1.76},
+  {c:"Europe (continent)", flag:"🇪🇺", value:1.41},
+  {c:"Singapour / Ukraine / Hong Kong", flag:"🏙️", value:1.2},
+  {c:"Taïwan / Corée du Sud", flag:"🇰🇷", value:1.1},
+];
+
+// Urbanisation (% population urbaine)
+const urbanData = [
+  {c:"Singapour / Monaco / Koweït", flag:"🏙️", value:99.5},
+  {c:"Belgique", flag:"🇧🇪", value:99, pin:true},
+  {c:"Moyenne mondiale", flag:"🌍", value:57.9},
+  {c:"Niger", flag:"🇳🇪", value:16},
+  {c:"Burundi", flag:"🇧🇮", value:13},
+];
+
+// Composition population belge, 2025 (Statbel)
+const belPopData = [
+  {c:"Belges d'origine belge", flag:"🇧🇪", value:64.0},
+  {c:"Belges d'origine étrangère", flag:"🌍", value:22.1},
+  {c:"Non-Belges", flag:"🌐", value:13.8},
+];
+
 const deciles = [
   {label:"RMMMG (minimum légal)", value:2190, cls:"min"},
   {label:"D1 — 10% gagnent moins", value:2443, cls:"decile"},
@@ -2430,6 +2626,13 @@ renderBarList('debtPublicList', publicDebtData, {fmt:v=>v.toFixed(1)+'%'});
 renderBarList('productivityList', productivityData, {fmt:v=>'$'+v.toFixed(2)});
 renderBarList('minwageList', minwageData, {fmt:v=>v.toLocaleString('en-US')+' €'});
 renderBarList('gdpGrowthList', gdpGrowthData, {fmt:v=>(v>0?'+':'')+v.toFixed(1)+'%'});
+
+// Migration, réfugiés, fécondité, urbanisation, population belge
+renderBarList('remittanceList', remittanceData, {fmt:v=>v+' Md $'});
+renderBarList('refugeeWorldList', refugeeWorldData, {fmt:v=>v.toFixed(1)+' M'});
+renderBarList('fertilityList', fertilityData, {fmt:v=>v.toFixed(2)});
+renderBarList('urbanList', urbanData, {fmt:v=>v.toFixed(1)+'%'});
+renderBarList('belPopList', belPopData, {fmt:v=>v.toFixed(1)+'%'});
 
 // Structure patrimoine belge, concentration, démographie
 renderBarList('structList', structData, {fmt:v=>v+'%', max:60});
