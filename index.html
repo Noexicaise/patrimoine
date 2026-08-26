@@ -193,6 +193,20 @@
   .sim-bar{height:8px; background:var(--surface); border-radius:4px; overflow:hidden; margin:14px 0; border:1px solid var(--border);}
   .sim-bar-fill{height:100%; background:linear-gradient(90deg, var(--teal), var(--gold), var(--coral));}
 
+  /* ---------- COMPARATOR ---------- */
+  .cmp-select{
+    font-family:var(--sans); font-size:13.5px; color:var(--text); background:var(--surface-2);
+    border:1px solid var(--border); border-radius:8px; padding:9px 12px; min-width:160px;
+  }
+  .comparator-table-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:var(--radius); background:var(--surface);}
+  .cmp-table{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:13px;}
+  .cmp-table th, .cmp-table td{padding:12px 16px; text-align:right; border-bottom:1px solid var(--border); white-space:nowrap;}
+  .cmp-table th:first-child, .cmp-table td:first-child{text-align:left; font-family:var(--sans); color:var(--text-dim); font-size:12.5px;}
+  .cmp-table thead th{font-family:var(--sans); font-weight:600; color:var(--text); font-size:13px; background:var(--surface-2);}
+  .cmp-table td.best{color:var(--teal); font-weight:600;}
+  .cmp-table td.worst{color:var(--coral);}
+  .cmp-table tbody tr:last-child td{border-bottom:none;}
+
   /* ---------- TOC / NAVIGATION ---------- */
   .toc-toggle{
     position:fixed; top:18px; right:18px; z-index:200;
@@ -245,6 +259,20 @@
     .chip, .panel, .surface{border-color:#ccc !important;}
     section{break-inside:avoid; border-bottom:1px solid #ccc;}
   }
+
+  /* ---------- TL;DR MODE ---------- */
+  .tldr-btn.active{background:var(--teal-soft); border-color:rgba(95,195,168,.4); color:var(--teal);}
+  body.tldr-mode .s-desc, body.tldr-mode .panel, body.tldr-mode .bg-grid,
+  body.tldr-mode .controls, body.tldr-mode .gdp-list, body.tldr-mode .dlist,
+  body.tldr-mode .cards, body.tldr-mode .region-bars, body.tldr-mode .fact-grid,
+  body.tldr-mode .note, body.tldr-mode .hint, body.tldr-mode .legend,
+  body.tldr-mode .tabs, body.tldr-mode .line-chart, body.tldr-mode .line-labels,
+  body.tldr-mode .sim-panel, body.tldr-mode .extremes-grid, body.tldr-mode .evo-grid,
+  body.tldr-mode .comparator-controls, body.tldr-mode .comparator-table-wrap
+  {display:none !important;}
+  body.tldr-mode .tab-panel{display:block !important;}
+  body.tldr-mode section{padding:20px 0;}
+  body.tldr-mode .callout, body.tldr-mode .detail-bar, body.tldr-mode .rank-callout{margin-top:8px;}
   .back-to-top{
     position:fixed; bottom:22px; right:18px; z-index:150;
     width:42px; height:42px; border-radius:50%; background:var(--surface); border:1px solid var(--border);
@@ -322,6 +350,7 @@
 <body>
 
 <button id="tocToggle" class="toc-toggle" aria-label="Ouvrir le sommaire">☰ Sommaire</button>
+<button id="tldrToggle" class="toc-toggle tldr-btn" aria-label="Mode résumé" style="right:150px;">📝 Résumé</button>
 <div id="tocOverlay" class="toc-overlay"></div>
 <nav id="tocPanel" class="toc-panel">
   <div class="toc-head">
@@ -336,50 +365,53 @@
       <div class="toc-group-title" style="color:var(--gold)">Patrimoine mondial</div>
       <a href="#wealth" class="toc-link">01 · Patrimoine par adulte</a>
       <a href="#simulator" class="toc-link">02 · Simulateur personnel</a>
-      <a href="#pyramid" class="toc-link">03 · La pyramide mondiale</a>
+      <a href="#comparator" class="toc-link">03 · Comparateur de pays</a>
+      <a href="#pyramid" class="toc-link">04 · La pyramide mondiale</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--coral)">La Belgique en détail</div>
-      <a href="#belgium" class="toc-link">04 · Salaires belges (déciles)</a>
-      <a href="#wealthstructure" class="toc-link">05 · Structure du patrimoine</a>
-      <a href="#wealthorigin" class="toc-link">06 · Origine des grandes fortunes</a>
-      <a href="#billionaires" class="toc-link">14 · Milliardaires belges</a>
+      <a href="#belgium" class="toc-link">05 · Salaires belges (déciles)</a>
+      <a href="#wealthstructure" class="toc-link">06 · Structure du patrimoine</a>
+      <a href="#wealthorigin" class="toc-link">07 · Origine des grandes fortunes</a>
+      <a href="#billionaires" class="toc-link">15 · Milliardaires belges</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--blue)">Revenus & pouvoir d'achat</div>
-      <a href="#wages" class="toc-link">07 · Salaires, comparaison internationale</a>
-      <a href="#realpp" class="toc-link">08 · Revenus vs coût de la vie</a>
-      <a href="#realestate" class="toc-link">09 · Immobilier</a>
-      <a href="#housingburden" class="toc-link">10 · Taux d'effort logement</a>
-      <a href="#purchasing" class="toc-link">11 · Extrêmes du PIB/habitant</a>
-      <a href="#bigmac" class="toc-link">12 · Minutes pour un Big Mac</a>
-      <a href="#foodbasket" class="toc-link">13 · Panier de courses</a>
+      <a href="#wages" class="toc-link">08 · Salaires, comparaison internationale</a>
+      <a href="#realpp" class="toc-link">09 · Revenus vs coût de la vie</a>
+      <a href="#realestate" class="toc-link">10 · Immobilier</a>
+      <a href="#housingburden" class="toc-link">11 · Taux d'effort logement</a>
+      <a href="#purchasing" class="toc-link">12 · Extrêmes du PIB/habitant</a>
+      <a href="#bigmac" class="toc-link">13 · Minutes pour un Big Mac</a>
+      <a href="#foodbasket" class="toc-link">14 · Panier de courses</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--teal)">Société & fiscalité</div>
-      <a href="#insights" class="toc-link">15 · Ce que la médiane révèle</a>
-      <a href="#mobility" class="toc-link">16 · Mobilité sociale</a>
-      <a href="#savingsdebt" class="toc-link">17 · Épargne & dette</a>
-      <a href="#poverty" class="toc-link">18 · Pauvreté</a>
-      <a href="#fiscality" class="toc-link">19 · Fiscalité & succession</a>
-      <a href="#ceoratio" class="toc-link">20 · Ratio CEO / salarié</a>
-      <a href="#genderpay" class="toc-link">21 · Écart salarial H/F</a>
-      <a href="#pensions" class="toc-link">22 · Pensions légales</a>
-      <a href="#lifeexp" class="toc-link">23 · Espérance de vie</a>
+      <a href="#insights" class="toc-link">16 · Ce que la médiane révèle</a>
+      <a href="#mobility" class="toc-link">17 · Mobilité sociale</a>
+      <a href="#savingsdebt" class="toc-link">18 · Épargne & dette</a>
+      <a href="#generations" class="toc-link">19 · Richesse par génération</a>
+      <a href="#carbon" class="toc-link">20 · Empreinte carbone vs richesse</a>
+      <a href="#poverty" class="toc-link">21 · Pauvreté</a>
+      <a href="#fiscality" class="toc-link">22 · Fiscalité & succession</a>
+      <a href="#ceoratio" class="toc-link">23 · Ratio CEO / salarié</a>
+      <a href="#genderpay" class="toc-link">24 · Écart salarial H/F</a>
+      <a href="#pensions" class="toc-link">25 · Pensions légales</a>
+      <a href="#lifeexp" class="toc-link">26 · Espérance de vie</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--text-dim)">Indicateurs macroéconomiques</div>
-      <a href="#unemployment" class="toc-link">24 · Chômage</a>
-      <a href="#publicdebt" class="toc-link">25 · Dette publique</a>
-      <a href="#productivity" class="toc-link">26 · Productivité horaire</a>
-      <a href="#minwage" class="toc-link">27 · Salaire minimum légal</a>
-      <a href="#gdpgrowth" class="toc-link">28 · Croissance du PIB</a>
+      <a href="#unemployment" class="toc-link">27 · Chômage</a>
+      <a href="#publicdebt" class="toc-link">28 · Dette publique</a>
+      <a href="#productivity" class="toc-link">29 · Productivité horaire</a>
+      <a href="#minwage" class="toc-link">30 · Salaire minimum légal</a>
+      <a href="#gdpgrowth" class="toc-link">31 · Croissance du PIB</a>
     </div>
     <div class="toc-group">
       <div class="toc-group-title" style="color:var(--text-dim)">Prospective</div>
-      <a href="#demography" class="toc-link">29 · Démographie 2050</a>
-      <a href="#funfacts" class="toc-link">30 · Pour se rendre compte</a>
-      <a href="#evolution" class="toc-link">31 · Évolution</a>
+      <a href="#demography" class="toc-link">32 · Démographie 2050</a>
+      <a href="#funfacts" class="toc-link">33 · Pour se rendre compte</a>
+      <a href="#evolution" class="toc-link">34 · Évolution</a>
     </div>
   </div>
 </nav>
@@ -469,11 +501,31 @@
     <div class="note">Estimation à visée illustrative : modèle log-normal calibré sur la médiane mondiale (revenu : 3 920 $/an ; patrimoine : ≈9 000 $) et le seuil d'entrée du top 1% (revenu : ≈85 000 $/an, Banque mondiale PIP 2024 ; patrimoine : 1 000 000 $, seuil des millionnaires, UBS 2026) — ce n'est pas une mesure officielle exacte, mais l'ordre de grandeur est fiable.</div>
   </section>
 
+  <!-- ================= NEW : COMPARATEUR DE PAYS ================= -->
+  <section id="comparator">
+    <div class="s-head">
+      <div>
+        <div class="s-num">03 — Comparateur</div>
+        <h2>Trois pays, toutes les données</h2>
+        <p class="s-desc">Choisissez jusqu'à trois pays pour comparer d'un coup d'œil ce qui est dispersé dans le reste de ce dashboard. "—" signifie que la donnée n'est pas couverte pour ce pays dans ce dashboard.</p>
+      </div>
+    </div>
+    <div class="controls comparator-controls">
+      <select id="cmpA" class="cmp-select"></select>
+      <select id="cmpB" class="cmp-select"></select>
+      <select id="cmpC" class="cmp-select"></select>
+    </div>
+    <div class="comparator-table-wrap">
+      <table class="cmp-table" id="cmpTable"></table>
+    </div>
+    <div class="hint">Toutes les valeurs proviennent des sections déjà sourcées de ce dashboard (patrimoine, salaires, fiscalité, chômage, dette, prix, croissance) — pas de nouvelle collecte de données.</div>
+  </section>
+
   <!-- ================= 03 : PYRAMIDE MONDIALE ================= -->
   <section id="pyramid">
     <div class="s-head">
       <div>
-        <div class="s-num">03 — L'écart ultime</div>
+        <div class="s-num">04 — L'écart ultime</div>
         <h2>Qui possède quoi, à l'échelle mondiale</h2>
         <p class="s-desc">Au-delà des pays : comment la richesse se répartit entre les adultes de la planète. Deux groupes, deux réalités opposées.</p>
       </div>
@@ -508,7 +560,7 @@
   <section id="belgium">
     <div class="s-head">
       <div>
-        <div class="s-num">04 — Loupe sur la Belgique</div>
+        <div class="s-num">05 — Loupe sur la Belgique</div>
         <h2>Le salaire, décile par décile</h2>
         <p class="s-desc">Répartition des salaires bruts mensuels à temps plein. L'écart entre le premier et le dernier décile résume mieux la réalité qu'un seul chiffre moyen.</p>
       </div>
@@ -535,7 +587,7 @@
   <section id="wealthstructure">
     <div class="s-head">
       <div>
-        <div class="s-num">05 — De quoi le patrimoine belge est-il fait ?</div>
+        <div class="s-num">06 — De quoi le patrimoine belge est-il fait ?</div>
         <h2>73% de brique, 23% de finance</h2>
         <p class="s-desc">Composition moyenne du patrimoine des ménages belges en 2025 (Keytrade Bank / UGent).</p>
       </div>
@@ -559,7 +611,7 @@
   <section id="wealthorigin">
     <div class="s-head">
       <div>
-        <div class="s-num">06 — D'où vient l'argent des plus riches ?</div>
+        <div class="s-num">07 — D'où vient l'argent des plus riches ?</div>
         <h2>Héritage, entrepreneuriat, travail</h2>
         <p class="s-desc">Comparaison entre les 20% de ménages belges les plus riches et les 20% les plus pauvres : d'où vient leur patrimoine ?</p>
       </div>
@@ -599,7 +651,7 @@
   <section id="wages">
     <div class="s-head">
       <div>
-        <div class="s-num">07 — Salaires, comparaison internationale</div>
+        <div class="s-num">08 — Salaires, comparaison internationale</div>
         <h2>Le salaire moyen, pays par pays</h2>
         <p class="s-desc">Salaire annuel moyen brut, en parité de pouvoir d'achat (OCDE 2024). Une mesure différente des deciles belges ci-dessus : ici, c'est la <b style="color:var(--text)">moyenne</b>, pas la médiane — donc elle aussi tirée vers le haut par les hauts salaires.</p>
       </div>
@@ -646,7 +698,7 @@
   <section id="realpp">
     <div class="s-head">
       <div>
-        <div class="s-num">08 — Revenus vs coût de la vie</div>
+        <div class="s-num">09 — Revenus vs coût de la vie</div>
         <h2>Le pouvoir d'achat réel, pays par pays</h2>
         <p class="s-desc">Chaque point croise le <b>coût de la vie local</b> (axe horizontal, référence New York = 100) et le <b>pouvoir d'achat local</b> (axe vertical — un salaire moyen net rapporté à ce coût de la vie). En haut à gauche : on vit bien pour pas cher. En bas à droite : cher, et le salaire ne suit pas.</p>
       </div>
@@ -680,7 +732,7 @@
   <section id="realestate">
     <div class="s-head">
       <div>
-        <div class="s-num">09 — Immobilier</div>
+        <div class="s-num">10 — Immobilier</div>
         <h2>Le prix du mètre carré</h2>
         <p class="s-desc">Prix moyen d'un appartement, en €/m² (2025-2026). Le patrimoine des ménages, c'est d'abord la brique — surtout en Belgique.</p>
       </div>
@@ -706,7 +758,7 @@
   <section id="housingburden">
     <div class="s-head">
       <div>
-        <div class="s-num">10 — Le poids du logement sur le budget</div>
+        <div class="s-num">11 — Le poids du logement sur le budget</div>
         <h2>Taux d'effort : quand se loger devient un fardeau</h2>
         <p class="s-desc">Part de la population vivant dans un ménage où le logement (loyer/crédit + charges) absorbe plus de 40% du revenu disponible (Eurostat 2024).</p>
       </div>
@@ -720,7 +772,7 @@
   <section id="purchasing">
     <div class="s-head">
       <div>
-        <div class="s-num">11 — Les extrêmes absolus</div>
+        <div class="s-num">12 — Les extrêmes absolus</div>
         <h2>PIB par habitant : d'un monde à l'autre</h2>
         <p class="s-desc">Le PIB par habitant nominal mesure la production économique moyenne par personne. L'écart entre les pôles est vertigineux.</p>
       </div>
@@ -749,7 +801,7 @@
   <section id="bigmac">
     <div class="s-head">
       <div>
-        <div class="s-num">12 — Combien de temps pour un Big Mac ?</div>
+        <div class="s-num">13 — Combien de temps pour un Big Mac ?</div>
         <h2>Le salaire traduit en minutes</h2>
         <p class="s-desc">Prix d'un Big Mac (The Economist, janvier 2026) rapporté au salaire horaire moyen OCDE de chaque pays. Une façon très concrète de "voir" le pouvoir d'achat.</p>
       </div>
@@ -764,7 +816,7 @@
   <section id="foodbasket">
     <div class="s-head">
       <div>
-        <div class="s-num">13 — Le panier de courses</div>
+        <div class="s-num">14 — Le panier de courses</div>
         <h2>Le même caddie, des prix très différents</h2>
         <p class="s-desc">Niveau de prix de l'alimentation, indice base 100 = moyenne UE (Eurostat 2025-2026).</p>
       </div>
@@ -792,7 +844,7 @@
   <section id="billionaires">
     <div class="s-head">
       <div>
-        <div class="s-num">14 — Milliardaires</div>
+        <div class="s-num">15 — Milliardaires</div>
         <h2>3 428 personnes, 20 100 milliards $</h2>
         <p class="s-desc">Classement Forbes 2026 (mars 2026) — un record historique, +400 milliardaires en un an.</p>
       </div>
@@ -821,7 +873,7 @@
   <section id="insights">
     <div class="s-head">
       <div>
-        <div class="s-num">15 — Ce que la médiane révèle</div>
+        <div class="s-num">16 — Ce que la médiane révèle</div>
         <h2>Résultats contre-intuitifs</h2>
       </div>
     </div>
@@ -839,7 +891,7 @@
   <section id="mobility">
     <div class="s-head">
       <div>
-        <div class="s-num">16 — Mobilité sociale</div>
+        <div class="s-num">17 — Mobilité sociale</div>
         <h2>Combien de générations pour rejoindre le revenu moyen ?</h2>
         <p class="s-desc">Quand on naît dans une famille à faible revenu, combien de temps faut-il, en moyenne, pour que la lignée familiale rattrape le revenu moyen du pays ?</p>
       </div>
@@ -853,7 +905,7 @@
   <section id="savingsdebt">
     <div class="s-head">
       <div>
-        <div class="s-num">17 — Épargne & dette des ménages</div>
+        <div class="s-num">18 — Épargne & dette des ménages</div>
         <h2>Le paradoxe du Nord riche et endetté</h2>
         <p class="s-desc">Contre-intuitif : ce sont les pays les plus riches du nord de l'Europe qui ont les ménages les plus endettés — pas le Sud, souvent montré du doigt.</p>
       </div>
@@ -872,11 +924,62 @@
     <div class="hint">Sources : Eurostat, taux d'épargne T2 2024/2025 · Euronews / Armstrong Economics, dette des ménages 2025 · Veracash, épargne belge 2026</div>
   </section>
 
+  <!-- ================= NEW : RICHESSE PAR GÉNÉRATION ================= -->
+  <section id="generations">
+    <div class="s-head">
+      <div>
+        <div class="s-num">19 — Richesse par génération</div>
+        <h2>Les baby-boomers, la génération la plus riche de l'histoire</h2>
+        <p class="s-desc">Aux États-Unis (données les plus complètes disponibles), qui possède quoi parmi les générations vivantes ?</p>
+      </div>
+    </div>
+    <div class="bg-grid">
+      <div class="panel">
+        <h3>Part du patrimoine total américain (2025)</h3>
+        <div id="genWealthList"></div>
+        <div class="note" style="margin-top:16px;">Les baby-boomers (≈20% de la population) détiennent plus de la moitié du patrimoine national — un déséquilibre comparable en France, où ils possèdent également plus de la moitié du patrimoine des ménages pour environ un quart de la population.</div>
+      </div>
+      <div class="panel">
+        <h3>Le nuance qui change tout</h3>
+        <ul class="factlist">
+          <li>À <b>âge égal</b> et corrigé de l'inflation, les millennials américains possèdent en réalité <b>1,35$ pour chaque 1$</b> que les baby-boomers avaient au même âge</li>
+          <li>Le problème n'est donc pas (seulement) individuel : c'est que les baby-boomers sont une génération nombreuse qui a eu plus de temps pour accumuler, dans une économie en croissance continue</li>
+          <li>Les millennials détiennent <b>41%</b> de toute la dette des ménages américains, contre 22% pour les baby-boomers — largement due aux prêts étudiants</li>
+        </ul>
+        <div class="callout">📌 Le "fossé générationnel" est réel en <em>proportion du patrimoine national</em>, mais moins tranché qu'il n'y paraît en <em>patrimoine individuel à âge égal</em> — deux lectures différentes d'une même réalité.</div>
+      </div>
+    </div>
+    <div class="hint">Sources : Visual Capitalist / UBS Global Wealth Report 2025 · Federal Reserve, Survey of Consumer Finances · St. Louis Fed, juin 2025 · Business AM, septembre 2025 (comparaison France)</div>
+  </section>
+
+  <!-- ================= NEW : EMPREINTE CARBONE VS RICHESSE ================= -->
+  <section id="carbon">
+    <div class="s-head">
+      <div>
+        <div class="s-num">20 — Empreinte carbone vs richesse</div>
+        <h2>Polluer, un luxe comme un autre</h2>
+        <p class="s-desc">Émissions de CO2/CO2e liées à la consommation, par groupe de richesse (Oxfam, données 2025-2026).</p>
+      </div>
+    </div>
+    <div id="carbonList"></div>
+    <div class="cards" style="margin-top:20px;">
+      <div class="card">
+        <span class="tag">⏱️ 10 jours</span>
+        <p>En 2026, les 1% les plus riches du monde ont épuisé leur <b>budget carbone annuel équitable</b> (leur juste part pour rester sous 1,5°C) en seulement <b>10 jours</b> — soit 36 fois plus vite que ce qui serait soutenable.</p>
+      </div>
+      <div class="card">
+        <span class="tag">✈️ Bernard Arnault</span>
+        <p>L'homme le plus riche de France émet environ <b>1 200 fois</b> plus de CO2 qu'un Français moyen — son empreinte totale (consommation + investissements) est estimée à plus de 10 000 tonnes de CO2e par an.</p>
+      </div>
+    </div>
+    <div class="hint">Source : Oxfam International / Oxfam France, "Le pillage climatique des ultra-riches" et rapports associés, 2025-2026 · Institut de l'environnement de Stockholm (SEI)</div>
+  </section>
+
   <!-- ================= NEW : PAUVRETÉ ================= -->
   <section id="poverty">
     <div class="s-head">
       <div>
-        <div class="s-num">18 — Pauvreté</div>
+        <div class="s-num">21 — Pauvreté</div>
         <h2>Le seuil, et qui vit en-dessous</h2>
         <p class="s-desc">Le taux de risque de pauvreté mesure la part de la population vivant sous 60% du revenu médian national — un seuil relatif, propre à chaque pays.</p>
       </div>
@@ -911,7 +1014,7 @@
   <section id="fiscality">
     <div class="s-head">
       <div>
-        <div class="s-num">19 — Fiscalité & succession</div>
+        <div class="s-num">22 — Fiscalité & succession</div>
         <h2>Ce que l'État prend, corrige et transmet</h2>
         <p class="s-desc">Trois visages de la fiscalité belge : ce qu'elle prélève sur le travail, ce qu'elle corrige comme inégalités, et ce qu'elle taxe à la transmission.</p>
       </div>
@@ -948,7 +1051,7 @@
   <section id="ceoratio">
     <div class="s-head">
       <div>
-        <div class="s-num">20 — Ratio CEO / salarié</div>
+        <div class="s-num">23 — Ratio CEO / salarié</div>
         <h2>Combien de fois le salaire moyen ?</h2>
         <p class="s-desc">Rémunération totale du patron d'une grande entreprise cotée, rapportée au salaire moyen du pays.</p>
       </div>
@@ -962,7 +1065,7 @@
   <section id="genderpay">
     <div class="s-head">
       <div>
-        <div class="s-num">21 — Écart salarial hommes-femmes</div>
+        <div class="s-num">24 — Écart salarial hommes-femmes</div>
         <h2>Le salaire horaire, par genre</h2>
         <p class="s-desc">Écart non ajusté entre le salaire horaire brut moyen des hommes et des femmes, en % du salaire des hommes (Eurostat, 2024).</p>
       </div>
@@ -976,7 +1079,7 @@
   <section id="pensions">
     <div class="s-head">
       <div>
-        <div class="s-num">22 — Pensions légales</div>
+        <div class="s-num">25 — Pensions légales</div>
         <h2>Le taux de remplacement net</h2>
         <p class="s-desc">Quelle part de son dernier salaire net un retraité au salaire moyen touche-t-il de pension légale ?</p>
       </div>
@@ -990,7 +1093,7 @@
   <section id="lifeexp">
     <div class="s-head">
       <div>
-        <div class="s-num">23 — Espérance de vie vs richesse</div>
+        <div class="s-num">26 — Espérance de vie vs richesse</div>
         <h2>Vivre vieux ne coûte pas toujours cher</h2>
         <p class="s-desc">La richesse d'un pays prédit globalement une vie plus longue — mais avec des exceptions frappantes.</p>
       </div>
@@ -1015,7 +1118,7 @@
   <section id="unemployment">
     <div class="s-head">
       <div>
-        <div class="s-num">24 — Chômage</div>
+        <div class="s-num">27 — Chômage</div>
         <h2>Qui travaille, qui cherche</h2>
         <p class="s-desc">Taux de chômage harmonisé, population active 15-74 ans (Eurostat/OCDE, décembre 2025 - mars 2026).</p>
       </div>
@@ -1029,7 +1132,7 @@
   <section id="publicdebt">
     <div class="s-head">
       <div>
-        <div class="s-num">25 — Dette publique</div>
+        <div class="s-num">28 — Dette publique</div>
         <h2>Ce que l'État doit, en % du PIB</h2>
         <p class="s-desc">Dette publique brute des administrations, T1 2026 (Eurostat) et dernières données FMI pour les pays hors UE.</p>
       </div>
@@ -1043,7 +1146,7 @@
   <section id="productivity">
     <div class="s-head">
       <div>
-        <div class="s-num">26 — Productivité horaire</div>
+        <div class="s-num">29 — Productivité horaire</div>
         <h2>Travailler moins, produire plus</h2>
         <p class="s-desc">PIB généré par heure travaillée (USD PPA, OCDE 2024) — et le nombre d'heures travaillées par an, qui suit souvent la tendance inverse.</p>
       </div>
@@ -1057,7 +1160,7 @@
   <section id="minwage">
     <div class="s-head">
       <div>
-        <div class="s-num">27 — Salaire minimum légal</div>
+        <div class="s-num">30 — Salaire minimum légal</div>
         <h2>Le plancher, pas la moyenne</h2>
         <p class="s-desc">Salaire minimum net mensuel, 2026 — à ne pas confondre avec le salaire <em>moyen</em> déjà comparé en section 07.</p>
       </div>
@@ -1071,7 +1174,7 @@
   <section id="gdpgrowth">
     <div class="s-head">
       <div>
-        <div class="s-num">28 — Croissance du PIB</div>
+        <div class="s-num">31 — Croissance du PIB</div>
         <h2>Qui accélère, qui ralentit</h2>
         <p class="s-desc">Prévisions de croissance du PIB réel pour 2026 (FMI, avril 2026).</p>
       </div>
@@ -1087,9 +1190,9 @@
   <section id="demography">
     <div class="s-head">
       <div>
-        <div class="s-num">29 — Projection démographique</div>
+        <div class="s-num">32 — Projection démographique</div>
         <h2>2 actifs pour 1 pensionné en 2050</h2>
-        <p class="s-desc">Le vieillissement de la population explique directement pourquoi les pensions (section 22) sont sous pression : il y aura de moins en moins d'actifs pour financer de plus en plus de pensionnés, qui vivront eux-mêmes plus longtemps à la retraite.</p>
+        <p class="s-desc">Le vieillissement de la population explique directement pourquoi les pensions (section 25) sont sous pression : il y aura de moins en moins d'actifs pour financer de plus en plus de pensionnés, qui vivront eux-mêmes plus longtemps à la retraite.</p>
       </div>
     </div>
     <div class="bg-grid">
@@ -1118,7 +1221,7 @@
   <section id="funfacts">
     <div class="s-head">
       <div>
-        <div class="s-num">30 — Pour se rendre compte</div>
+        <div class="s-num">33 — Pour se rendre compte</div>
         <h2>Les mêmes chiffres, mis en perspective</h2>
         <p class="s-desc">Rien de nouveau ici — juste les données déjà vues dans ce dashboard, recombinées pour donner une idée plus concrète de ce qu'elles représentent.</p>
       </div>
@@ -1198,7 +1301,7 @@
   <section id="evolution" style="border-bottom:none;">
     <div class="s-head">
       <div>
-        <div class="s-num">31 — Évolution</div>
+        <div class="s-num">34 — Évolution</div>
         <h2>2025 : la plus forte hausse depuis 2017</h2>
         <p class="s-desc">Croissance de la richesse personnelle mondiale, en dollars.</p>
       </div>
@@ -1724,6 +1827,52 @@ const gdpGrowthData = [
   {c:"Italie", flag:"🇮🇹", value:0.5},
 ];
 
+// Comparateur de pays — consolidation de données déjà présentes ailleurs dans ce dashboard
+const countryProfiles = {
+  "Belgique":     {flag:"🇧🇪", wealthMean:408000, wealthMedian:277000, wage:76109, taxWedge:52.5, unemployment:5.9,  publicDebt:109.1, priceLevel:118.1, gdpGrowth:1.1},
+  "France":       {flag:"🇫🇷", wealthMean:341000, wealthMedian:122000, wage:60608, taxWedge:47.2, unemployment:null, publicDebt:117.6, priceLevel:null,  gdpGrowth:0.9},
+  "Allemagne":    {flag:"🇩🇪", wealthMean:347000, wealthMedian:53000,  wage:69433, taxWedge:49.3, unemployment:null, publicDebt:null,  priceLevel:null,  gdpGrowth:0.8},
+  "Pays-Bas":     {flag:"🇳🇱", wealthMean:415000, wealthMedian:127000, wage:75370, taxWedge:null, unemployment:null, publicDebt:null,  priceLevel:120.4, gdpGrowth:null},
+  "Suisse":       {flag:"🇨🇭", wealthMean:910000, wealthMedian:146000, wage:87468, taxWedge:null, unemployment:null, publicDebt:null,  priceLevel:171.3, gdpGrowth:null},
+  "États-Unis":   {flag:"🇺🇸", wealthMean:696000, wealthMedian:69000,  wage:82933, taxWedge:null, unemployment:4.3,  publicDebt:null,  priceLevel:null,  gdpGrowth:2.3},
+  "Royaume-Uni":  {flag:"🇬🇧", wealthMean:293000, wealthMedian:125000, wage:63691, taxWedge:29.2, unemployment:null, publicDebt:null,  priceLevel:null,  gdpGrowth:0.8},
+  "Italie":       {flag:"🇮🇹", wealthMean:279000, wealthMedian:131000, wage:51019, taxWedge:45.8, unemployment:null, publicDebt:138.9, priceLevel:null,  gdpGrowth:0.5},
+  "Espagne":      {flag:"🇪🇸", wealthMean:306000, wealthMedian:112000, wage:54564, taxWedge:null, unemployment:10.0, publicDebt:101.6, priceLevel:null,  gdpGrowth:2.1},
+  "Suède":        {flag:"🇸🇪", wealthMean:406000, wealthMedian:84000,  wage:60415, taxWedge:null, unemployment:8.8,  publicDebt:null,  priceLevel:121.0, gdpGrowth:null},
+  "Danemark":     {flag:"🇩🇰", wealthMean:523000, wealthMedian:204000, wage:74021, taxWedge:null, unemployment:null, publicDebt:29.9,  priceLevel:139.7, gdpGrowth:null},
+  "Luxembourg":   {flag:"🇱🇺", wealthMean:655000, wealthMedian:394000, wage:94447, taxWedge:null, unemployment:null, publicDebt:26.1,  priceLevel:131.5, gdpGrowth:null},
+  "Autriche":     {flag:"🇦🇹", wealthMean:280000, wealthMedian:71000,  wage:75767, taxWedge:47.1, unemployment:null, publicDebt:null,  priceLevel:119.0, gdpGrowth:null},
+  "Japon":        {flag:"🇯🇵", wealthMean:212000, wealthMedian:136000, wage:49446, taxWedge:null, unemployment:null, publicDebt:230,   priceLevel:null,  gdpGrowth:0.7},
+  "Portugal":     {flag:"🇵🇹", wealthMean:196000, wealthMedian:77000,  wage:40002, taxWedge:null, unemployment:null, publicDebt:null,  priceLevel:null,  gdpGrowth:null},
+};
+const cmpMetrics = [
+  {key:"wealthMean", label:"Patrimoine moyen / adulte", fmt:v=>"$"+v.toLocaleString('en-US'), better:"high"},
+  {key:"wealthMedian", label:"Patrimoine médian / adulte", fmt:v=>"$"+v.toLocaleString('en-US'), better:"high"},
+  {key:"wage", label:"Salaire moyen (PPA/an)", fmt:v=>"$"+v.toLocaleString('en-US'), better:"high"},
+  {key:"taxWedge", label:"Coin fiscal", fmt:v=>v.toFixed(1)+"%", better:"low"},
+  {key:"unemployment", label:"Chômage", fmt:v=>v.toFixed(1)+"%", better:"low"},
+  {key:"publicDebt", label:"Dette publique (% PIB)", fmt:v=>v.toFixed(1)+"%", better:"low"},
+  {key:"priceLevel", label:"Niveau de prix (UE=100)", fmt:v=>v.toFixed(1), better:"low"},
+  {key:"gdpGrowth", label:"Croissance PIB 2026 (prév.)", fmt:v=>(v>0?"+":"")+v.toFixed(1)+"%", better:"high"},
+];
+
+// Part du patrimoine total US par génération (Visual Capitalist/UBS/Fed, 2025)
+const genWealthData = [
+  {c:"Baby-boomers (nés 1946-1964)", flag:"👴", value:51.4},
+  {c:"Génération X (1965-1980)", flag:"🧑", value:31.2},
+  {c:"Millennials + Gen Z (1981+)", flag:"🧒", value:10.5},
+];
+
+// Empreinte carbone annuelle par groupe (tonnes CO2/CO2e, Oxfam 2025-2026)
+const carbonData = [
+  {c:"50% les plus pauvres (monde)", flag:"🌍", value:1.01},
+  {c:"Moyenne française", flag:"🇫🇷", value:6.4},
+  {c:"10% les plus riches (France, empreinte mixte)", flag:"🇫🇷", value:38},
+  {c:"Elon Musk (consommation seule)", flag:"🚀", value:5947},
+  {c:"Top 50 milliardaires (jets/yachts uniquement)", flag:"🛥️", value:7746},
+  {c:"Bernard Arnault (empreinte totale)", flag:"👑", value:10421},
+];
+
 const deciles = [
   {label:"RMMMG (minimum légal)", value:2190, cls:"min"},
   {label:"D1 — 10% gagnent moins", value:2443, cls:"decile"},
@@ -2054,6 +2203,39 @@ document.querySelector('.sim-quickset').addEventListener('click', e=>{
 });
 
 // ---------------------------------------------------------------
+// COUNTRY COMPARATOR
+// ---------------------------------------------------------------
+const cmpCountries = Object.keys(countryProfiles);
+const cmpSelects = ['cmpA','cmpB','cmpC'].map(id=>document.getElementById(id));
+const cmpDefaults = ['Belgique','France','Allemagne'];
+cmpSelects.forEach((sel, i)=>{
+  sel.innerHTML = cmpCountries.map(c=>`<option value="${c}" ${c===cmpDefaults[i]?'selected':''}>${countryProfiles[c].flag} ${c}</option>`).join('');
+  sel.addEventListener('change', renderComparator);
+});
+function renderComparator(){
+  const chosen = cmpSelects.map(s=>s.value);
+  const table = document.getElementById('cmpTable');
+  let thead = '<thead><tr><th>Indicateur</th>' + chosen.map(c=>`<th>${countryProfiles[c].flag} ${c}</th>`).join('') + '</tr></thead>';
+  let tbody = '<tbody>';
+  cmpMetrics.forEach(m=>{
+    const vals = chosen.map(c=> countryProfiles[c][m.key]);
+    const present = vals.filter(v=>v!=null);
+    const best = present.length ? (m.better==="high" ? Math.max(...present) : Math.min(...present)) : null;
+    const worst = present.length ? (m.better==="high" ? Math.min(...present) : Math.max(...present)) : null;
+    tbody += `<tr><td>${m.label}</td>` + vals.map(v=>{
+      if(v==null) return '<td>—</td>';
+      let cls = '';
+      if(present.length>1 && v===best && best!==worst) cls=' class="best"';
+      else if(present.length>1 && v===worst && best!==worst) cls=' class="worst"';
+      return `<td${cls}>${m.fmt(v)}</td>`;
+    }).join('') + '</tr>';
+  });
+  tbody += '</tbody>';
+  table.innerHTML = thead + tbody;
+}
+renderComparator();
+
+// ---------------------------------------------------------------
 // 06 — SCATTER: cost of living vs local purchasing power
 // ---------------------------------------------------------------
 const svgNS = "http://www.w3.org/2000/svg";
@@ -2259,6 +2441,10 @@ renderBarList('housingBurdenList', housingBurdenData, {fmt:v=>v.toFixed(1)+'%'})
 renderBarList('priceLevelList', priceLevelData, {fmt:v=>v.toFixed(1)});
 renderBarList('povRegionList', povRegionData, {fmt:v=>v+'%', max:25});
 
+// Génération, carbone
+renderBarList('genWealthList', genWealthData, {fmt:v=>v.toFixed(1)+'%'});
+renderBarList('carbonList', carbonData, {fmt:v=>v.toLocaleString('en-US')+' t CO2e/an'});
+
 // ---------------------------------------------------------------
 // 14 — EVOLUTION
 // ---------------------------------------------------------------
@@ -2331,6 +2517,12 @@ window.addEventListener('scroll', ()=>{
   backToTop.classList.toggle('show', window.scrollY > 800);
 });
 backToTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+// TL;DR mode toggle
+document.getElementById('tldrToggle').addEventListener('click', function(){
+  document.body.classList.toggle('tldr-mode');
+  this.classList.toggle('active');
+});
 </script>
 </body>
 </html>
